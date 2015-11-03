@@ -28,7 +28,7 @@ namespace EbayMarketplaceMdl
                         {
                             Db.Db.AddEbayOrderToDb(ebayOrderType);
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                             continue;// continue if order already exist in DB
                         }
