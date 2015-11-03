@@ -30,7 +30,7 @@ namespace EbayMarketplaceMdl
                         }
                         catch (Exception ex)
                         {
-                            continue;// continue if there is an ex
+                            continue;// continue if order already exist
                         }
                     }
                 }
