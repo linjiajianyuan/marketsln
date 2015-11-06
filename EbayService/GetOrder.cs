@@ -90,6 +90,7 @@ namespace EbayService
             ebayOrderHeaderType.ShippingServicePriority = orderType.ShippingServiceSelected.ShippingServicePriority;
             ebayOrderHeaderType.Subtotal = orderType.Subtotal == null ? 0 : orderType.Subtotal.Value;
             ebayOrderHeaderType.Total = orderType.Total == null ? 0 : orderType.Total.Value;
+            ebayOrderHeaderType.TransferStatus = 0;
             ebayOrderHeaderType.EnterDate = System.DateTime.Now;
             ebayOrderHeaderType.UpdateDate = System.DateTime.Now;
             return ebayOrderHeaderType;

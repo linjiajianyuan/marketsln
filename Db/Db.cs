@@ -44,7 +44,7 @@ namespace Db
            ,[SalesTaxAmount],[SalesTaxPercent],[ShippingIncludedInTax]
            ,[SalesTaxState],[SellingManagerSalesRecordNumber],[ExpeditedService]
            ,[ShippingService],[ShippingServiceCost],[ShippingServiceAdditionalCost]
-           ,[ShippingServicePriority],[Subtotal],[Total]
+           ,[ShippingServicePriority],[Subtotal],[Total],[TransferStatus]
            ,[EnterDate],[UpdateDate])
      VALUES
            ('"
@@ -58,7 +58,7 @@ namespace Db
            + eohType.SalesTaxAmount + "','" +eohType.SalesTaxPerecent + "','" +eohType.ShippingIncludedInTax + "',N'" 
            + eohType.SalesTaxState + "','" +eohType.SellingManagerSalesRecordNumber + "','" +eohType.ExpeditedService + "','"
            + eohType.ShippingService + "','" +eohType.ShippingServiceCost + "','" +eohType.ShippingServiceAdditionalCost + "','"
-           + eohType.ShippingServicePriority + "','" +eohType.Subtotal + "','" +eohType.Total + "','"
+           + eohType.ShippingServicePriority + "','" +eohType.Subtotal + "','" +eohType.Total + "','" +eohType.TransferStatus + "','"
            + eohType.EnterDate + "','" +eohType.UpdateDate+"')";
             return sql;
         }

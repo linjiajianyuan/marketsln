@@ -48,6 +48,7 @@ namespace EbayComm
         public int ShippingServicePriority { set; get; }
         public double Subtotal { set; get; }
         public double Total { set; get; }
+        public int TransferStatus { set; get; }
         public DateTime EnterDate { set; get; }
         public DateTime UpdateDate { set; get; }
     }
