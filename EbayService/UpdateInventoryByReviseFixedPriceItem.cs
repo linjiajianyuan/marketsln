@@ -20,9 +20,8 @@ namespace EbayService
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
 
-        public static bool UpdateInventory(string accountName, string token, string itemId, int qty,string sku,int isVariation,int soldQty, double startPrice)
+        public static void UpdateInventory(string accountName, string token, string itemId, int qty,string sku,int isVariation,int soldQty, double startPrice)
         {
-            bool isSuccessed = true;
             ApiContext context = new ApiContext();
             context.ApiCredential.eBayToken = token;
             context.SoapApiServerUrl = "https://api.ebay.com/wsapi";
@@ -59,12 +58,9 @@ namespace EbayService
             }
             catch(Exception ex)
             {
-                isSuccessed = false;
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
-                exceptionUtility.CatchMethod(ex, "UpdateInventoryByReviseFixedPriceItem ", accountName+":"+itemId+" "+ ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                exceptionUtility.CatchMethod(ex, "UpdateInventoryByReviseFixedPriceItem ", accountName+":"+itemId+"("+sku+")"+" "+ ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
             }
-            return isSuccessed;
-
         }
     }
 }

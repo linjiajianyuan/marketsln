@@ -11,6 +11,11 @@ namespace EbayInventoryMdl
 {
     public class Mdl
     {
+        private static string senderEmail = ConfigurationManager.AppSettings["senderEmail"];
+        private static string messageFromPassword = ConfigurationManager.AppSettings["messageFromPassword"];
+        private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
+        private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
+        private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
         public static void UpdateEbayInventory()
         {
             DataTable sellerAccountDt = Db.Db.GetEbayDeveloperInfo();
@@ -32,12 +37,23 @@ namespace EbayInventoryMdl
                         string itemId = adjustInventoryDr["ItemID"].ToString();
                         string sku = adjustInventoryDr["SKU"].ToString();
                         string name = adjustInventoryDr["Name"].ToString();
-                        int qty = ConvertUtility.ToInt(adjustInventoryDr["qty"]);
-                        double startPrice = ConvertUtility.ToDouble(adjustInventoryDr["startPrice"]);
-                        int soldQty = ConvertUtility.ToInt(adjustInventoryDr["soldQty"]);
-                        int quantityAvailable = ConvertUtility.ToInt(adjustInventoryDr["quantityAvailable"]);
-                        int isVariation = ConvertUtility.ToInt(adjustInventoryDr["isVariation"]);
-                        EbayService.UpdateInventoryByReviseFixedPriceItem.UpdateInventory(accountName, token, itemId, qty, sku, isVariation, soldQty, startPrice);
+                        try
+                        {
+                            int qty = ConvertUtility.ToInt(adjustInventoryDr["qty"]);
+                            double startPrice = ConvertUtility.ToDouble(adjustInventoryDr["startPrice"]);
+                            int soldQty = ConvertUtility.ToInt(adjustInventoryDr["soldQty"]);
+                            int quantityAvailable = ConvertUtility.ToInt(adjustInventoryDr["quantityAvailable"]);
+                            int isVariation = ConvertUtility.ToInt(adjustInventoryDr["isVariation"]);
+                            EbayService.UpdateInventoryByReviseFixedPriceItem.UpdateInventory(accountName, token, itemId, qty, sku, isVariation, soldQty, startPrice);
+                        }
+                        catch(Exception ex)
+                        {
+                            ExceptionUtility exceptionUtility = new ExceptionUtility();
+                            exceptionUtility.CatchMethod(ex, "UpdateInventoryByReviseFixedPriceItem ", accountName + ":" + itemId+"("+ sku+ ")" + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                            continue;
+                        }
+                       
+
                     }
                 }
             }
