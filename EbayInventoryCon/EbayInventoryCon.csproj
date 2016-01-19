@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7BFA2192-A945-4A9F-9782-AD5AECA2F9F7}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{7E3C1240-1571-4B5E-B2AC-D932098F4B11}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EbayService</RootNamespace>
-    <AssemblyName>EbayService</AssemblyName>
+    <RootNamespace>EbayInventoryCon</RootNamespace>
+    <AssemblyName>EbayInventoryCon</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,17 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="eBay.Service">
-      <HintPath>..\Lib\eBay.Service.dll</HintPath>
-    </Reference>
-    <Reference Include="eBay.Service.SDK.Attribute">
-      <HintPath>..\Lib\eBay.Service.SDK.Attribute.dll</HintPath>
-    </Reference>
-    <Reference Include="PebbledonUtilityLib">
-      <HintPath>..\Lib\PebbledonUtilityLib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,19 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetMyEbaySelling.cs" />
-    <Compile Include="GetOrder.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateInventoryByReviseFixedPriceItem.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Db\Db.csproj">
-      <Project>{2c4365bb-8c30-46a1-b5e7-ca1736dbc612}</Project>
-      <Name>Db</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\EbayComm\EbayComm.csproj">
-      <Project>{5093b9c9-562c-4f07-9125-5bc5bb21de3c}</Project>
-      <Name>EbayComm</Name>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EbayInventoryMdl\EbayInventoryMdl.csproj">
+      <Project>{45f105cd-1994-4fdf-90f2-2c551f0fbc2c}</Project>
+      <Name>EbayInventoryMdl</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayMarketplaceMdl", "EbayM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayComm", "EbayComm\EbayComm.csproj", "{5093B9C9-562C-4F07-9125-5BC5BB21DE3C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayInventoryCon", "EbayInventoryCon\EbayInventoryCon.csproj", "{7E3C1240-1571-4B5E-B2AC-D932098F4B11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayInventoryMdl", "EbayInventoryMdl\EbayInventoryMdl.csproj", "{45F105CD-1994-4FDF-90F2-2C551F0FBC2C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{5093B9C9-562C-4F07-9125-5BC5BB21DE3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5093B9C9-562C-4F07-9125-5BC5BB21DE3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5093B9C9-562C-4F07-9125-5BC5BB21DE3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E3C1240-1571-4B5E-B2AC-D932098F4B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E3C1240-1571-4B5E-B2AC-D932098F4B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E3C1240-1571-4B5E-B2AC-D932098F4B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E3C1240-1571-4B5E-B2AC-D932098F4B11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F105CD-1994-4FDF-90F2-2C551F0FBC2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F105CD-1994-4FDF-90F2-2C551F0FBC2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F105CD-1994-4FDF-90F2-2C551F0FBC2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F105CD-1994-4FDF-90F2-2C551F0FBC2C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
