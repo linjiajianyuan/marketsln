@@ -42,7 +42,7 @@ namespace EbayService
             context.ApiCredential.eBayToken = token;
             context.SoapApiServerUrl = "https://api.ebay.com/wsapi";
             context.ApiLogManager = new ApiLogManager();
-            //context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", false, false, true));
+            context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", true,true, true));
             context.ApiLogManager.EnableLogging = true;
             context.Version = "861";
             context.Site = SiteCodeType.US;
@@ -82,14 +82,14 @@ namespace EbayService
                                     {
                                         continue;
                                     }
-                                    else if (itemType.Variations == null)
+                                    else if (itemType.Variations == null || itemType.Variations.Variation.Count==0)
                                     {
                                         //continue;
                                         int quantityAvailable = itemType.QuantityAvailable;
                                         int quantity = itemType.Quantity;
                                         int soldQty = quantity - quantityAvailable;
-                                        double startPrice = itemType.StartPrice.Value;
-                                        if (quantity == 1 || quantityAvailable == 1)
+                                        double startPrice = itemType.BuyItNowPrice.Value;
+                                        if (quantityAvailable == 1)
                                         {
                                             DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
                                             sellingInventoryDr["ItemID"] = productId;

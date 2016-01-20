@@ -27,9 +27,6 @@ namespace EbayInventoryCon
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
                 exceptionUtility.CatchMethod(ex, "UpdateEbayInventoryCon Main ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
             }
-
-
-            
         }
     }
 }
