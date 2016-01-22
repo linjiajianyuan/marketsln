@@ -57,7 +57,7 @@ namespace EbayService
                     item.Variations = vsType;
                     reviseFixedPriceItemCall.Item = item;
                     reviseFixedPriceItemCall.Execute();
-                }C:\Project\MarketplaceSln\MarketplaceSln\EbayService\UpdateInventoryByReviseFixedPriceItem.cs
+                }
 
             }
             catch(Exception ex)
