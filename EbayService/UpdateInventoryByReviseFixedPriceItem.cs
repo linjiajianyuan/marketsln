@@ -26,7 +26,7 @@ namespace EbayService
             context.ApiCredential.eBayToken = token;
             context.SoapApiServerUrl = "https://api.ebay.com/wsapi";
             context.ApiLogManager = new ApiLogManager();
-            context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", false, false, true));
+            context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", true, true, true));
             context.ApiLogManager.EnableLogging = true;
             context.Version = "861";
             context.Site = SiteCodeType.US;
@@ -47,13 +47,17 @@ namespace EbayService
                 {
                     item.ItemID = itemId;
                     VariationType simpleType = new VariationType();
+                    VariationTypeCollection vtc = new VariationTypeCollection();
+                    VariationsType vsType = new VariationsType();
+                    
                     simpleType.SKU = sku;
                     simpleType.Quantity = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
-                    simpleType.StartPrice.Value = startPrice; // comment: test if need to pass price to ebay
-                    item.Variations.Variation.Add(simpleType);
+                    vtc.Add(simpleType);
+                    vsType.Variation = vtc;
+                    item.Variations = vsType;
                     reviseFixedPriceItemCall.Item = item;
                     reviseFixedPriceItemCall.Execute();
-                }
+                }C:\Project\MarketplaceSln\MarketplaceSln\EbayService\UpdateInventoryByReviseFixedPriceItem.cs
 
             }
             catch(Exception ex)
