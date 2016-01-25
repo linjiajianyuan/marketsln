@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PebbledonUtilityLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\PebbledonUtilityLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +56,12 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderDetailForm.Designer.cs">
+      <DependentUpon>OrderDetailForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrdersForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +72,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderDetailForm.resx">
+      <DependentUpon>OrderDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrdersForm.resx">
       <DependentUpon>OrdersForm.cs</DependentUpon>
