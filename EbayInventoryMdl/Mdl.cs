@@ -22,40 +22,48 @@ namespace EbayInventoryMdl
             foreach (DataRow sellerAccountDr in sellerAccountDt.Rows)
             {
                 string accountName = sellerAccountDr["AccountName"].ToString();
-                string token = sellerAccountDr["Token"].ToString();
-                List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
-                List<string> exceptSKUList = ConfigurationManager.AppSettings["exceptSKUList"].Split(',').ToList();
-                if (exceptList.Contains(accountName))
+                try
                 {
-                    continue;
-                }
-                else
-                {
-                    DataTable adjustInventoryDt = EbayService.GetMyEbaySelling.GetMySelling(accountName,token,exceptSKUList);
-                    foreach(DataRow adjustInventoryDr in adjustInventoryDt.Rows)
+                    string token = sellerAccountDr["Token"].ToString();
+                    List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                    List<string> exceptSKUList = ConfigurationManager.AppSettings["exceptSKUList"].Split(',').ToList();
+                    if (exceptList.Contains(accountName))
                     {
-                        string itemId = adjustInventoryDr["ItemID"].ToString();
-                        string sku = adjustInventoryDr["SKU"].ToString();
-                        string name = adjustInventoryDr["Name"].ToString();
-                        try
+                        continue;
+                    }
+                    else
+                    {
+                        DataTable adjustInventoryDt = EbayService.GetMyEbaySelling.GetMySelling(accountName, token, exceptSKUList);
+                        foreach (DataRow adjustInventoryDr in adjustInventoryDt.Rows)
                         {
-                            int qty = ConvertUtility.ToInt(adjustInventoryDr["qty"]);
-                            double startPrice = ConvertUtility.ToDouble(adjustInventoryDr["startPrice"]);
-                            int soldQty = ConvertUtility.ToInt(adjustInventoryDr["soldQty"]);
-                            int quantityAvailable = ConvertUtility.ToInt(adjustInventoryDr["quantityAvailable"]);
-                            int isVariation = ConvertUtility.ToInt(adjustInventoryDr["isVariation"]);
-                            EbayService.UpdateInventoryByReviseFixedPriceItem.UpdateInventory(accountName, token, itemId, qty, sku, isVariation, soldQty, startPrice);
+                            string itemId = adjustInventoryDr["ItemID"].ToString();
+                            string sku = adjustInventoryDr["SKU"].ToString();
+                            string name = adjustInventoryDr["Name"].ToString();
+                            try
+                            {
+                                int qty = ConvertUtility.ToInt(adjustInventoryDr["qty"]);
+                                double startPrice = ConvertUtility.ToDouble(adjustInventoryDr["startPrice"]);
+                                int soldQty = ConvertUtility.ToInt(adjustInventoryDr["soldQty"]);
+                                int quantityAvailable = ConvertUtility.ToInt(adjustInventoryDr["quantityAvailable"]);
+                                int isVariation = ConvertUtility.ToInt(adjustInventoryDr["isVariation"]);
+                                EbayService.UpdateInventoryByReviseFixedPriceItem.UpdateInventory(accountName, token, itemId, qty, sku, isVariation, soldQty, startPrice);
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                exceptionUtility.CatchMethod(ex, "UpdateInventoryByReviseFixedPriceItem ", accountName + ":" + itemId + "(" + sku + ")" + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                continue;
+                            }
                         }
-                        catch(Exception ex)
-                        {
-                            ExceptionUtility exceptionUtility = new ExceptionUtility();
-                            exceptionUtility.CatchMethod(ex, "UpdateInventoryByReviseFixedPriceItem ", accountName + ":" + itemId+"("+ sku+ ")" + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                            continue;
-                        }
-                       
-
                     }
                 }
+                catch (Exception ex)
+                {
+                    ExceptionUtility exceptionUtility = new ExceptionUtility();
+                    exceptionUtility.CatchMethod(ex, "Filter Account ", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                    continue;
+                }
+               
             }
         }
     }

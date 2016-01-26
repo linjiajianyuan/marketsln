@@ -26,7 +26,7 @@ namespace EbayService
             context.ApiCredential.eBayToken = token;
             context.SoapApiServerUrl = "https://api.ebay.com/wsapi";
             context.ApiLogManager = new ApiLogManager();
-            context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", true, true, true));
+            context.ApiLogManager.ApiLoggerList.Add(new FileLogger("log.txt", false, false, false));
             context.ApiLogManager.EnableLogging = true;
             context.Version = "861";
             context.Site = SiteCodeType.US;
