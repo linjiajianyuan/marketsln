@@ -77,6 +77,8 @@
             this.label23 = new System.Windows.Forms.Label();
             this._ShipCountry = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this._PaidAmountTxt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -174,7 +176,7 @@
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 490);
+            this.label11.Location = new System.Drawing.Point(12, 529);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(33, 13);
             this.label11.TabIndex = 10;
@@ -243,7 +245,7 @@
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 451);
+            this.label16.Location = new System.Drawing.Point(12, 490);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(72, 13);
             this.label16.TabIndex = 17;
@@ -310,7 +312,7 @@
             // 
             this._TrackingLinkLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._TrackingLinkLab.AutoSize = true;
-            this._TrackingLinkLab.Location = new System.Drawing.Point(90, 451);
+            this._TrackingLinkLab.Location = new System.Drawing.Point(90, 490);
             this._TrackingLinkLab.Name = "_TrackingLinkLab";
             this._TrackingLinkLab.Size = new System.Drawing.Size(73, 13);
             this._TrackingLinkLab.TabIndex = 26;
@@ -385,7 +387,7 @@
             // 
             this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(667, 558);
+            this.label18.Location = new System.Drawing.Point(668, 560);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(34, 13);
             this.label18.TabIndex = 35;
@@ -395,7 +397,7 @@
             // 
             this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(673, 501);
+            this.label19.Location = new System.Drawing.Point(674, 503);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(28, 13);
             this.label19.TabIndex = 36;
@@ -405,7 +407,7 @@
             // 
             this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(648, 451);
+            this.label20.Location = new System.Drawing.Point(649, 453);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(53, 13);
             this.label20.TabIndex = 37;
@@ -414,7 +416,7 @@
             // _NoteTxt
             // 
             this._NoteTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._NoteTxt.Location = new System.Drawing.Point(51, 490);
+            this._NoteTxt.Location = new System.Drawing.Point(51, 529);
             this._NoteTxt.Multiline = true;
             this._NoteTxt.Name = "_NoteTxt";
             this._NoteTxt.ReadOnly = true;
@@ -425,7 +427,7 @@
             // 
             this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(635, 476);
+            this.label21.Location = new System.Drawing.Point(636, 478);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(66, 13);
             this.label21.TabIndex = 39;
@@ -434,7 +436,7 @@
             // _SubTotalTxt
             // 
             this._SubTotalTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._SubTotalTxt.Location = new System.Drawing.Point(707, 448);
+            this._SubTotalTxt.Location = new System.Drawing.Point(708, 450);
             this._SubTotalTxt.Name = "_SubTotalTxt";
             this._SubTotalTxt.ReadOnly = true;
             this._SubTotalTxt.Size = new System.Drawing.Size(159, 20);
@@ -443,7 +445,7 @@
             // _ShippingFeeTxt
             // 
             this._ShippingFeeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._ShippingFeeTxt.Location = new System.Drawing.Point(707, 474);
+            this._ShippingFeeTxt.Location = new System.Drawing.Point(708, 476);
             this._ShippingFeeTxt.Name = "_ShippingFeeTxt";
             this._ShippingFeeTxt.ReadOnly = true;
             this._ShippingFeeTxt.Size = new System.Drawing.Size(159, 20);
@@ -452,7 +454,7 @@
             // _TaxTxt
             // 
             this._TaxTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._TaxTxt.Location = new System.Drawing.Point(707, 501);
+            this._TaxTxt.Location = new System.Drawing.Point(708, 503);
             this._TaxTxt.Name = "_TaxTxt";
             this._TaxTxt.ReadOnly = true;
             this._TaxTxt.Size = new System.Drawing.Size(173, 20);
@@ -461,7 +463,7 @@
             // _TotalTxt
             // 
             this._TotalTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._TotalTxt.Location = new System.Drawing.Point(707, 552);
+            this._TotalTxt.Location = new System.Drawing.Point(708, 554);
             this._TotalTxt.Name = "_TotalTxt";
             this._TotalTxt.ReadOnly = true;
             this._TotalTxt.Size = new System.Drawing.Size(173, 20);
@@ -471,7 +473,7 @@
             // 
             this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(647, 526);
+            this.label22.Location = new System.Drawing.Point(648, 528);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(54, 13);
             this.label22.TabIndex = 44;
@@ -480,7 +482,7 @@
             // _OtherFeeTxt
             // 
             this._OtherFeeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._OtherFeeTxt.Location = new System.Drawing.Point(707, 526);
+            this._OtherFeeTxt.Location = new System.Drawing.Point(708, 528);
             this._OtherFeeTxt.Name = "_OtherFeeTxt";
             this._OtherFeeTxt.ReadOnly = true;
             this._OtherFeeTxt.Size = new System.Drawing.Size(173, 20);
@@ -520,11 +522,32 @@
             this.label24.TabIndex = 48;
             this.label24.Text = "ShipCountry:";
             // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(635, 597);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(67, 13);
+            this.label25.TabIndex = 50;
+            this.label25.Text = "PaidAmount:";
+            // 
+            // _PaidAmountTxt
+            // 
+            this._PaidAmountTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._PaidAmountTxt.Location = new System.Drawing.Point(708, 594);
+            this._PaidAmountTxt.Name = "_PaidAmountTxt";
+            this._PaidAmountTxt.ReadOnly = true;
+            this._PaidAmountTxt.Size = new System.Drawing.Size(173, 20);
+            this._PaidAmountTxt.TabIndex = 51;
+            // 
             // OrderDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(908, 580);
+            this.ClientSize = new System.Drawing.Size(908, 619);
+            this.Controls.Add(this._PaidAmountTxt);
+            this.Controls.Add(this.label25);
             this.Controls.Add(this._ShipCountry);
             this.Controls.Add(this.label24);
             this.Controls.Add(this._ShipEmailTxt);
@@ -634,5 +657,7 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.TextBox _ShipCountry;
         private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox _PaidAmountTxt;
     }
 }
