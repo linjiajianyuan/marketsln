@@ -102,6 +102,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MarketplaceDb\MarketplaceDb.csproj">
+      <Project>{28d709f6-a0d6-4dff-a70b-06572f2e3e1f}</Project>
+      <Name>MarketplaceDb</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MarketplaceMdl\MarketplaceMdl.csproj">
       <Project>{610cc0d5-80e2-4b8d-a793-5c6f2ab836a2}</Project>
       <Name>MarketplaceMdl</Name>

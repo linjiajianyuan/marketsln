@@ -43,9 +43,41 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this._OrderLineDgv = new System.Windows.Forms.DataGridView();
             this._OrderNumTxt = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.label16 = new System.Windows.Forms.Label();
+            this._ChannelTxt = new System.Windows.Forms.TextBox();
+            this._AccountNameTxt = new System.Windows.Forms.TextBox();
+            this._BuyerUserIDTxt = new System.Windows.Forms.TextBox();
+            this._OrderDateTxt = new System.Windows.Forms.TextBox();
+            this._ShipNameTxt = new System.Windows.Forms.TextBox();
+            this._EnterDateTxt = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this._TrackingLinkLab = new System.Windows.Forms.LinkLabel();
+            this._Address1Txt = new System.Windows.Forms.TextBox();
+            this._Address2Txt = new System.Windows.Forms.TextBox();
+            this._ShipCityTxt = new System.Windows.Forms.TextBox();
+            this._ShipStateTxt = new System.Windows.Forms.TextBox();
+            this._ShipZipTxt = new System.Windows.Forms.TextBox();
+            this._ShipPhoneTxt = new System.Windows.Forms.TextBox();
+            this._ShippedDateTxt = new System.Windows.Forms.TextBox();
+            this._ShippingCarrierTxt = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this._NoteTxt = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this._SubTotalTxt = new System.Windows.Forms.TextBox();
+            this._ShippingFeeTxt = new System.Windows.Forms.TextBox();
+            this._TaxTxt = new System.Windows.Forms.TextBox();
+            this._TotalTxt = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this._OtherFeeTxt = new System.Windows.Forms.TextBox();
+            this._ShipEmailTxt = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this._ShipCountry = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -53,9 +85,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.Size = new System.Drawing.Size(56, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "OrderNum:";
+            this.label1.Text = "Order No.:";
             // 
             // label2
             // 
@@ -132,7 +164,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(395, 185);
+            this.label10.Location = new System.Drawing.Point(395, 224);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(62, 13);
             this.label10.TabIndex = 9;
@@ -140,8 +172,9 @@
             // 
             // label11
             // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 260);
+            this.label11.Location = new System.Drawing.Point(12, 490);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(33, 13);
             this.label11.TabIndex = 10;
@@ -150,7 +183,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(395, 220);
+            this.label12.Location = new System.Drawing.Point(12, 258);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(72, 13);
             this.label12.TabIndex = 11;
@@ -159,7 +192,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 220);
+            this.label13.Location = new System.Drawing.Point(12, 294);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(58, 13);
             this.label13.TabIndex = 12;
@@ -183,28 +216,349 @@
             this.label15.TabIndex = 14;
             this.label15.Text = "ShihpAddress2";
             // 
-            // dataGridView1
+            // _OrderLineDgv
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(15, 290);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(865, 254);
-            this.dataGridView1.TabIndex = 15;
+            this._OrderLineDgv.AllowUserToAddRows = false;
+            this._OrderLineDgv.AllowUserToDeleteRows = false;
+            this._OrderLineDgv.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._OrderLineDgv.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this._OrderLineDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this._OrderLineDgv.Location = new System.Drawing.Point(15, 317);
+            this._OrderLineDgv.Name = "_OrderLineDgv";
+            this._OrderLineDgv.ReadOnly = true;
+            this._OrderLineDgv.Size = new System.Drawing.Size(865, 111);
+            this._OrderLineDgv.TabIndex = 15;
             // 
             // _OrderNumTxt
             // 
             this._OrderNumTxt.Location = new System.Drawing.Point(76, 18);
             this._OrderNumTxt.Name = "_OrderNumTxt";
-            this._OrderNumTxt.Size = new System.Drawing.Size(235, 20);
+            this._OrderNumTxt.ReadOnly = true;
+            this._OrderNumTxt.Size = new System.Drawing.Size(313, 20);
             this._OrderNumTxt.TabIndex = 16;
+            // 
+            // label16
+            // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(12, 451);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(72, 13);
+            this.label16.TabIndex = 17;
+            this.label16.Text = "Tracking No.:";
+            // 
+            // _ChannelTxt
+            // 
+            this._ChannelTxt.Location = new System.Drawing.Point(76, 49);
+            this._ChannelTxt.Name = "_ChannelTxt";
+            this._ChannelTxt.ReadOnly = true;
+            this._ChannelTxt.Size = new System.Drawing.Size(313, 20);
+            this._ChannelTxt.TabIndex = 18;
+            // 
+            // _AccountNameTxt
+            // 
+            this._AccountNameTxt.Location = new System.Drawing.Point(96, 81);
+            this._AccountNameTxt.Name = "_AccountNameTxt";
+            this._AccountNameTxt.ReadOnly = true;
+            this._AccountNameTxt.Size = new System.Drawing.Size(293, 20);
+            this._AccountNameTxt.TabIndex = 19;
+            // 
+            // _BuyerUserIDTxt
+            // 
+            this._BuyerUserIDTxt.Location = new System.Drawing.Point(88, 111);
+            this._BuyerUserIDTxt.Name = "_BuyerUserIDTxt";
+            this._BuyerUserIDTxt.ReadOnly = true;
+            this._BuyerUserIDTxt.Size = new System.Drawing.Size(301, 20);
+            this._BuyerUserIDTxt.TabIndex = 20;
+            // 
+            // _OrderDateTxt
+            // 
+            this._OrderDateTxt.Location = new System.Drawing.Point(76, 147);
+            this._OrderDateTxt.Name = "_OrderDateTxt";
+            this._OrderDateTxt.ReadOnly = true;
+            this._OrderDateTxt.Size = new System.Drawing.Size(313, 20);
+            this._OrderDateTxt.TabIndex = 21;
+            // 
+            // _ShipNameTxt
+            // 
+            this._ShipNameTxt.Location = new System.Drawing.Point(76, 182);
+            this._ShipNameTxt.Name = "_ShipNameTxt";
+            this._ShipNameTxt.ReadOnly = true;
+            this._ShipNameTxt.Size = new System.Drawing.Size(313, 20);
+            this._ShipNameTxt.TabIndex = 22;
+            // 
+            // _EnterDateTxt
+            // 
+            this._EnterDateTxt.Location = new System.Drawing.Point(76, 291);
+            this._EnterDateTxt.Name = "_EnterDateTxt";
+            this._EnterDateTxt.ReadOnly = true;
+            this._EnterDateTxt.Size = new System.Drawing.Size(313, 20);
+            this._EnterDateTxt.TabIndex = 23;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(395, 262);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(81, 13);
+            this.label17.TabIndex = 25;
+            this.label17.Text = "ShippingCarrier:";
+            // 
+            // _TrackingLinkLab
+            // 
+            this._TrackingLinkLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._TrackingLinkLab.AutoSize = true;
+            this._TrackingLinkLab.Location = new System.Drawing.Point(90, 451);
+            this._TrackingLinkLab.Name = "_TrackingLinkLab";
+            this._TrackingLinkLab.Size = new System.Drawing.Size(73, 13);
+            this._TrackingLinkLab.TabIndex = 26;
+            this._TrackingLinkLab.TabStop = true;
+            this._TrackingLinkLab.Text = "___________";
+            // 
+            // _Address1Txt
+            // 
+            this._Address1Txt.Location = new System.Drawing.Point(479, 18);
+            this._Address1Txt.Name = "_Address1Txt";
+            this._Address1Txt.ReadOnly = true;
+            this._Address1Txt.Size = new System.Drawing.Size(367, 20);
+            this._Address1Txt.TabIndex = 27;
+            // 
+            // _Address2Txt
+            // 
+            this._Address2Txt.Location = new System.Drawing.Point(479, 49);
+            this._Address2Txt.Name = "_Address2Txt";
+            this._Address2Txt.ReadOnly = true;
+            this._Address2Txt.Size = new System.Drawing.Size(367, 20);
+            this._Address2Txt.TabIndex = 28;
+            // 
+            // _ShipCityTxt
+            // 
+            this._ShipCityTxt.Location = new System.Drawing.Point(449, 81);
+            this._ShipCityTxt.Name = "_ShipCityTxt";
+            this._ShipCityTxt.ReadOnly = true;
+            this._ShipCityTxt.Size = new System.Drawing.Size(397, 20);
+            this._ShipCityTxt.TabIndex = 29;
+            // 
+            // _ShipStateTxt
+            // 
+            this._ShipStateTxt.Location = new System.Drawing.Point(457, 111);
+            this._ShipStateTxt.Name = "_ShipStateTxt";
+            this._ShipStateTxt.ReadOnly = true;
+            this._ShipStateTxt.Size = new System.Drawing.Size(389, 20);
+            this._ShipStateTxt.TabIndex = 30;
+            // 
+            // _ShipZipTxt
+            // 
+            this._ShipZipTxt.Location = new System.Drawing.Point(448, 147);
+            this._ShipZipTxt.Name = "_ShipZipTxt";
+            this._ShipZipTxt.ReadOnly = true;
+            this._ShipZipTxt.Size = new System.Drawing.Size(398, 20);
+            this._ShipZipTxt.TabIndex = 31;
+            // 
+            // _ShipPhoneTxt
+            // 
+            this._ShipPhoneTxt.Location = new System.Drawing.Point(457, 221);
+            this._ShipPhoneTxt.Name = "_ShipPhoneTxt";
+            this._ShipPhoneTxt.ReadOnly = true;
+            this._ShipPhoneTxt.Size = new System.Drawing.Size(389, 20);
+            this._ShipPhoneTxt.TabIndex = 32;
+            // 
+            // _ShippedDateTxt
+            // 
+            this._ShippedDateTxt.Location = new System.Drawing.Point(84, 255);
+            this._ShippedDateTxt.Name = "_ShippedDateTxt";
+            this._ShippedDateTxt.ReadOnly = true;
+            this._ShippedDateTxt.Size = new System.Drawing.Size(305, 20);
+            this._ShippedDateTxt.TabIndex = 33;
+            // 
+            // _ShippingCarrierTxt
+            // 
+            this._ShippingCarrierTxt.Location = new System.Drawing.Point(479, 259);
+            this._ShippingCarrierTxt.Name = "_ShippingCarrierTxt";
+            this._ShippingCarrierTxt.ReadOnly = true;
+            this._ShippingCarrierTxt.Size = new System.Drawing.Size(367, 20);
+            this._ShippingCarrierTxt.TabIndex = 34;
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(667, 558);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(34, 13);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "Total:";
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(673, 501);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(28, 13);
+            this.label19.TabIndex = 36;
+            this.label19.Text = "Tax:";
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(648, 451);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(53, 13);
+            this.label20.TabIndex = 37;
+            this.label20.Text = "SubTotal:";
+            // 
+            // _NoteTxt
+            // 
+            this._NoteTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this._NoteTxt.Location = new System.Drawing.Point(51, 490);
+            this._NoteTxt.Multiline = true;
+            this._NoteTxt.Name = "_NoteTxt";
+            this._NoteTxt.ReadOnly = true;
+            this._NoteTxt.Size = new System.Drawing.Size(533, 78);
+            this._NoteTxt.TabIndex = 38;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(635, 476);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(66, 13);
+            this.label21.TabIndex = 39;
+            this.label21.Text = "ShippingFee";
+            // 
+            // _SubTotalTxt
+            // 
+            this._SubTotalTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._SubTotalTxt.Location = new System.Drawing.Point(707, 448);
+            this._SubTotalTxt.Name = "_SubTotalTxt";
+            this._SubTotalTxt.ReadOnly = true;
+            this._SubTotalTxt.Size = new System.Drawing.Size(159, 20);
+            this._SubTotalTxt.TabIndex = 40;
+            // 
+            // _ShippingFeeTxt
+            // 
+            this._ShippingFeeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._ShippingFeeTxt.Location = new System.Drawing.Point(707, 474);
+            this._ShippingFeeTxt.Name = "_ShippingFeeTxt";
+            this._ShippingFeeTxt.ReadOnly = true;
+            this._ShippingFeeTxt.Size = new System.Drawing.Size(159, 20);
+            this._ShippingFeeTxt.TabIndex = 41;
+            // 
+            // _TaxTxt
+            // 
+            this._TaxTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._TaxTxt.Location = new System.Drawing.Point(707, 501);
+            this._TaxTxt.Name = "_TaxTxt";
+            this._TaxTxt.ReadOnly = true;
+            this._TaxTxt.Size = new System.Drawing.Size(173, 20);
+            this._TaxTxt.TabIndex = 42;
+            // 
+            // _TotalTxt
+            // 
+            this._TotalTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._TotalTxt.Location = new System.Drawing.Point(707, 552);
+            this._TotalTxt.Name = "_TotalTxt";
+            this._TotalTxt.ReadOnly = true;
+            this._TotalTxt.Size = new System.Drawing.Size(173, 20);
+            this._TotalTxt.TabIndex = 43;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(647, 526);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(54, 13);
+            this.label22.TabIndex = 44;
+            this.label22.Text = "OtherFee:";
+            // 
+            // _OtherFeeTxt
+            // 
+            this._OtherFeeTxt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._OtherFeeTxt.Location = new System.Drawing.Point(707, 526);
+            this._OtherFeeTxt.Name = "_OtherFeeTxt";
+            this._OtherFeeTxt.ReadOnly = true;
+            this._OtherFeeTxt.Size = new System.Drawing.Size(173, 20);
+            this._OtherFeeTxt.TabIndex = 45;
+            // 
+            // _ShipEmailTxt
+            // 
+            this._ShipEmailTxt.Location = new System.Drawing.Point(76, 217);
+            this._ShipEmailTxt.Name = "_ShipEmailTxt";
+            this._ShipEmailTxt.ReadOnly = true;
+            this._ShipEmailTxt.Size = new System.Drawing.Size(313, 20);
+            this._ShipEmailTxt.TabIndex = 47;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(12, 220);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(56, 13);
+            this.label23.TabIndex = 46;
+            this.label23.Text = "ShipEmail:";
+            // 
+            // _ShipCountry
+            // 
+            this._ShipCountry.Location = new System.Drawing.Point(457, 185);
+            this._ShipCountry.Name = "_ShipCountry";
+            this._ShipCountry.ReadOnly = true;
+            this._ShipCountry.Size = new System.Drawing.Size(389, 20);
+            this._ShipCountry.TabIndex = 49;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(393, 188);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(67, 13);
+            this.label24.TabIndex = 48;
+            this.label24.Text = "ShipCountry:";
             // 
             // OrderDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 580);
+            this.Controls.Add(this._ShipCountry);
+            this.Controls.Add(this.label24);
+            this.Controls.Add(this._ShipEmailTxt);
+            this.Controls.Add(this.label23);
+            this.Controls.Add(this._OtherFeeTxt);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this._TotalTxt);
+            this.Controls.Add(this._TaxTxt);
+            this.Controls.Add(this._ShippingFeeTxt);
+            this.Controls.Add(this._SubTotalTxt);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this._NoteTxt);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this._ShippingCarrierTxt);
+            this.Controls.Add(this._ShippedDateTxt);
+            this.Controls.Add(this._ShipPhoneTxt);
+            this.Controls.Add(this._ShipZipTxt);
+            this.Controls.Add(this._ShipStateTxt);
+            this.Controls.Add(this._ShipCityTxt);
+            this.Controls.Add(this._Address2Txt);
+            this.Controls.Add(this._Address1Txt);
+            this.Controls.Add(this._TrackingLinkLab);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this._EnterDateTxt);
+            this.Controls.Add(this._ShipNameTxt);
+            this.Controls.Add(this._OrderDateTxt);
+            this.Controls.Add(this._BuyerUserIDTxt);
+            this.Controls.Add(this._AccountNameTxt);
+            this.Controls.Add(this._ChannelTxt);
+            this.Controls.Add(this.label16);
             this.Controls.Add(this._OrderNumTxt);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this._OrderLineDgv);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label14);
@@ -223,7 +577,7 @@
             this.Name = "OrderDetailForm";
             this.Text = "OrderDetailForm";
             this.Load += new System.EventHandler(this.OrderDetailForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,7 +600,39 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView _OrderLineDgv;
         private System.Windows.Forms.TextBox _OrderNumTxt;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox _ChannelTxt;
+        private System.Windows.Forms.TextBox _AccountNameTxt;
+        private System.Windows.Forms.TextBox _BuyerUserIDTxt;
+        private System.Windows.Forms.TextBox _OrderDateTxt;
+        private System.Windows.Forms.TextBox _ShipNameTxt;
+        private System.Windows.Forms.TextBox _EnterDateTxt;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.LinkLabel _TrackingLinkLab;
+        private System.Windows.Forms.TextBox _Address1Txt;
+        private System.Windows.Forms.TextBox _Address2Txt;
+        private System.Windows.Forms.TextBox _ShipCityTxt;
+        private System.Windows.Forms.TextBox _ShipStateTxt;
+        private System.Windows.Forms.TextBox _ShipZipTxt;
+        private System.Windows.Forms.TextBox _ShipPhoneTxt;
+        private System.Windows.Forms.TextBox _ShippedDateTxt;
+        private System.Windows.Forms.TextBox _ShippingCarrierTxt;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox _NoteTxt;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TextBox _SubTotalTxt;
+        private System.Windows.Forms.TextBox _ShippingFeeTxt;
+        private System.Windows.Forms.TextBox _TaxTxt;
+        private System.Windows.Forms.TextBox _TotalTxt;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox _OtherFeeTxt;
+        private System.Windows.Forms.TextBox _ShipEmailTxt;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox _ShipCountry;
+        private System.Windows.Forms.Label label24;
     }
 }
