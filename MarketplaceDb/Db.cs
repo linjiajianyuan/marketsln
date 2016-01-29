@@ -54,7 +54,7 @@ namespace MarketplaceDb
         public static DataTable GetOrderLineDtByOrderNum(string orderNum,string channel)
         {
             DataTable dt = new DataTable();
-            string sql = "select LineNum,ChannelItemNum,ItemNum, Quantity, ItemDesc,ShippingMethod,TrackingNum,TrackingNumUploadDate from OrderLine where Channel = '" + channel + "' and OrderNum = '" + orderNum + "'";
+            string sql = "select LineNum,ChannelItemNum,ItemNum, Quantity, ItemDesc,ShippingMethod,TrackingNum,TrackingNumUploadDate,TransactionPrice from OrderLine where Channel = '" + channel + "' and OrderNum = '" + orderNum + "'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
