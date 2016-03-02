@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Tracking" />
+  <xs:element name="GetLabel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q1:DhlLabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetLabelResult" nillable="true" type="q2:DhlLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReprint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q3:DhlReprintRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetReprintResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetReprintResult" nillable="true" type="q4:DhlLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseDomesticShippingDay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q5:CloseDomesticShippingDayRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseDomesticShippingDayResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="CloseDomesticShippingDayResult" nillable="true" type="q6:CloseDomesticShippingDayResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalLabel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q7:InternationalLabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalLabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetInternationalLabelResult" nillable="true" type="q8:InternationalLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalReprint">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q9:DhlReprintRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalReprintResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetInternationalReprintResult" nillable="true" type="q10:InternationalLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseInternationalShippingDay">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q11:DhlCloseInternationalShippingDayRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CloseInternationalShippingDayResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="CloseInternationalShippingDayResult" nillable="true" type="q12:DhlCloseInternationalShippingDayResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelInternationalLabel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q13:DhlCancelInternationalLabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelInternationalLabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="CancelInternationalLabelResult" nillable="true" type="q14:DhlCancelInternationalLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelDomesticLabel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q15:CancelDomesticLabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelDomesticLabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="CancelDomesticLabelResult" nillable="true" type="q16:CancelDomesticLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q17:DomesticRateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetRateResult" nillable="true" type="q18:DomesticRateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalRate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q19:InternationalRateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalRateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetInternationalRateResult" nillable="true" type="q20:InternationalRateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReprintDomesticBOL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q21:ReprintBOLRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReprintDomesticBOLResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="ReprintDomesticBOLResult" nillable="true" type="q22:ReprintBOLResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReprintInternationalBOL">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q23:ReprintBOLRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ReprintInternationalBOLResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="ReprintInternationalBOLResult" nillable="true" type="q24:ReprintBOLResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q25:DomesticRatesRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetRatesResult" nillable="true" type="q26:DomesticRatesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalRates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="request" nillable="true" type="q27:InternationalRatesRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetInternationalRatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="GetInternationalRatesResult" nillable="true" type="q28:InternationalRatesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1Label">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="request" nillable="true" type="q29:Express1LabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1LabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="GetExpress1LabelResult" nillable="true" type="q30:Express1LabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1Rates">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="request" nillable="true" type="q31:Express1RatesRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1RatesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="GetExpress1RatesResult" nillable="true" type="q32:Express1RatesResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1Rate">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="request" nillable="true" type="q33:Express1RateRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetExpress1RateResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="GetExpress1RateResult" nillable="true" type="q34:Express1RateResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelExpress1Label">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="request" nillable="true" type="q35:Express1CancelLabelRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CancelExpress1LabelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" minOccurs="0" name="CancelExpress1LabelResult" nillable="true" type="q36:Express1CancelLabelResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackingInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/Iss.Contracts.Tracking" minOccurs="0" name="request" nillable="true" type="q37:TrackingRequest" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTrackingInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Iss.Contracts.Tracking" minOccurs="0" name="GetTrackingInfoResult" nillable="true" type="q38:TrackingResponse" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

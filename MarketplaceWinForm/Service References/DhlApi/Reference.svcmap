@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3cd039b4-6a3b-4ff3-a646-5733d95f764a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://ifslabelservice.com/api/dhlapi.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DhlApi.xsd" MetadataType="Schema" ID="aecafdaa-30f2-4ba0-a863-8f3a4b8a3d8b" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd3" />
+    <MetadataFile FileName="DhlApi1.xsd" MetadataType="Schema" ID="e99e04b5-ac52-4038-88e5-46b64490628b" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd2" />
+    <MetadataFile FileName="DhlApi2.xsd" MetadataType="Schema" ID="52a0f4d7-d124-44d2-8bde-9cfb1d2074af" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd1" />
+    <MetadataFile FileName="DhlApi.wsdl" MetadataType="Wsdl" ID="7da16725-e4c4-4aee-b7b9-fccc1c065e0d" SourceId="1" SourceUrl="http://ifslabelservice.com/api/dhlapi.svc?wsdl" />
+    <MetadataFile FileName="DhlApi3.xsd" MetadataType="Schema" ID="99fe01e8-dd2c-4886-a4c7-175fde116c2d" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd6" />
+    <MetadataFile FileName="DhlApi4.xsd" MetadataType="Schema" ID="a76ee4ad-8f9b-4b44-8a69-cdf82a4375a4" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd5" />
+    <MetadataFile FileName="DhlApi5.xsd" MetadataType="Schema" ID="6d02036e-24d4-418d-a4a8-e081caa213b5" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd4" />
+    <MetadataFile FileName="DhlApi6.xsd" MetadataType="Schema" ID="07cc733a-b7ed-4998-bc1b-2958b3bc86ea" SourceId="1" SourceUrl="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

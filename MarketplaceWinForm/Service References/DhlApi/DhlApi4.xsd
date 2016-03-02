@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Express1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="Express1LabelRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AutomationRate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="BpodClientDunsNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CODAmount" type="xs:double" />
+      <xs:element minOccurs="0" name="ContentsExplanation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContentsType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CostCenter" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="Credentials" nillable="true" type="q1:Credentials" />
+      <xs:element minOccurs="0" name="CustomsCertify" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsCountry1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsCountry2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsCountry3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsCountry4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsCountry5" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsDescription1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsDescription2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsDescription3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsDescription4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsDescription5" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsFormImageFormat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsFormImageResolution" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsFormType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsInfo" nillable="true" type="tns:CustomsInfo" />
+      <xs:element minOccurs="0" name="CustomsQuantity1" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsQuantity2" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsQuantity3" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsQuantity4" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsQuantity5" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsSigner" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsValue1" type="xs:float" />
+      <xs:element minOccurs="0" name="CustomsValue2" type="xs:float" />
+      <xs:element minOccurs="0" name="CustomsValue3" type="xs:float" />
+      <xs:element minOccurs="0" name="CustomsValue4" type="xs:float" />
+      <xs:element minOccurs="0" name="CustomsValue5" type="xs:float" />
+      <xs:element minOccurs="0" name="CustomsWeight1" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsWeight2" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsWeight3" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsWeight4" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="CustomsWeight5" type="xs:unsignedInt" />
+      <xs:element minOccurs="0" name="DateAdvance" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EelPfc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EntryFacility" type="tns:EntryFacility" />
+      <xs:element minOccurs="0" name="FromCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromCompany" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromEMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromState" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromZIP4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageFormat" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImageResolution" type="tns:Express1ImageResolution" />
+      <xs:element minOccurs="0" name="ImageRotation" type="tns:Express1ImageRotation" />
+      <xs:element minOccurs="0" name="IncludePostage" type="xs:boolean" />
+      <xs:element minOccurs="0" name="InsuredValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IntegratedFormType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LabelSize" type="tns:Express1LabelSize" />
+      <xs:element minOccurs="0" name="Machinable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MailClass" type="tns:Express1MailClass" />
+      <xs:element minOccurs="0" name="MailpieceDimensions" nillable="true" type="tns:Dimensions" />
+      <xs:element minOccurs="0" name="MailpieceShape" type="tns:Express1MailPieceShape" />
+      <xs:element minOccurs="0" name="NoWeekendDelivery" type="xs:boolean" />
+      <xs:element minOccurs="0" name="NonDeliveryOption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="POZipCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartnerCustomerID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PartnerTransactionID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisteredMailValue" type="xs:double" />
+      <xs:element minOccurs="0" name="ReplyPostage" type="xs:boolean" />
+      <xs:element minOccurs="0" name="RequesterID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResponseOptions" nillable="true" type="tns:ResponseOptions" />
+      <xs:element minOccurs="0" name="ReturnAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnAddress4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RubberStamp1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RubberStamp2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RubberStamp3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceLevel" type="tns:ServiceLevel" />
+      <xs:element minOccurs="0" name="Services" nillable="true" type="tns:SpecialServices" />
+      <xs:element minOccurs="0" name="ShipDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShipTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShowReturnAddress" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SignatureWaiver" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SortType" type="tns:SortType" />
+      <xs:element minOccurs="0" name="Stealth" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SundayHolidayDelivery" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToAddress1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToAddress2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToAddress3" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToAddress4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCity" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCompany" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToDeliveryPoint" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToEMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToState" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToZIP4" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ValidateAddress" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Value" type="xs:float" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1LabelRequest" nillable="true" type="tns:Express1LabelRequest" />
+  <xs:complexType name="CustomsInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CertificateNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContentsExplanation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContentsType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomsItems" nillable="true" type="tns:ArrayOfCustomsItem" />
+      <xs:element minOccurs="0" name="EelPfc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ImportersCustomsReference" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InsuredNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InvoiceNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LicenseNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NonDeliveryOption" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestrictionComments" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestrictionType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendersCustomsReference" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomsInfo" nillable="true" type="tns:CustomsInfo" />
+  <xs:complexType name="ArrayOfCustomsItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomsItem" nillable="true" type="tns:CustomsItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomsItem" nillable="true" type="tns:ArrayOfCustomsItem" />
+  <xs:complexType name="CustomsItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountryOfOrigin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HSTariffNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomsItem" nillable="true" type="tns:CustomsItem" />
+  <xs:simpleType name="EntryFacility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Other" />
+      <xs:enumeration value="DBMC" />
+      <xs:enumeration value="DDU" />
+      <xs:enumeration value="DSCF" />
+      <xs:enumeration value="OBMC" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="EntryFacility" nillable="true" type="tns:EntryFacility" />
+  <xs:simpleType name="Express1ImageResolution">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DPI300" />
+      <xs:enumeration value="DPI203" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Express1ImageResolution" nillable="true" type="tns:Express1ImageResolution" />
+  <xs:simpleType name="Express1ImageRotation">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="Rotate90" />
+      <xs:enumeration value="Rotate180" />
+      <xs:enumeration value="Rotate270" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Express1ImageRotation" nillable="true" type="tns:Express1ImageRotation" />
+  <xs:simpleType name="Express1LabelSize">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Label4X6" />
+      <xs:enumeration value="Label4X5" />
+      <xs:enumeration value="Label4X4_5" />
+      <xs:enumeration value="DocTab" />
+      <xs:enumeration value="Label4X8" />
+      <xs:enumeration value="Label7X3" />
+      <xs:enumeration value="Label6X4" />
+      <xs:enumeration value="Dymo30384" />
+      <xs:enumeration value="EnvelopeSize10" />
+      <xs:enumeration value="Mailer7X5" />
+      <xs:enumeration value="Label7X4" />
+      <xs:enumeration value="Label8X3" />
+      <xs:enumeration value="Booklet" />
+      <xs:enumeration value="Label4X6C" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Express1LabelSize" nillable="true" type="tns:Express1LabelSize" />
+  <xs:simpleType name="Express1MailClass">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Express" />
+      <xs:enumeration value="Priority" />
+      <xs:enumeration value="ExpressMailInternational" />
+      <xs:enumeration value="PriorityMailInternational" />
+      <xs:enumeration value="First" />
+      <xs:enumeration value="PriorityExpress" />
+      <xs:enumeration value="FirstClassMailInternational" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Express1MailClass" nillable="true" type="tns:Express1MailClass" />
+  <xs:complexType name="Dimensions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Height" type="xs:double" />
+      <xs:element minOccurs="0" name="Length" type="xs:double" />
+      <xs:element minOccurs="0" name="Width" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Dimensions" nillable="true" type="tns:Dimensions" />
+  <xs:simpleType name="Express1MailPieceShape">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="Card" />
+      <xs:enumeration value="Letter" />
+      <xs:enumeration value="Flat" />
+      <xs:enumeration value="Parcel" />
+      <xs:enumeration value="LargeParcel" />
+      <xs:enumeration value="IrregularParcel" />
+      <xs:enumeration value="FlatRateEnvelope" />
+      <xs:enumeration value="FlatRatePaddedEnvelope" />
+      <xs:enumeration value="FlatRateGiftCardEnvelope" />
+      <xs:enumeration value="FlatRateWindowEnvelope" />
+      <xs:enumeration value="FlatRateCardobardEnvelope" />
+      <xs:enumeration value="SmallFlatRateEnvelope" />
+      <xs:enumeration value="SmallFlatRateBox" />
+      <xs:enumeration value="MediumFlatRateBox" />
+      <xs:enumeration value="LargeFlatRateBox" />
+      <xs:enumeration value="DVDFlatRateBox" />
+      <xs:enumeration value="LargeVideoFlatRateBox" />
+      <xs:enumeration value="RegionalRateBoxA" />
+      <xs:enumeration value="RegionalRateBoxB" />
+      <xs:enumeration value="RegionalRateBoxC" />
+      <xs:enumeration value="LargeFlatRateBoardGameBox" />
+      <xs:enumeration value="HalfTrayBox" />
+      <xs:enumeration value="FullTrayBox" />
+      <xs:enumeration value="EMMTrayBox" />
+      <xs:enumeration value="FlatTubTrayBox" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Express1MailPieceShape" nillable="true" type="tns:Express1MailPieceShape" />
+  <xs:complexType name="ResponseOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PostagePrice" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ResponseOptions" nillable="true" type="tns:ResponseOptions" />
+  <xs:simpleType name="ServiceLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="NextDay2ndDayPOToAddressee" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ServiceLevel" nillable="true" type="tns:ServiceLevel" />
+  <xs:complexType name="SpecialServices">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdultSignature" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="COD" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CertifiedMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliveryConfirmation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ElectronicReturnReceipt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InsuredMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisteredMail" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RestrictedDelivery" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReturnReceipt" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SignatureConfirmation" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SpecialServices" nillable="true" type="tns:SpecialServices" />
+  <xs:simpleType name="SortType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="BMC" />
+      <xs:enumeration value="FiveDigit" />
+      <xs:enumeration value="MixedBMC" />
+      <xs:enumeration value="Nonpresorted" />
+      <xs:enumeration value="Presorted" />
+      <xs:enumeration value="SCF" />
+      <xs:enumeration value="SinglePiece" />
+      <xs:enumeration value="ThreeDigit" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SortType" nillable="true" type="tns:SortType" />
+  <xs:complexType name="Express1LabelResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CustomsNumber" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element minOccurs="0" name="FinalPostage" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LabelImageFormat" nillable="true" type="xs:string" />
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="LabelImagesBase64" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="PostageBalance" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PostagePrice" nillable="true" type="tns:PostagePrice" />
+      <xs:element minOccurs="0" name="PostmarkDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ReferenceID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TransactionDateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TransactionID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1LabelResponse" nillable="true" type="tns:Express1LabelResponse" />
+  <xs:complexType name="PostagePrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Fees" nillable="true" type="tns:Fees" />
+      <xs:element minOccurs="0" name="Postage" nillable="true" type="tns:Postage" />
+      <xs:element minOccurs="0" name="PostageAmount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PostagePrice" nillable="true" type="tns:PostagePrice" />
+  <xs:complexType name="Fees">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdultSignature" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AdultSignatureRestrictedDelivery" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CertificateOfMailing" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CertifiedMail" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CollectOnDelivery" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DeliveryConfirmation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ElectronicReturnReceipt" type="xs:decimal" />
+      <xs:element minOccurs="0" name="InsuredMail" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LiveAnimalSurcharge" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RegisteredMail" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RestrictedDelivery" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReturnReceipt" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ReturnReceiptForMerchandise" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SignatureConfirmation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SpecialHandling" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalAmount" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Fees" nillable="true" type="tns:Fees" />
+  <xs:complexType name="Postage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IntraBMC" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MailService" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Pricing" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TotalAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Zone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Postage" nillable="true" type="tns:Postage" />
+  <xs:complexType name="Express1RatesRequest">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="Credentials" nillable="true" type="q4:Credentials" />
+      <xs:element minOccurs="0" name="Dimensions" nillable="true" type="tns:Dimensions" />
+      <xs:element minOccurs="0" name="FromPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsInternational" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="PeiceShape" type="tns:Express1MailPieceShape" />
+      <xs:element minOccurs="0" name="ToCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1RatesRequest" nillable="true" type="tns:Express1RatesRequest" />
+  <xs:complexType name="Express1RatesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q5:ArrayOfstring" />
+      <xs:element minOccurs="0" name="PostagePrice" nillable="true" type="tns:ArrayOfPostagePrice" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1RatesResponse" nillable="true" type="tns:Express1RatesResponse" />
+  <xs:complexType name="ArrayOfPostagePrice">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PostagePrice" nillable="true" type="tns:PostagePrice" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPostagePrice" nillable="true" type="tns:ArrayOfPostagePrice" />
+  <xs:complexType name="Express1RateRequest">
+    <xs:sequence>
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="Credentials" nillable="true" type="q6:Credentials" />
+      <xs:element minOccurs="0" name="Dimensions" nillable="true" type="tns:Dimensions" />
+      <xs:element minOccurs="0" name="FromPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MailClass" type="tns:Express1MailClass" />
+      <xs:element minOccurs="0" name="PeiceShape" type="tns:Express1MailPieceShape" />
+      <xs:element minOccurs="0" name="ToCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToCountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" type="xs:float" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1RateRequest" nillable="true" type="tns:Express1RateRequest" />
+  <xs:complexType name="Express1RateResponse">
+    <xs:sequence>
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q7:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Postage" nillable="true" type="tns:ArrayOfPostageRate" />
+      <xs:element minOccurs="0" name="Status" type="xs:int" />
+      <xs:element minOccurs="0" name="Zone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1RateResponse" nillable="true" type="tns:Express1RateResponse" />
+  <xs:complexType name="ArrayOfPostageRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PostageRate" nillable="true" type="tns:PostageRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPostageRate" nillable="true" type="tns:ArrayOfPostageRate" />
+  <xs:complexType name="PostageRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="MailService" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rate" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PostageRate" nillable="true" type="tns:PostageRate" />
+  <xs:complexType name="Express1CancelLabelRequest">
+    <xs:sequence>
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="Credentials" nillable="true" type="q8:Credentials" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1CancelLabelRequest" nillable="true" type="tns:Express1CancelLabelRequest" />
+  <xs:complexType name="Express1CancelLabelResponse">
+    <xs:sequence>
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q9:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Express1CancelLabelResponse" nillable="true" type="tns:Express1CancelLabelResponse" />
+</xs:schema>

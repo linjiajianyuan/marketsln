@@ -1,0 +1,1041 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="DhlLabelRequest">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="CustomsData" nillable="true" type="q1:CustomsData" />
+      <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="DocTabValues" nillable="true" type="q2:ArrayOfstring" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" name="FromAddress" nillable="true" type="q3:Address" />
+      <xs:element minOccurs="0" name="GetRate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LabelImageFormat" type="tns:ImageFormat" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="LabelSize" type="q4:LabelSize" />
+      <xs:element minOccurs="0" name="LabelType" type="tns:DomesticLabelType" />
+      <xs:element minOccurs="0" name="Machinable" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="tns:OrderNumberBarCode" />
+      <xs:element minOccurs="0" name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q5:PackageDetails" />
+      <xs:element minOccurs="0" name="PackageDimensions" nillable="true" type="tns:PackageDimensions" />
+      <xs:element minOccurs="0" name="Reference1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Reference2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RequestDeliveryConfirmation" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResidentialSpecified" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ReturnMerchandiseAuthorization" nillable="true" type="xs:string" />
+      <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" name="ShipToAddress" nillable="true" type="q6:Address" />
+      <xs:element minOccurs="0" name="UseImpb" type="xs:boolean" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element minOccurs="0" name="WeightKilos" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeightLbs" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlLabelRequest" nillable="true" type="tns:DhlLabelRequest" />
+  <xs:complexType name="ArrayOfCustomsItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomsItem" nillable="true" type="tns:CustomsItem" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomsItem" nillable="true" type="tns:ArrayOfCustomsItem" />
+  <xs:complexType name="CustomsItem">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountryOfOrigin" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HSCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemDescriptionInExportCountryLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ItemQuantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ItemValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ItemWeight" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomsItem" nillable="true" type="tns:CustomsItem" />
+  <xs:simpleType name="ImageFormat">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Jpeg">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Gif" />
+      <xs:enumeration value="Png">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Tiff">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ZPL">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EPL">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ImageFormat" nillable="true" type="tns:ImageFormat" />
+  <xs:simpleType name="DomesticLabelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="DhlSmBpmExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">76</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmBpmGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">77</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmMediaMailGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">80</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmParcelsExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">81</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmParcelsGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">82</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmParcelPlusGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">83</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmParcelPlusExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">36</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmFlatsExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">72</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmFlatsGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">73</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlFirstClassParcels">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">261</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlFirstClassFlats">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">262</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlPriorityMail">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">70</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmMarketingParcelGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">383</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlSmMarketingParcelExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">384</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_2_DAY">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">385</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_EXPRESS_SAVER">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">386</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_GROUND">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">387</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_GROUND_HOME_DELIVERY">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">388</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_PRIORITY_OVERNIGHT">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">389</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_STANDARD_OVERNIGHT">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">390</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_PARCEL_SELECT_LIGHTWEIGHT">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">391</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_PARCEL_SELECT">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">392</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_MEDIA_MAIL">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">393</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_BPM">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">394</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_SMARTPOST_RETURNS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">395</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlEasyReturnPlus">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">491</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlEasyReturnLight">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">531</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlEasyReturnGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">532</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodFirstClass">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">533</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">534</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodBPM">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">535</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodMediaMail">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">536</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodParcelSelect">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">537</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodMarketingParcel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">538</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="PmodPSLightweight">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">539</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracFirstClass">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">540</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">541</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracParcelSelectLightweight">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">542</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracParcelSelect">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">543</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracBPM">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">544</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="OnTracMediaMail">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">545</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BestRate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">546</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BestRoute">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">547</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XParcelGround">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">548</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XParcelExpedited">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">549</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DomesticLabelType" nillable="true" type="tns:DomesticLabelType" />
+  <xs:complexType name="OrderNumberBarCode">
+    <xs:sequence>
+      <xs:element name="BarcodeType" type="tns:DhlBarcodeType" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderNumberBarCode" nillable="true" type="tns:OrderNumberBarCode" />
+  <xs:simpleType name="DhlBarcodeType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Code128">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Code39">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="CodeI2Of5">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">9</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DhlBarcodeType" nillable="true" type="tns:DhlBarcodeType" />
+  <xs:complexType name="PackageDimensions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="HeightCM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="HeightInches" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LengthCM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LengthInches" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WidthCM" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WidthInches" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageDimensions" nillable="true" type="tns:PackageDimensions" />
+  <xs:complexType name="Credentials">
+    <xs:sequence>
+      <xs:element name="MailerId" type="xs:int" />
+      <xs:element name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProfileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Credentials" nillable="true" type="tns:Credentials" />
+  <xs:complexType name="DhlLabelResponse">
+    <xs:sequence>
+      <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q7:ArrayOfstring" />
+      <xs:element minOccurs="0" name="LabelImage" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="LabelImageFormat" type="tns:ImageFormat" />
+      <xs:element minOccurs="0" name="LabelType" type="tns:DomesticLabelType" />
+      <xs:element minOccurs="0" name="NativePrinterCommand" nillable="true" type="xs:string" />
+      <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageData" nillable="true" type="q8:ArrayOfPackageResponseData" />
+      <xs:element minOccurs="0" name="RateInfo" nillable="true" type="tns:DomesticRateResponse" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlLabelResponse" nillable="true" type="tns:DhlLabelResponse" />
+  <xs:complexType name="DomesticRateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q9:ArrayOfstring" />
+      <xs:element minOccurs="0" name="EstimatedZone" nillable="true" type="xs:string" />
+      <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageRates" nillable="true" type="q10:ArrayOfPackageRate" />
+      <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="Weight" nillable="true" type="q11:BilledWeight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomesticRateResponse" nillable="true" type="tns:DomesticRateResponse" />
+  <xs:complexType name="DhlReprintRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LabelImageFormat" type="tns:ImageFormat" />
+      <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="LabelSize" type="q12:LabelSize" />
+      <xs:element name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlReprintRequest" nillable="true" type="tns:DhlReprintRequest" />
+  <xs:complexType name="CloseDomesticShippingDayRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OptionalOverrides" nillable="true" type="tns:OptionalManifestOverrides" />
+      <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TrackingNumbers" nillable="true" type="q13:ArrayOfstring" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDomesticShippingDayRequest" nillable="true" type="tns:CloseDomesticShippingDayRequest" />
+  <xs:complexType name="OptionalManifestOverrides">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Overrides" nillable="true" type="tns:ArrayOfManifestOverride" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OptionalManifestOverrides" nillable="true" type="tns:OptionalManifestOverrides" />
+  <xs:complexType name="ArrayOfManifestOverride">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ManifestOverride" nillable="true" type="tns:ManifestOverride" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfManifestOverride" nillable="true" type="tns:ArrayOfManifestOverride" />
+  <xs:complexType name="ManifestOverride">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ManifestOverride" nillable="true" type="tns:ManifestOverride" />
+  <xs:complexType name="CloseDomesticShippingDayResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BOLDataPDF" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="BatchNumber" type="xs:long" />
+      <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q14:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Manifest" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ManifestedLabelCount" type="xs:int" />
+      <xs:element minOccurs="0" name="MultipleManifestDetails" nillable="true" type="tns:ArrayOfMultipleManifestDetail" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+      <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TrackingNumbers" nillable="true" type="q15:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CloseDomesticShippingDayResponse" nillable="true" type="tns:CloseDomesticShippingDayResponse" />
+  <xs:complexType name="ArrayOfMultipleManifestDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MultipleManifestDetail" nillable="true" type="tns:MultipleManifestDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMultipleManifestDetail" nillable="true" type="tns:ArrayOfMultipleManifestDetail" />
+  <xs:complexType name="MultipleManifestDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BOLDataPDF" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="BatchNumber" type="xs:long" />
+      <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q16:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Manifest" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+      <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TrackingNumbers" nillable="true" type="q17:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MultipleManifestDetail" nillable="true" type="tns:MultipleManifestDetail" />
+  <xs:complexType name="InternationalLabelRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalReferenceId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CanadaPostOptions" nillable="true" type="tns:CanadaPostOptions" />
+      <xs:element name="CustomsItems" nillable="true" type="tns:ArrayOfCustomsItem" />
+      <xs:element minOccurs="0" name="DeliverTimeWindow" nillable="true" type="xs:string" />
+      <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" name="FromAddress" nillable="true" type="q18:Address" />
+      <xs:element minOccurs="0" name="GetRate" type="xs:boolean" />
+      <xs:element name="Incoterms" type="tns:Incoterms" />
+      <xs:element minOccurs="0" name="InvoiceIncluded" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element name="IsoCurrencyCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LabelImageOptions" nillable="true" type="tns:ImageOptions" />
+      <xs:element minOccurs="0" name="LabelType" type="tns:LabelType" />
+      <xs:element minOccurs="0" name="OrderNumber" nillable="true" type="tns:OrderNumberBarCode" />
+      <xs:element name="OrderValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element name="PackageDescription" nillable="true" type="xs:string" />
+      <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q19:PackageDetails" />
+      <xs:element minOccurs="0" name="PackageHeight" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PackageLength" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PackageWidth" type="xs:decimal" />
+      <xs:element minOccurs="0" name="RecipientIDType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResidentialSpecified" type="xs:boolean" />
+      <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" name="ShipToAddress" nillable="true" type="q20:Address" />
+      <xs:element minOccurs="0" name="SubAccountNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaxIdNumber" nillable="true" type="xs:string" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element minOccurs="0" name="WeightLbs" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalLabelRequest" nillable="true" type="tns:InternationalLabelRequest" />
+  <xs:complexType name="CanadaPostOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalCoverage" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CardForPickup" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DeliverToDoor" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DeliverToParcelBox" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DeliverToPostOffice" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DoNotSafeDrop" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DoNotSafeDropDeliverToParcelBox" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LeaveAtDoor" type="xs:boolean" />
+      <xs:element minOccurs="0" name="MailingTube" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProofOfAgeRequired18" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProofOfAgeRequired19" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ProofOfIdentityAndSignatureRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SignatureRequired" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Unpackaged" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CanadaPostOptions" nillable="true" type="tns:CanadaPostOptions" />
+  <xs:simpleType name="Incoterms">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="DDU" />
+      <xs:enumeration value="DDP" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="Incoterms" nillable="true" type="tns:Incoterms" />
+  <xs:complexType name="ImageOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="LabelImageFormat" type="tns:ImageFormat" />
+      <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="LabelSize" type="q21:LabelSize" />
+      <xs:element minOccurs="0" name="Rotate180" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImageOptions" nillable="true" type="tns:ImageOptions" />
+  <xs:simpleType name="LabelType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Unknown" />
+      <xs:enumeration value="DhlGMParcelPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">54</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelStandard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">55</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMPacketPlus">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">29</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirect">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">60</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirectExpress">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">58</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMBusinessPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">34</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMBusinessStandard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">35</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMPacketPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">27</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMPacketStandard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">28</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMPacketIPA">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">56</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMPacketISAL">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">57</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoPriorityParcelDeliveryConfirmation">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoIPAService">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoCourierService">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoEconomyParcel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoPriorityParcelNonDeliveryConfirmation">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="XpoPriorityParcelCourier">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FirstMileXParcel">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1006</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirectInboundPriority">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">21</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirectInboundStandard">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">22</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirectInboundPriorityFormal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">23</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DhlGMParcelDirectInboundStandardFormal">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">24</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_GROUND">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">500</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_INTERNATIONAL_ECONOMY">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">501</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_INTERNATIONAL_FIRST">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">502</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FEDEX_INTERNATIONAL_PRIORITY">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">503</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExpressWorldwide">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">504</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExpressWorldwideDocument">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">505</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExpressNoonDocument">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">506</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="ExpressNoon">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">507</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BestRate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">508</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LabelType" nillable="true" type="tns:LabelType" />
+  <xs:complexType name="InternationalLabelResponse">
+    <xs:sequence>
+      <xs:element xmlns:q22="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q22:ArrayOfstring" />
+      <xs:element minOccurs="0" name="LabelImageFormat" type="tns:ImageFormat" />
+      <xs:element xmlns:q23="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="LabelImagesBase64" nillable="true" type="q23:ArrayOfstring" />
+      <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageData" nillable="true" type="q24:ArrayOfPackageResponseData" />
+      <xs:element minOccurs="0" name="RateInfo" nillable="true" type="tns:InternationalRateResponse" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalLabelResponse" nillable="true" type="tns:InternationalLabelResponse" />
+  <xs:complexType name="InternationalRateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element xmlns:q25="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q25:ArrayOfstring" />
+      <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageRates" nillable="true" type="q26:ArrayOfPackageRate" />
+      <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="Weight" nillable="true" type="q27:BilledWeight" />
+      <xs:element minOccurs="0" name="Zone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalRateResponse" nillable="true" type="tns:InternationalRateResponse" />
+  <xs:complexType name="DhlCloseInternationalShippingDayRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OptionalOverrides" nillable="true" type="tns:OptionalManifestOverrides" />
+      <xs:element xmlns:q28="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TrackingNumbers" nillable="true" type="q28:ArrayOfstring" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlCloseInternationalShippingDayRequest" nillable="true" type="tns:DhlCloseInternationalShippingDayRequest" />
+  <xs:complexType name="DhlCloseInternationalShippingDayResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BOLDataPDF" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="BatchNumber" type="xs:int" />
+      <xs:element xmlns:q29="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q29:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Manifest" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ManifestedLabelCount" type="xs:int" />
+      <xs:element minOccurs="0" name="MultipleManifestDetails" nillable="true" type="tns:ArrayOfMultipleManifestDetail" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+      <xs:element xmlns:q30="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="TrackingNumbers" nillable="true" type="q30:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlCloseInternationalShippingDayResponse" nillable="true" type="tns:DhlCloseInternationalShippingDayResponse" />
+  <xs:complexType name="DhlCancelInternationalLabelRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlCancelInternationalLabelRequest" nillable="true" type="tns:DhlCancelInternationalLabelRequest" />
+  <xs:complexType name="DhlCancelInternationalLabelResponse">
+    <xs:sequence>
+      <xs:element xmlns:q31="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q31:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DhlCancelInternationalLabelResponse" nillable="true" type="tns:DhlCancelInternationalLabelResponse" />
+  <xs:complexType name="CancelDomesticLabelRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element name="TrackingNumber" nillable="true" type="xs:string" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelDomesticLabelRequest" nillable="true" type="tns:CancelDomesticLabelRequest" />
+  <xs:complexType name="CancelDomesticLabelResponse">
+    <xs:sequence>
+      <xs:element xmlns:q32="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q32:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Successful" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CancelDomesticLabelResponse" nillable="true" type="tns:CancelDomesticLabelResponse" />
+  <xs:complexType name="DomesticRateRequest">
+    <xs:sequence>
+      <xs:element name="DestinationZipCode" nillable="true" type="xs:string" />
+      <xs:element name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q33:PackageDetails" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element name="ShippingService" type="tns:DomesticLabelType" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomesticRateRequest" nillable="true" type="tns:DomesticRateRequest" />
+  <xs:complexType name="InternationalRateRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DestinationCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q34:PackageDetails" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ShippingService" type="tns:LabelType" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalRateRequest" nillable="true" type="tns:InternationalRateRequest" />
+  <xs:complexType name="ReprintBOLRequest">
+    <xs:sequence>
+      <xs:element name="BatchId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsTest" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OptionalBOLType" type="tns:BOLType" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReprintBOLRequest" nillable="true" type="tns:ReprintBOLRequest" />
+  <xs:simpleType name="BOLType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Summary" />
+      <xs:enumeration value="Detailed" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BOLType" nillable="true" type="tns:BOLType" />
+  <xs:complexType name="ReprintBOLResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BOLDataPDF" nillable="true" type="xs:base64Binary" />
+      <xs:element xmlns:q35="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ErrorMessages" nillable="true" type="q35:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReprintBOLResponse" nillable="true" type="tns:ReprintBOLResponse" />
+  <xs:complexType name="DomesticRatesRequest">
+    <xs:sequence>
+      <xs:element name="DestinationZipCode" nillable="true" type="xs:string" />
+      <xs:element name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q36:PackageDetails" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomesticRatesRequest" nillable="true" type="tns:DomesticRatesRequest" />
+  <xs:complexType name="DomesticRatesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q37="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q37:ArrayOfstring" />
+      <xs:element minOccurs="0" name="EstimatedZone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Rates" nillable="true" type="tns:ArrayOfDomesticLabelRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomesticRatesResponse" nillable="true" type="tns:DomesticRatesResponse" />
+  <xs:complexType name="ArrayOfDomesticLabelRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DomesticLabelRate" nillable="true" type="tns:DomesticLabelRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDomesticLabelRate" nillable="true" type="tns:ArrayOfDomesticLabelRate" />
+  <xs:complexType name="DomesticLabelRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LabelType" type="tns:DomesticLabelType" />
+      <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="Weight" nillable="true" type="q38:BilledWeight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DomesticLabelRate" nillable="true" type="tns:DomesticLabelRate" />
+  <xs:complexType name="InternationalRatesRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DestinationCountry" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DestinationPostalCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OriginZipCode" nillable="true" type="xs:string" />
+      <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="PackageDetail" nillable="true" type="q39:PackageDetails" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element name="UserCredentials" nillable="true" type="tns:Credentials" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalRatesRequest" nillable="true" type="tns:InternationalRatesRequest" />
+  <xs:complexType name="InternationalRatesResponse">
+    <xs:sequence>
+      <xs:element xmlns:q40="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Errors" nillable="true" type="q40:ArrayOfstring" />
+      <xs:element minOccurs="0" name="Rates" nillable="true" type="tns:ArrayOfInternationalLabelRate" />
+      <xs:element minOccurs="0" name="Zone" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalRatesResponse" nillable="true" type="tns:InternationalRatesResponse" />
+  <xs:complexType name="ArrayOfInternationalLabelRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="InternationalLabelRate" nillable="true" type="tns:InternationalLabelRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInternationalLabelRate" nillable="true" type="tns:ArrayOfInternationalLabelRate" />
+  <xs:complexType name="InternationalLabelRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element minOccurs="0" name="LabelType" type="tns:LabelType" />
+      <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" minOccurs="0" name="Weight" nillable="true" type="q41:BilledWeight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="InternationalLabelRate" nillable="true" type="tns:InternationalLabelRate" />
+</xs:schema>
