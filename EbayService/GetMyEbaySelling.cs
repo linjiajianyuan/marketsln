@@ -87,23 +87,30 @@ namespace EbayService
                                         int quantityAvailable = itemType.QuantityAvailable;
                                         int quantity = itemType.Quantity;
                                         int soldQty = quantity - quantityAvailable;
-                                        double startPrice = itemType.BuyItNowPrice.Value;
-                                        if (quantityAvailable == 1)
+                                        if(itemType.BuyItNowPrice==null)
                                         {
-                                            DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
-                                            sellingInventoryDr["ItemID"] = productId;
-                                            sellingInventoryDr["SKU"] = itemType.SKU;
-                                            sellingInventoryDr["Name"] = productName;
-                                            sellingInventoryDr["Qty"] = quantity;
-                                            sellingInventoryDr["StartPrice"] = startPrice;
-                                            sellingInventoryDr["SoldQty"] = soldQty;
-                                            sellingInventoryDr["QuantityAvailable"] = quantityAvailable;
-                                            sellingInventoryDr["IsVariation"] = 0;
-                                            sellingInventoryDt.Rows.Add(sellingInventoryDr);
+                                            continue;
                                         }
                                         else
                                         {
-                                            continue;
+                                            double startPrice = itemType.BuyItNowPrice.Value;
+                                            if (quantityAvailable == 1)
+                                            {
+                                                DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
+                                                sellingInventoryDr["ItemID"] = productId;
+                                                sellingInventoryDr["SKU"] = itemType.SKU;
+                                                sellingInventoryDr["Name"] = productName;
+                                                sellingInventoryDr["Qty"] = quantity;
+                                                sellingInventoryDr["StartPrice"] = startPrice;
+                                                sellingInventoryDr["SoldQty"] = soldQty;
+                                                sellingInventoryDr["QuantityAvailable"] = quantityAvailable;
+                                                sellingInventoryDr["IsVariation"] = 0;
+                                                sellingInventoryDt.Rows.Add(sellingInventoryDr);
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
                                         }
                                     }
                                     else

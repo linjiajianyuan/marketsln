@@ -14,7 +14,6 @@ namespace MarketplaceDb
         public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate)
         {
             // 0 = not shipped; 1 = shipped; 2 = both
-            DataTable dt = new DataTable();
             string sql = "";
             if (shipped==0)
             {
@@ -39,7 +38,6 @@ namespace MarketplaceDb
         }
         public static DataRow GetOrderHeaderDrByOrderNum(string orderNum, string channel)
         {
-            DataTable dt = new DataTable();
             string sql = "select * from OrderHeader where Channel = '"+channel+"' and OrderNum = '"+ orderNum + "'";
             try
             {
@@ -50,7 +48,18 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-
+        public static DataRow GetItemInfoBySKU(string sku)
+        {
+            string sql = "select * from Item where SKU = '" + sku + "'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public static DataTable GetOrderLineDtByOrderNum(string orderNum,string channel)
         {
             DataTable dt = new DataTable();

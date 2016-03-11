@@ -1,4 +1,5 @@
 ﻿using MarketplaceWinForm.DhlApi;
+using PebbledonUtilityLib;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,49 +17,71 @@ namespace MarketplaceWinForm
             Dictionary<string, string> shippingLabelDic = new Dictionary<string, string>();
             DataRow orderHeaderInfoDr = MarketplaceDb.Db.GetOrderHeaderDrByOrderNum(orderNum, channel);
             DataTable orderRowInfoDt = MarketplaceDb.Db.GetOrderLineDtByOrderNum(orderNum, channel);
+            int weightOz = 0;
+            string reference = "";
+            List<string> infoList = new List<string>();
+            
+            foreach (DataRow dr in orderRowInfoDt.Rows)
+            {
+                string sku = dr["SKU"].ToString();
+                DataRow itemDr = MarketplaceDb.Db.GetItemInfoBySKU(sku);
+                int tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
+                weightOz = weightOz + tempWeightOz;
+                reference = reference + sku + "x" + ConvertUtility.ToInt(dr["Quantity"]) + "|";
+            }
+            infoList.Add(reference);
             DhlLabelRequest dhlLabelReq = new DhlLabelRequest();
             Credentials dhlCred = new Credentials();
             dhlCred.Username = ConfigurationManager.AppSettings["firstMileAccount"];
             dhlCred.Password = ConfigurationManager.AppSettings["firstMilePassword"];
             dhlLabelReq.UserCredentials = dhlCred;
-            dhlLabelReq.WeightOz = 4;
+            dhlLabelReq.WeightOz = weightOz;
             Address shipToAddress = new Address();
-            shipToAddress.Name = orderHeaderInfoDr[""].ToString();
-            shipToAddress.Address1 = orderHeaderInfoDr[""].ToString();
-            shipToAddress.City = orderHeaderInfoDr[""].ToString();
-            shipToAddress.Region = orderHeaderInfoDr[""].ToString();
-            shipToAddress.RegionCode = orderHeaderInfoDr[""].ToString();
-            shipToAddress.Country = orderHeaderInfoDr[""].ToString();
-            shipToAddress.CountryCode = orderHeaderInfoDr[""].ToString();
-            shipToAddress.PhoneNumber = orderHeaderInfoDr[""].ToString();
+            shipToAddress.Name = orderHeaderInfoDr["ShipName"].ToString();
+            shipToAddress.Address1 = orderHeaderInfoDr["ShipAddress1"].ToString();
+            shipToAddress.Address2 = orderHeaderInfoDr["ShipAddress2"].ToString();
+            shipToAddress.City = orderHeaderInfoDr["ShipCity"].ToString();
+            shipToAddress.Region = orderHeaderInfoDr["ShipState"].ToString();
+            shipToAddress.RegionCode = orderHeaderInfoDr["ShipZip"].ToString();
+            shipToAddress.Country = orderHeaderInfoDr["ShipCountry"].ToString();
+            shipToAddress.CountryCode = orderHeaderInfoDr["ShipCountry"].ToString();
+            shipToAddress.PhoneNumber = orderHeaderInfoDr["ShipPhone"].ToString();
             dhlLabelReq.ShipToAddress = shipToAddress;
             Address fromAddress = new Address();
-            fromAddress.Name = "Jack Ng";
-            fromAddress.Address1 = "15046 Nelson Ave #15";
-            fromAddress.City = "City Of Industry";
-            fromAddress.Region = "CA";
-            fromAddress.RegionCode = "90601";
-            fromAddress.Country = "US";
-            fromAddress.CountryCode = "US";
-            fromAddress.PhoneNumber = "6264008832";
+            fromAddress.Name = ConfigurationManager.AppSettings["FromName"];
+            fromAddress.Address1 = ConfigurationManager.AppSettings["FromAddress1"];
+            fromAddress.Address2 = ConfigurationManager.AppSettings["FromAddress2"];
+            fromAddress.City = ConfigurationManager.AppSettings["FromCity"];
+            fromAddress.Region = ConfigurationManager.AppSettings["FromRegion"];
+            fromAddress.RegionCode = ConfigurationManager.AppSettings["FromRegionCode"];
+            fromAddress.Country = ConfigurationManager.AppSettings["FromCountry"];
+            fromAddress.CountryCode = ConfigurationManager.AppSettings["FromCountryCode"];
+            fromAddress.PhoneNumber = ConfigurationManager.AppSettings["FromPhoneNum"];
             dhlLabelReq.FromAddress = fromAddress;
-            dhlLabelReq.IsTest = true;
-            dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsExpedited;
+            dhlLabelReq.IsTest = false;
+
+            if(weightOz>=16)
+            {
+                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusGround;
+            }
+            else
+            {
+                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsGround;
+            }
+            
             dhlLabelReq.LabelImageFormat = ImageFormat.ZPL;
             dhlLabelReq.LabelSize = LabelSize.Label4X6;
-            dhlLabelReq.Reference1 = orderHeaderInfoDr[""].ToString();// order number
-            List<string> infoList = new List<string>();
-            infoList.Add("test1test1test1");
+            dhlLabelReq.Reference1 = orderHeaderInfoDr["OrderNum"].ToString();// order number
             dhlLabelReq.DocTabValues = infoList.ToArray();
             dhlLabelReq.GetRate = true;
-            dhlLabelReq.OriginZipCode = "90601";
+            dhlLabelReq.OriginZipCode = ConfigurationManager.AppSettings["FromRegionCode"];
             DhlWebApiClient client = new DhlWebApiClient("DhlApi", "http://ifslabelservice.com/api/DhlApi.svc");
             DhlLabelResponse dhlLabelRes = client.GetLabel(dhlLabelReq);
-            byte[] labelImage = dhlLabelRes.LabelImage;
             string nativeCommand = dhlLabelRes.NativePrinterCommand;
-            string format = dhlLabelRes.LabelImageFormat.ToString();
             string trackingNum = dhlLabelRes.TrackingNumber;
             DomesticRateResponse drres = dhlLabelRes.RateInfo;
+            decimal cost = drres.Cost;
+            // to do save info to shipment datebase table
             shippingLabelDic.Add(trackingNum, nativeCommand);
             Console.WriteLine("OK");
             return shippingLabelDic;
