@@ -14,6 +14,13 @@ namespace MarketplaceWinForm
     {
         public static Dictionary<string, string> GetShippingLabel(string orderNum,string channel)
         {
+            string senderEmail = ConfigurationManager.AppSettings["senderEmail"];
+            string messageFromPassword = ConfigurationManager.AppSettings["messageFromPassword"];
+            string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
+            string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
+            int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
+
+
             Dictionary<string, string> shippingLabelDic = new Dictionary<string, string>();
             DataRow orderHeaderInfoDr = MarketplaceDb.Db.GetOrderHeaderDrByOrderNum(orderNum, channel);
             DataTable orderRowInfoDt = MarketplaceDb.Db.GetOrderLineDtByOrderNum(orderNum, channel);
@@ -59,15 +66,42 @@ namespace MarketplaceWinForm
             fromAddress.PhoneNumber = ConfigurationManager.AppSettings["FromPhoneNum"];
             dhlLabelReq.FromAddress = fromAddress;
             dhlLabelReq.IsTest = false;
+            string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
 
-            if(weightOz>=16)
+            if (shipCountry!= "US")
             {
-                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusGround;
+                List <string> dhlGmParcelDirectCountryList = ConfigurationManager.AppSettings["DHLGMParcelDirectCountryList"].Split(',').ToList();
+                if(weightOz>=704)
+                {
+                    ExceptionUtility exceptionUtility = new ExceptionUtility();
+                    exceptionUtility.ErrorWarningMethod("Internation Shipping Over Max Weight: " + orderNum, "Internation Shipping Over Max Weight: " + orderNum, senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                    shippingLabelDic.Add("EmailSent", "EmailSent");
+                    return shippingLabelDic;
+                }
+                else
+                {
+                    if (dhlGmParcelDirectCountryList.Contains(shipCountry))
+                    {
+                    //    dhlLabelReq.LabelType = DomesticLabelType.DHLGMParcelDirect;
+                    }
+                    else
+                    {
+                     //   dhlLabelReq.LabelType = DomesticLabelType.DHLGMParcelPriority;
+                    }
+                }
             }
             else
             {
-                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsGround;
+                if (weightOz >= 16)
+                {
+                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusGround;
+                }
+                else
+                {
+                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsGround;
+                }
             }
+            
             
             dhlLabelReq.LabelImageFormat = ImageFormat.ZPL;
             dhlLabelReq.LabelSize = LabelSize.Label4X6;
