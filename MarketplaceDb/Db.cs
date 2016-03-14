@@ -11,6 +11,12 @@ namespace MarketplaceDb
 {
     public class Db
     {
+        private static string senderEmail = ConfigurationManager.AppSettings["senderEmail"];
+        private static string messageFromPassword = ConfigurationManager.AppSettings["messageFromPassword"];
+        private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
+        private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
+        private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
+
         public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate)
         {
             // 0 = not shipped; 1 = shipped; 2 = both
@@ -71,6 +77,23 @@ namespace MarketplaceDb
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+        public static void SaveShipmentInfo(string orderNum, string channel,string trackingNum,string reference, decimal cost)
+        {
+            try
+            {
+                string sql = @"insert into  ShipmentInfo 
+                    (TrackingNum, OrderNum, Channel, Cost, Reference1) 
+             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "')";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": SaveShipmentInfo ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
     }

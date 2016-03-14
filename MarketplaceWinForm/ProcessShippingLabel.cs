@@ -115,8 +115,9 @@ namespace MarketplaceWinForm
             string trackingNum = dhlLabelRes.TrackingNumber;
             DomesticRateResponse drres = dhlLabelRes.RateInfo;
             decimal cost = drres.Cost;
-            // to do save info to shipment datebase table
+
             shippingLabelDic.Add(trackingNum, nativeCommand);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum,channel,trackingNum, reference, cost);
             Console.WriteLine("OK");
             return shippingLabelDic;
         }
