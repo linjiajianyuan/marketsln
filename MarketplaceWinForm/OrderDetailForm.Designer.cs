@@ -79,6 +79,7 @@
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this._PaidAmountTxt = new System.Windows.Forms.TextBox();
+            this._ReprintBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -541,11 +542,22 @@
             this._PaidAmountTxt.Size = new System.Drawing.Size(173, 20);
             this._PaidAmountTxt.TabIndex = 51;
             // 
+            // _ReprintBtn
+            // 
+            this._ReprintBtn.Location = new System.Drawing.Point(729, 285);
+            this._ReprintBtn.Name = "_ReprintBtn";
+            this._ReprintBtn.Size = new System.Drawing.Size(151, 23);
+            this._ReprintBtn.TabIndex = 52;
+            this._ReprintBtn.Text = "Reprint Shipping Label";
+            this._ReprintBtn.UseVisualStyleBackColor = true;
+            this._ReprintBtn.Click += new System.EventHandler(this._ReprintBtn_Click);
+            // 
             // OrderDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 619);
+            this.Controls.Add(this._ReprintBtn);
             this.Controls.Add(this._PaidAmountTxt);
             this.Controls.Add(this.label25);
             this.Controls.Add(this._ShipCountry);
@@ -659,5 +671,6 @@
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox _PaidAmountTxt;
+        private System.Windows.Forms.Button _ReprintBtn;
     }
 }

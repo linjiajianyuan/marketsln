@@ -117,7 +117,7 @@ namespace MarketplaceWinForm
             decimal cost = drres.Cost;
 
             shippingLabelDic.Add(trackingNum, nativeCommand);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum,channel,trackingNum, reference, cost);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum,channel,trackingNum, reference, cost, nativeCommand);
             Console.WriteLine("OK");
             return shippingLabelDic;
         }

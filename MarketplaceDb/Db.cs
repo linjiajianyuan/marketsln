@@ -79,14 +79,19 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-        public static void SaveShipmentInfo(string orderNum, string channel,string trackingNum,string reference, decimal cost)
+        public static void SaveShipmentInfo(string orderNum, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
             try
             {
-                string sql = @"insert into  ShipmentInfo 
-                    (TrackingNum, OrderNum, Channel, Cost, Reference1) 
-             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "')";
-                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+                List<string> sqlList = new List<string>();
+                string sqlInsert = @"insert into  ShipmentInfo 
+                    (TrackingNum, OrderNum, Channel, Cost, Reference1,LabelCommand) 
+             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
+
+                string sqlUpdate = "update OrderHeader set ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
+                sqlList.Add(sqlInsert);
+                sqlList.Add(sqlUpdate);
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
             }
 
             catch (Exception ex)
@@ -94,6 +99,18 @@ namespace MarketplaceDb
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
                 exceptionUtility.CatchMethod(ex, orderNum + ": SaveShipmentInfo ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                 throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+        public static DataRow GetShipmentInfoByOrder(string orderNum,string channel )
+        {
+            string sql = "select * from ShipmentInfo where OrderNum ='"+orderNum +"' and Channel='"+channel+"'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

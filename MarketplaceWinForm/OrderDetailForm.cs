@@ -21,6 +21,14 @@ namespace MarketplaceWinForm
             this._OrderNumTxt.Text = orderNum;
             this._ChannelTxt.Text = channel;
             DataRow orderHeaderDr = Db.GetOrderHeaderDrByOrderNum(orderNum,channel);
+            if(orderHeaderDr["ShippdedDate"].ToString()!= "1753-01-01 00:00:00.000")
+            {
+                this._ReprintBtn.Enabled = true;
+            }
+            else
+            {
+                this._ReprintBtn.Enabled = false;
+            }
             DataTable orderLineDt = new DataTable();
             if(orderHeaderDr==null || orderHeaderDr["OrderNum"]==null)
             {
@@ -70,6 +78,28 @@ namespace MarketplaceWinForm
         private void OrderDetailForm_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void _ReprintBtn_Click(object sender, EventArgs e)
+        {
+            DialogResult dialog = MessageBox.Show("Reprint existing label(Yes) or create new label(No)?");
+            if(dialog==DialogResult.Yes)
+            {
+                DataRow dr = Db.GetShipmentInfoByOrder(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                string nativeCommand = dr["LabelCommand"].ToString();
+                byte[] data = Convert.FromBase64String(nativeCommand);
+                string encodedLabelBinary = Encoding.UTF8.GetString(data);
+                RawPrinterHelper.SendStringToPrinter("Zebra ZP 500 (ZPL)", encodedLabelBinary);
+            }
+            else if(dialog==DialogResult.No)
+            {
+                Dictionary<string, string> labelDict = ProcessShippingLabel.GetShippingLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                string printResult = PrintShippingLabel.Print(labelDict);
+                if (printResult == "Error, Email Sent")
+                {
+                    MessageBox.Show("Error, Email Sent");
+                }
+            }
         }
     }
 }
