@@ -93,11 +93,23 @@ namespace MarketplaceWinForm
             }
             else if(dialog==DialogResult.No)
             {
-                Dictionary<string, string> labelDict = ProcessShippingLabel.GetShippingLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
-                string printResult = PrintShippingLabel.Print(labelDict);
-                if (printResult == "Error, Email Sent")
+                if (this._ShipCountry.Text != "US")
                 {
-                    MessageBox.Show("Error, Email Sent");
+                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                    string printResult = PrintShippingLabel.Print(labelDict);
+                    if (printResult == "Error, Email Sent")
+                    {
+                        MessageBox.Show("Error, Email Sent");
+                    }
+                }
+                else
+                {
+                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                    string printResult = PrintShippingLabel.Print(labelDict);
+                    if (printResult == "Error, Email Sent")
+                    {
+                        MessageBox.Show("Error, Email Sent");
+                    }
                 }
             }
         }
