@@ -17,21 +17,39 @@ namespace MarketplaceDb
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
 
-        public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate)
+        public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate, string ebayItemNum, string buyerUserId, string name, string email)
         {
             // 0 = not shipped; 1 = shipped; 2 = both
             string sql = "";
+            string addCondition = "";
+            if(ebayItemNum!="")
+            {
+                addCondition="l.ChannelItemNum='"+ebayItemNum+"' and ";
+            }
+            if(buyerUserId !="")
+            {
+                addCondition = addCondition + "h.BuyerUserID='" + buyerUserId + "' and ";
+            }
+            if (name != "")
+            {
+                addCondition = addCondition + "h.ShipName='" + name + "' and ";
+            }
+            if (email != "")
+            {
+                addCondition = addCondition + "h.ShipEmail='" + email + "' and ";
+            }
+
             if (shipped==0)
             {
-                sql = "select OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,EnterDate,Channel,TrackingNum from OrderHeader where ShippedDate='1753-01-01' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else if (shipped ==1)
             {
-                sql = "select OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,EnterDate,Channel,TrackingNum from OrderHeader where ShippedDate <>'1753-01-01' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else
             {
-                sql = "select OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,EnterDate,Channel,TrackingNum from OrderHeader where OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             try
             {
