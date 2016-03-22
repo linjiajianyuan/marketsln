@@ -29,5 +29,12 @@ namespace MarketplaceWinForm
             frm.MdiParent = this;
             frm.Show();
         }
+
+        private void addShipmentToOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddShipmentToOrderForm frm = new AddShipmentToOrderForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
     }
 }

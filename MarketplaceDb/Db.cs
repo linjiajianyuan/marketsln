@@ -17,6 +17,19 @@ namespace MarketplaceDb
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
 
+        public static DataTable GetAllChannel()
+        {
+            string sql = "select distinct Channel from OrderHeader";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate, string ebayItemNum, string buyerUserId, string name, string email)
         {
             // 0 = not shipped; 1 = shipped; 2 = both
@@ -97,6 +110,28 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
+
+        public static void SaveSingleShipmentInfo(string orderNum,string channel, string trackingNum, string carrier)
+        {
+            List<string> sqlList = new List<string>();
+            string sqlInsert = @"insert into  ShipmentInfo 
+                    (TrackingNum, OrderNum, Channel, Cost, Reference1,LabelCommand) 
+             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + 0 + "','" + carrier + "','" + "" + "')";
+            string sqlUpdate = "update OrderHeader set TrackingNum='" + trackingNum + "' ShippedDate ='" + System.DateTime.Now + "' where OrderNum ='" + orderNum + "' and Channel='" + channel + "'";
+            try
+            {
+                sqlList.Add(sqlInsert);
+                sqlList.Add(sqlUpdate);
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": SaveShipmentInfo ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+
         public static void SaveShipmentInfo(string orderNum, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
             try
@@ -111,7 +146,6 @@ namespace MarketplaceDb
                 sqlList.Add(sqlUpdate);
                 SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
             }
-
             catch (Exception ex)
             {
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
