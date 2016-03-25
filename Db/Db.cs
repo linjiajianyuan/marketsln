@@ -145,5 +145,31 @@ namespace Db
                 throw new Exception(ex.Message);
             }
         }
+        public static DataTable GetShippedOrderInfo(string accountName)
+        {
+            string sql = "select * from ShipmentInfo where IsUpload=0 and AccountName='" + accountName + "'";
+            try
+            {
+                return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void UpdateShipmentInfoDt(string orderNum, string accountName, DateTime uploadDate)
+        {
+            string sql = "update ShipmentInfo set isUpload = 1, UploadTime='"+uploadDate+"' where OrderNum='"+orderNum+"' and AccountName='"+accountName+"'";
+            try
+            {
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, accountName + ": UpdateShipmentInfoDt ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
     }
 }

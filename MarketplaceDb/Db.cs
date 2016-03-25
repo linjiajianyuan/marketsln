@@ -29,7 +29,18 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-
+        public static DataTable GetAllAccount()
+        {
+            string sql = "select distinct AccountName from OrderHeader";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public static DataTable GetOrderInfoDt(int shipped, string startDate, string endDate, string ebayItemNum, string buyerUserId, string name, string email)
         {
             // 0 = not shipped; 1 = shipped; 2 = both
@@ -111,12 +122,12 @@ namespace MarketplaceDb
             }
         }
 
-        public static void SaveSingleShipmentInfo(string orderNum,string channel, string trackingNum, string carrier)
+        public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
         {
             List<string> sqlList = new List<string>();
             string sqlInsert = @"insert into  ShipmentInfo 
-                    (TrackingNum, OrderNum, Channel, Cost, Reference1,LabelCommand) 
-             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + 0 + "','" + carrier + "','" + "" + "')";
+                    (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
+             values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + 0 + "','" + carrier + "','" + "" + "')";
             string sqlUpdate = "update OrderHeader set TrackingNum='" + trackingNum + "' ShippedDate ='" + System.DateTime.Now + "' where OrderNum ='" + orderNum + "' and Channel='" + channel + "'";
             try
             {
@@ -132,14 +143,14 @@ namespace MarketplaceDb
             }
         }
 
-        public static void SaveShipmentInfo(string orderNum, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
+        public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
             try
             {
                 List<string> sqlList = new List<string>();
                 string sqlInsert = @"insert into  ShipmentInfo 
-                    (TrackingNum, OrderNum, Channel, Cost, Reference1,LabelCommand) 
-             values ('" + trackingNum + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
+                    (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
+             values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
 
                 string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "' ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
                 sqlList.Add(sqlInsert);

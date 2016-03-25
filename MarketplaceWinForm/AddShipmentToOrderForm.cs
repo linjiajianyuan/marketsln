@@ -21,6 +21,11 @@ namespace MarketplaceWinForm
             {
                 this._ChannelComboBox.Items.Add(dr["Channel"].ToString());
             }
+            DataTable dt2 = Db.GetAllAccount();
+            foreach (DataRow dr in dt2.Rows)
+            {
+                this._AccountCombox.Items.Add(dr["AccountName"].ToString());
+            }
         }
 
         private void _SaveBtn_Click(object sender, EventArgs e)
@@ -28,8 +33,9 @@ namespace MarketplaceWinForm
             string orderNum = this._OrderNumTxt.Text.Trim();
             string trackingNum = this._TrackingNumTxt.Text.Trim();
             string carrier = this._CarrierTxt.Text.Trim();
-            string channel = this._CarrierTxt.Text.Trim();
-            if(orderNum==""||trackingNum==""||carrier=="")
+            string channel = this._ChannelComboBox.Text.Trim();
+            string account = this._AccountCombox.Text.Trim();
+            if (orderNum==""||trackingNum==""||carrier=="")
             {
                 MessageBox.Show("Please fill up all fields!");
             }
@@ -41,7 +47,7 @@ namespace MarketplaceWinForm
                     DialogResult dialog = MessageBox.Show("This order has been shipped already, Are you sure want to save tracking again?");
                     if (dialog == DialogResult.Yes)
                     {
-                        Db.SaveSingleShipmentInfo(orderNum, channel, trackingNum, carrier);
+                        Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier);
                     }
                     else if (dialog == DialogResult.No)
                     {
@@ -50,7 +56,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    Db.SaveSingleShipmentInfo(orderNum, channel, trackingNum, carrier);
+                    Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier);
                 }
             }
         }

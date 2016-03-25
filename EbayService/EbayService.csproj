@@ -54,6 +54,7 @@
     <Compile Include="GetOrder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UpdateInventoryByReviseFixedPriceItem.cs" />
+    <Compile Include="UploadTrackingNum.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Db\Db.csproj">

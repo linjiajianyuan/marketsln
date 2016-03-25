@@ -37,6 +37,8 @@
             this._SaveBtn = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this._ChannelComboBox = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this._AccountCombox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // label1
@@ -51,7 +53,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(37, 127);
+            this.label2.Location = new System.Drawing.Point(37, 151);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(92, 13);
             this.label2.TabIndex = 1;
@@ -60,7 +62,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(37, 187);
+            this.label3.Location = new System.Drawing.Point(37, 211);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 2;
@@ -75,21 +77,21 @@
             // 
             // _TrackingNumTxt
             // 
-            this._TrackingNumTxt.Location = new System.Drawing.Point(135, 127);
+            this._TrackingNumTxt.Location = new System.Drawing.Point(135, 151);
             this._TrackingNumTxt.Name = "_TrackingNumTxt";
             this._TrackingNumTxt.Size = new System.Drawing.Size(309, 20);
             this._TrackingNumTxt.TabIndex = 4;
             // 
             // _CarrierTxt
             // 
-            this._CarrierTxt.Location = new System.Drawing.Point(135, 187);
+            this._CarrierTxt.Location = new System.Drawing.Point(135, 211);
             this._CarrierTxt.Name = "_CarrierTxt";
             this._CarrierTxt.Size = new System.Drawing.Size(309, 20);
             this._CarrierTxt.TabIndex = 5;
             // 
             // _SaveBtn
             // 
-            this._SaveBtn.Location = new System.Drawing.Point(204, 224);
+            this._SaveBtn.Location = new System.Drawing.Point(188, 246);
             this._SaveBtn.Name = "_SaveBtn";
             this._SaveBtn.Size = new System.Drawing.Size(150, 23);
             this._SaveBtn.TabIndex = 6;
@@ -114,11 +116,30 @@
             this._ChannelComboBox.Size = new System.Drawing.Size(166, 21);
             this._ChannelComboBox.TabIndex = 8;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(37, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(47, 13);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "Account";
+            // 
+            // _AccountCombox
+            // 
+            this._AccountCombox.FormattingEnabled = true;
+            this._AccountCombox.Location = new System.Drawing.Point(135, 115);
+            this._AccountCombox.Name = "_AccountCombox";
+            this._AccountCombox.Size = new System.Drawing.Size(166, 21);
+            this._AccountCombox.TabIndex = 10;
+            // 
             // AddShipmentToOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 281);
+            this.Controls.Add(this._AccountCombox);
+            this.Controls.Add(this.label5);
             this.Controls.Add(this._ChannelComboBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this._SaveBtn);
@@ -146,5 +167,7 @@
         private System.Windows.Forms.Button _SaveBtn;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox _ChannelComboBox;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox _AccountCombox;
     }
 }

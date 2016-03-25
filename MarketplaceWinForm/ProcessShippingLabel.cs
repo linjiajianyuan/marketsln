@@ -42,6 +42,7 @@ namespace MarketplaceWinForm
             intelLabelReq.UserCredentials = dhlCred;
             intelLabelReq.WeightLbs = weightOz/16;
             Address shipToAddress = new Address();
+            string accountName = orderHeaderInfoDr["AccountName"].ToString();
             shipToAddress.Name = orderHeaderInfoDr["ShipName"].ToString();
             shipToAddress.Address1 = orderHeaderInfoDr["ShipAddress1"].ToString();
             shipToAddress.Address2 = orderHeaderInfoDr["ShipAddress2"].ToString();
@@ -105,7 +106,7 @@ namespace MarketplaceWinForm
             decimal cost = irres.Cost;
             string nativeCommand = labelImagesBase64.ToString();
             shippingLabelDic.Add(trackingNum, nativeCommand);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum, channel, trackingNum, reference, cost, nativeCommand);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum, channel, accountName, trackingNum, reference, cost, nativeCommand);
             return shippingLabelDic;
         }
 
@@ -134,6 +135,7 @@ namespace MarketplaceWinForm
             dhlLabelReq.UserCredentials = dhlCred;
             dhlLabelReq.WeightOz = weightOz;
             Address shipToAddress = new Address();
+            string accountName = orderHeaderInfoDr["AccountName"].ToString();
             shipToAddress.Name = orderHeaderInfoDr["ShipName"].ToString();
             shipToAddress.Address1 = orderHeaderInfoDr["ShipAddress1"].ToString();
             shipToAddress.Address2 = orderHeaderInfoDr["ShipAddress2"].ToString();
@@ -189,7 +191,7 @@ namespace MarketplaceWinForm
             DomesticRateResponse drres = dhlLabelRes.RateInfo;
             decimal cost = drres.Cost;
             shippingLabelDic.Add(trackingNum, nativeCommand);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum,channel,trackingNum, reference, cost, nativeCommand);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum, accountName,channel, trackingNum, reference, cost, nativeCommand);
             return shippingLabelDic;
         }
     }
