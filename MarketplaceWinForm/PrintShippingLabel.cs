@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,7 @@ namespace MarketplaceWinForm
                 string labelBinary = labelInfo.Value;
                 byte[] data = Convert.FromBase64String(labelBinary);
                 string encodedLabelBinary = Encoding.UTF8.GetString(data);
-                RawPrinterHelper.SendStringToPrinter("Zebra ZP 500 (ZPL)", encodedLabelBinary);
+                RawPrinterHelper.SendStringToPrinter(ConfigurationManager.AppSettings["printerName"], encodedLabelBinary);
             }
             return "Printed";
         }

@@ -174,7 +174,7 @@ namespace MarketplaceWinForm
             fromAddress.CountryCode = ConfigurationManager.AppSettings["FromCountryCode"];
             fromAddress.PhoneNumber = ConfigurationManager.AppSettings["FromPhoneNum"];
             dhlLabelReq.FromAddress = fromAddress;
-            dhlLabelReq.IsTest = false;
+            dhlLabelReq.IsTest = true;
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
 
             if (weightOz >= 16)
