@@ -28,9 +28,17 @@ namespace MarketplaceWinForm
             List<string> infoList = new List<string>();
             foreach (DataRow dr in orderRowInfoDt.Rows)
             {
-                string sku = dr["SKU"].ToString();
+                string sku = dr["ItemNum"].ToString();
                 DataRow itemDr = MarketplaceDb.Db.GetItemInfoBySKU(sku);
-                int tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
+                int tempWeightOz = 0;
+                if (itemDr == null)
+                {
+                    tempWeightOz = 4;
+                }
+                else
+                {
+                    tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
+                }
                 weightOz = weightOz + tempWeightOz;
                 reference = reference + sku + "x" + ConvertUtility.ToInt(dr["Quantity"]) + "|";
             }
@@ -121,9 +129,18 @@ namespace MarketplaceWinForm
             
             foreach (DataRow dr in orderRowInfoDt.Rows)
             {
-                string sku = dr["SKU"].ToString();
+                string sku = dr["ItemNum"].ToString();
                 DataRow itemDr = MarketplaceDb.Db.GetItemInfoBySKU(sku);
-                int tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
+                int tempWeightOz = 0;
+                if (itemDr==null)
+                {
+                    tempWeightOz = 4;
+                }
+                else
+                {
+                    tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
+                }
+                
                 weightOz = weightOz + tempWeightOz;
                 reference = reference + sku + "x" + ConvertUtility.ToInt(dr["Quantity"]) + "|";
             }

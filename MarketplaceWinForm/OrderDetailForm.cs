@@ -95,12 +95,13 @@ namespace MarketplaceWinForm
             {
                 if (this._ShipCountry.Text != "US")
                 {
-                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
-                    string printResult = PrintShippingLabel.Print(labelDict);
-                    if (printResult == "Error, Email Sent")
-                    {
-                        MessageBox.Show("Error, Email Sent");
-                    }
+                    MessageBox.Show("Not Support Yet!");
+                    //Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                    //string printResult = PrintShippingLabel.Print(labelDict);
+                    //if (printResult == "Error, Email Sent")
+                    //{
+                     //   MessageBox.Show("Error, Email Sent");
+                    //}
                 }
                 else
                 {

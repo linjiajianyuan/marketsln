@@ -65,15 +65,15 @@ namespace MarketplaceDb
 
             if (shipped==0)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else if (shipped ==1)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where" + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where" + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             try
             {
@@ -152,7 +152,7 @@ namespace MarketplaceDb
                     (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
              values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
 
-                string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "' ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
+                string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "', ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
                 sqlList.Add(sqlInsert);
                 sqlList.Add(sqlUpdate);
                 SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
