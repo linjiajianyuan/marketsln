@@ -44,7 +44,7 @@ namespace MarketplaceWinForm
                 DataRow orderHeaderDr = Db.GetOrderHeaderDrByOrderNum(orderNum, channel);
                 if (orderHeaderDr["ShippdedDate"].ToString() != "1753-01-01 00:00:00.000")
                 {
-                    DialogResult dialog = MessageBox.Show("This order has been shipped already, Are you sure want to save tracking again?");
+                    DialogResult dialog = MessageBox.Show("This order has been shipped already, Are you sure want to save tracking again?","Warning", MessageBoxButtons.YesNo);
                     if (dialog == DialogResult.Yes)
                     {
                         Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier);

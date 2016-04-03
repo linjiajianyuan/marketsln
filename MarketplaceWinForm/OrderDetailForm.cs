@@ -21,7 +21,7 @@ namespace MarketplaceWinForm
             this._OrderNumTxt.Text = orderNum;
             this._ChannelTxt.Text = channel;
             DataRow orderHeaderDr = Db.GetOrderHeaderDrByOrderNum(orderNum,channel);
-            if(orderHeaderDr["ShippdedDate"].ToString()!= "1753-01-01 00:00:00.000")
+            if(orderHeaderDr["ShippedDate"].ToString()!= "1753-01-01 00:00:00.000")
             {
                 this._ReprintBtn.Enabled = true;
             }
@@ -82,7 +82,7 @@ namespace MarketplaceWinForm
 
         private void _ReprintBtn_Click(object sender, EventArgs e)
         {
-            DialogResult dialog = MessageBox.Show("Reprint existing label(Yes) or create new label(No)?");
+            DialogResult dialog = MessageBox.Show("Reprint existing label(Yes) or create new label(No)?","Warning", MessageBoxButtons.YesNo);
             if(dialog==DialogResult.Yes)
             {
                 DataRow dr = Db.GetShipmentInfoByOrder(this._OrderNumTxt.Text, this._ChannelTxt.Text);
