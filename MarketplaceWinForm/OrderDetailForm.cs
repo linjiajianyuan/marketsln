@@ -114,5 +114,16 @@ namespace MarketplaceWinForm
                 }
             }
         }
+
+        private void _NoteTxtDoubleClick(object sender, EventArgs e)
+        {
+            _NoteTxt.ReadOnly = false;
+        }
+
+        private void _NoteTxtMouseLeave(object sender, EventArgs e)
+        {
+            _NoteTxt.ReadOnly = true;
+            Db.SaveNoteToDb(_OrderNumTxt.Text,_ChannelTxt.Text,_NoteTxt.Text);
+        }
     }
 }

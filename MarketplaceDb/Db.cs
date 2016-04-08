@@ -121,7 +121,20 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-
+        public static void SaveNoteToDb(string orderNum, string channel, string note)
+        {
+            string updateSql = "update OrderHeader set Note='"+note+"' where Channel='"+ channel + "' and OrderNum='"+ orderNum + "'" ;
+            try
+            {
+                SqlHelper.ExecuteNonQuery(updateSql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": SaveNoteToDb ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
         public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
         {
             List<string> sqlList = new List<string>();

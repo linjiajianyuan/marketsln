@@ -423,6 +423,8 @@
             this._NoteTxt.ReadOnly = true;
             this._NoteTxt.Size = new System.Drawing.Size(533, 78);
             this._NoteTxt.TabIndex = 38;
+            this._NoteTxt.DoubleClick += new System.EventHandler(this._NoteTxtDoubleClick);
+            this._NoteTxt.MouseLeave += new System.EventHandler(this._NoteTxtMouseLeave);
             // 
             // label21
             // 

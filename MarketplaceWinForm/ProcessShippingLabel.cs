@@ -142,9 +142,10 @@ namespace MarketplaceWinForm
                 }
                 
                 weightOz = weightOz + tempWeightOz;
-                reference = reference + sku + "x" + ConvertUtility.ToInt(dr["Quantity"]) + "|";
+                reference = reference + sku + "(" + ConvertUtility.ToInt(dr["Quantity"]) + ")|";
             }
             infoList.Add(reference);
+            
             DhlLabelRequest dhlLabelReq = new DhlLabelRequest();
             Credentials dhlCred = new Credentials();
             dhlCred.Username = ConfigurationManager.AppSettings["firstMileAccount"];
@@ -153,6 +154,8 @@ namespace MarketplaceWinForm
             dhlLabelReq.WeightOz = weightOz;
             Address shipToAddress = new Address();
             string accountName = orderHeaderInfoDr["AccountName"].ToString();
+            string buyerUserId = orderHeaderInfoDr["BuyerUserID"].ToString();
+            infoList.Add(buyerUserId+" - "+ accountName);
             shipToAddress.Name = orderHeaderInfoDr["ShipName"].ToString();
             shipToAddress.Address1 = orderHeaderInfoDr["ShipAddress1"].ToString();
             shipToAddress.Address2 = orderHeaderInfoDr["ShipAddress2"].ToString();
