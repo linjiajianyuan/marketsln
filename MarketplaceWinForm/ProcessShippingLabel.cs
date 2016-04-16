@@ -118,7 +118,7 @@ namespace MarketplaceWinForm
             return shippingLabelDic;
         }
 
-        public static Dictionary<string, string> GetDomesticLabel(string orderNum,string channel)
+        public static Dictionary<string, string> GetDomesticLabel(string orderNum,string channel,string weight,string message)
         {
             Dictionary<string, string> shippingLabelDic = new Dictionary<string, string>();
             DataRow orderHeaderInfoDr = MarketplaceDb.Db.GetOrderHeaderDrByOrderNum(orderNum, channel);
@@ -140,12 +140,13 @@ namespace MarketplaceWinForm
                 {
                     tempWeightOz = ConvertUtility.ToInt(itemDr["Weight"]);
                 }
-                
-                weightOz = weightOz + tempWeightOz;
+
+                //weightOz = weightOz + tempWeightOz;
+                weightOz = ConvertUtility.ToInt(weight);
                 reference = reference + sku + "(" + ConvertUtility.ToInt(dr["Quantity"]) + ")|";
             }
             infoList.Add(reference);
-            
+            infoList.Add(message);
             DhlLabelRequest dhlLabelReq = new DhlLabelRequest();
             Credentials dhlCred = new Credentials();
             dhlCred.Username = ConfigurationManager.AppSettings["firstMileAccount"];
