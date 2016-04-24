@@ -153,6 +153,7 @@ namespace MarketplaceWinForm
             dhlCred.Password = ConfigurationManager.AppSettings["firstMilePassword"];
             dhlLabelReq.UserCredentials = dhlCred;
             dhlLabelReq.WeightOz = weightOz;
+            
             Address shipToAddress = new Address();
             string accountName = orderHeaderInfoDr["AccountName"].ToString();
             string buyerUserId = orderHeaderInfoDr["BuyerUserID"].ToString();
@@ -178,7 +179,7 @@ namespace MarketplaceWinForm
             fromAddress.CountryCode = ConfigurationManager.AppSettings["FromCountryCode"];
             fromAddress.PhoneNumber = ConfigurationManager.AppSettings["FromPhoneNum"];
             dhlLabelReq.FromAddress = fromAddress;
-            dhlLabelReq.IsTest = true;
+            dhlLabelReq.IsTest = false;
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
 
             if (weightOz >= 16)

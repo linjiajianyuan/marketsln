@@ -156,6 +156,38 @@ namespace MarketplaceDb
             }
         }
 
+        public static DataRow CheckDuplicatedCustomizedWeight(string customizedInfo)
+        {
+            string sql = "select * from CustomizedWeight where ProductInfo='" + customizedInfo + "'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static void SaveCustomizedWeight(string customizedInfo, int customizedWeight)
+        {
+            try
+            {
+                string sql = "insert into CustomizedWeight (ProductInfo, CustomizedWeight) values ('" + customizedInfo + "','" + customizedWeight + "')";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, customizedInfo + ": SaveCustomizedWeight ", customizedWeight + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+
+
+        }
+
+
         public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
             try
@@ -177,6 +209,10 @@ namespace MarketplaceDb
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
+
+
+
+
         public static DataRow GetShipmentInfoByOrder(string orderNum,string channel )
         {
             string sql = "select * from ShipmentInfo where OrderNum ='"+orderNum +"' and Channel='"+channel+"'";
