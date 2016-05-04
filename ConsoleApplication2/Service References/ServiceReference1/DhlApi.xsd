@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://ifslabelservice.com/api/DhlApi.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="CustomsData">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" name="CustomsItems" nillable="true" type="q1:ArrayOfCustomsItem" />
+      <xs:element name="PackageDescription" nillable="true" type="xs:string" />
+      <xs:element name="PackageValue" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomsData" nillable="true" type="tns:CustomsData" />
+  <xs:complexType name="Address">
+    <xs:sequence>
+      <xs:element name="Address1" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address2" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Address3" nillable="true" type="xs:string" />
+      <xs:element name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhoneNumber" nillable="true" type="xs:string" />
+      <xs:element name="Region" nillable="true" type="xs:string" />
+      <xs:element name="RegionCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Residential" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ResidentialSpecified" type="xs:boolean" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Address" nillable="true" type="tns:Address" />
+  <xs:simpleType name="LabelSize">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Label4X6">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="Label4X8">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="LabelSize" nillable="true" type="tns:LabelSize" />
+  <xs:complexType name="PackageDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Packages" nillable="true" type="tns:ArrayOfPackageInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageDetails" nillable="true" type="tns:PackageDetails" />
+  <xs:complexType name="ArrayOfPackageInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PackageInfo" nillable="true" type="tns:PackageInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPackageInfo" nillable="true" type="tns:ArrayOfPackageInfo" />
+  <xs:complexType name="PackageInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PackageDescription" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="PackageDimensions" nillable="true" type="q2:PackageDimensions" />
+      <xs:element minOccurs="0" name="PackageValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SpecialServices" nillable="true" type="tns:SpecialServicesData" />
+      <xs:element minOccurs="0" name="WeightOz" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageInfo" nillable="true" type="tns:PackageInfo" />
+  <xs:complexType name="SpecialServicesData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DangerousGoodsData" nillable="true" type="tns:DangerousGoodsInfo" />
+      <xs:element minOccurs="0" name="DryIceData" nillable="true" type="tns:DryIceInfo" />
+      <xs:element minOccurs="0" name="PriorityAlertData" nillable="true" type="tns:PriorityAlertInfo" />
+      <xs:element minOccurs="0" name="SignatureOptionData" nillable="true" type="tns:SignatureOptionInfo" />
+      <xs:element minOccurs="0" name="SpecialServicesTypes" nillable="true" type="tns:ArrayOfSpecialServicesType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SpecialServicesData" nillable="true" type="tns:SpecialServicesData" />
+  <xs:complexType name="DangerousGoodsInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Accessability" type="tns:DangerousGoodsAccessibility" />
+      <xs:element minOccurs="0" name="AmountInPackage" type="xs:int" />
+      <xs:element minOccurs="0" name="AmountUnits" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CargoAircraftOnly" type="xs:boolean" />
+      <xs:element minOccurs="0" name="ContainerInfo" nillable="true" type="tns:ArrayOfDangerousGoodsContainerInfo" />
+      <xs:element minOccurs="0" name="DangerousGoodsSignatoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DangerousGoodsSignatoryPlace" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DangerousGoodsSignatoryTitle" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DangerousGoodsTypeCode" type="tns:DangerousGoodsCodes" />
+      <xs:element minOccurs="0" name="DescriptionOfGoods" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmergencyContactNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="InfectiousSubstanceResponsibleContact" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OfferorNameOrPhone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegulationType" type="tns:DangerousGoodsRegulationType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DangerousGoodsInfo" nillable="true" type="tns:DangerousGoodsInfo" />
+  <xs:simpleType name="DangerousGoodsAccessibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UNKNOWN" />
+      <xs:enumeration value="ACCESSIBLE" />
+      <xs:enumeration value="INACCESSIBLE" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DangerousGoodsAccessibility" nillable="true" type="tns:DangerousGoodsAccessibility" />
+  <xs:complexType name="ArrayOfDangerousGoodsContainerInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DangerousGoodsContainerInfo" nillable="true" type="tns:DangerousGoodsContainerInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDangerousGoodsContainerInfo" nillable="true" type="tns:ArrayOfDangerousGoodsContainerInfo" />
+  <xs:complexType name="DangerousGoodsContainerInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ContainerType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HazardousCommoditiesDetails" nillable="true" type="tns:ArrayOfHazardousCommoditiesDetail" />
+      <xs:element minOccurs="0" name="NumberOfContainers" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DangerousGoodsContainerInfo" nillable="true" type="tns:DangerousGoodsContainerInfo" />
+  <xs:complexType name="ArrayOfHazardousCommoditiesDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HazardousCommoditiesDetail" nillable="true" type="tns:HazardousCommoditiesDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHazardousCommoditiesDetail" nillable="true" type="tns:ArrayOfHazardousCommoditiesDetail" />
+  <xs:complexType name="HazardousCommoditiesDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Authorization" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DangerousGoodsDescriptionId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HazardClass" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LabelText" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PackingGroup" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PackingInstructions" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Percentage" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ProperShippingName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuantityAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="QuantityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="QuantityUnit" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportableQuantity" type="xs:boolean" />
+      <xs:element minOccurs="0" name="SequenceNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SubsidiaryClasses" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TechnicalName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="HazardousCommoditiesDetail" nillable="true" type="tns:HazardousCommoditiesDetail" />
+  <xs:simpleType name="DangerousGoodsCodes">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UNKNOWN" />
+      <xs:enumeration value="LithiumMetalInEquipment" />
+      <xs:enumeration value="LithiumMetalPackedWithEquipment" />
+      <xs:enumeration value="LithiumMetalStandAlone" />
+      <xs:enumeration value="LithiumIonInEquipment" />
+      <xs:enumeration value="LithiumIonPackedWithEquipment" />
+      <xs:enumeration value="LithiumIonStandAlone" />
+      <xs:enumeration value="LithiumGroundOnly" />
+      <xs:enumeration value="ORMD" />
+      <xs:enumeration value="SmallQuantityProvision" />
+      <xs:enumeration value="HAZARDOUS_MATERIALS" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DangerousGoodsCodes" nillable="true" type="tns:DangerousGoodsCodes" />
+  <xs:simpleType name="DangerousGoodsRegulationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UNKNOWN" />
+      <xs:enumeration value="ADR" />
+      <xs:enumeration value="DOT" />
+      <xs:enumeration value="IATA" />
+      <xs:enumeration value="ORMD" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DangerousGoodsRegulationType" nillable="true" type="tns:DangerousGoodsRegulationType" />
+  <xs:complexType name="DryIceInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WeightLbs" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DryIceInfo" nillable="true" type="tns:DryIceInfo" />
+  <xs:complexType name="PriorityAlertInfo">
+    <xs:sequence>
+      <xs:element name="AlertType" nillable="true" type="tns:ArrayOfPriorityAlertType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PriorityAlertInfo" nillable="true" type="tns:PriorityAlertInfo" />
+  <xs:complexType name="ArrayOfPriorityAlertType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PriorityAlertType" type="tns:PriorityAlertType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPriorityAlertType" nillable="true" type="tns:ArrayOfPriorityAlertType" />
+  <xs:simpleType name="PriorityAlertType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PRIORITY_ALERT_PLUS" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="PriorityAlertType" nillable="true" type="tns:PriorityAlertType" />
+  <xs:complexType name="SignatureOptionInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="SignatureType" type="tns:SignatureType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SignatureOptionInfo" nillable="true" type="tns:SignatureOptionInfo" />
+  <xs:simpleType name="SignatureType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ADULT" />
+      <xs:enumeration value="DIRECT" />
+      <xs:enumeration value="INDIRECT" />
+      <xs:enumeration value="NO_SIGNATURE_REQUIRED" />
+      <xs:enumeration value="SERVICE_DEFAULT" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SignatureType" nillable="true" type="tns:SignatureType" />
+  <xs:complexType name="ArrayOfSpecialServicesType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SpecialServicesType" type="tns:SpecialServicesType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSpecialServicesType" nillable="true" type="tns:ArrayOfSpecialServicesType" />
+  <xs:simpleType name="SpecialServicesType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NONE" />
+      <xs:enumeration value="ALCOHOL" />
+      <xs:enumeration value="DANGEROUS_GOODS" />
+      <xs:enumeration value="DRY_ICE" />
+      <xs:enumeration value="NON_STANDARD_CONTAINER" />
+      <xs:enumeration value="PRIORITY_ALERT" />
+      <xs:enumeration value="SIGNATURE_OPTION" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SpecialServicesType" nillable="true" type="tns:SpecialServicesType" />
+  <xs:complexType name="ArrayOfPackageResponseData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PackageResponseData" nillable="true" type="tns:PackageResponseData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPackageResponseData" nillable="true" type="tns:ArrayOfPackageResponseData" />
+  <xs:complexType name="PackageResponseData">
+    <xs:sequence>
+      <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ExtraDocumentsBase64" nillable="true" type="q3:ArrayOfstring" />
+      <xs:element minOccurs="0" name="LabelImageBase64" nillable="true" type="xs:string" />
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Iss.Contracts.Dhl" minOccurs="0" name="LabelImageFormat" type="q4:ImageFormat" />
+      <xs:element minOccurs="0" name="RateInfo" nillable="true" type="tns:PackageRate" />
+      <xs:element minOccurs="0" name="TrackingNumber" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageResponseData" nillable="true" type="tns:PackageResponseData" />
+  <xs:complexType name="PackageRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cost" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Weight" nillable="true" type="tns:BilledWeight" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PackageRate" nillable="true" type="tns:PackageRate" />
+  <xs:complexType name="BilledWeight">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="WeightOz" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeightType" type="tns:BilledWeightType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BilledWeight" nillable="true" type="tns:BilledWeight" />
+  <xs:simpleType name="BilledWeightType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Actual" />
+      <xs:enumeration value="Dimensional" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BilledWeightType" nillable="true" type="tns:BilledWeightType" />
+  <xs:complexType name="ArrayOfPackageRate">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PackageRate" nillable="true" type="tns:PackageRate" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPackageRate" nillable="true" type="tns:ArrayOfPackageRate" />
+</xs:schema>

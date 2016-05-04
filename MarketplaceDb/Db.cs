@@ -16,7 +16,7 @@ namespace MarketplaceDb
         private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
-
+        
         public static DataTable GetAllChannel()
         {
             string sql = "select distinct Channel from OrderHeader";
