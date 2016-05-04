@@ -1,4 +1,5 @@
 ﻿using MarketplaceDb;
+using Microsoft.VisualBasic;
 using PebbledonUtilityLib;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace MarketplaceWinForm
             this._OrderNumTxt.Text = orderNum;
             this._ChannelTxt.Text = channel;
             DataRow orderHeaderDr = Db.GetOrderHeaderDrByOrderNum(orderNum,channel);
-            if(orderHeaderDr["ShippdedDate"].ToString()!= "1753-01-01 00:00:00.000")
+            if(orderHeaderDr["ShippedDate"].ToString()!= "1753-01-01 00:00:00.000")
             {
                 this._ReprintBtn.Enabled = true;
             }
@@ -82,7 +83,7 @@ namespace MarketplaceWinForm
 
         private void _ReprintBtn_Click(object sender, EventArgs e)
         {
-            DialogResult dialog = MessageBox.Show("Reprint existing label(Yes) or create new label(No)?");
+            DialogResult dialog = MessageBox.Show("Reprint existing label(Yes) or create new label(No)?","Warning", MessageBoxButtons.YesNo);
             if(dialog==DialogResult.Yes)
             {
                 DataRow dr = Db.GetShipmentInfoByOrder(this._OrderNumTxt.Text, this._ChannelTxt.Text);
@@ -95,16 +96,19 @@ namespace MarketplaceWinForm
             {
                 if (this._ShipCountry.Text != "US")
                 {
-                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
-                    string printResult = PrintShippingLabel.Print(labelDict);
-                    if (printResult == "Error, Email Sent")
-                    {
-                        MessageBox.Show("Error, Email Sent");
-                    }
+                    MessageBox.Show("Not Support Yet!");
+                    //Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+                    //string printResult = PrintShippingLabel.Print(labelDict);
+                    //if (printResult == "Error, Email Sent")
+                    //{
+                     //   MessageBox.Show("Error, Email Sent");
+                    //}
                 }
                 else
                 {
-                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text);
+
+                    string customizedWeight = (Interaction.InputBox("Input Weight", this._OrderNumTxt.Text));
+                    Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text,customizedWeight,"");
                     string printResult = PrintShippingLabel.Print(labelDict);
                     if (printResult == "Error, Email Sent")
                     {
@@ -112,6 +116,17 @@ namespace MarketplaceWinForm
                     }
                 }
             }
+        }
+
+        private void _NoteTxtDoubleClick(object sender, EventArgs e)
+        {
+            _NoteTxt.ReadOnly = false;
+        }
+
+        private void _NoteTxtMouseLeave(object sender, EventArgs e)
+        {
+            _NoteTxt.ReadOnly = true;
+            Db.SaveNoteToDb(_OrderNumTxt.Text,_ChannelTxt.Text,_NoteTxt.Text);
         }
     }
 }

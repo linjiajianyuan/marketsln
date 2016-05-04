@@ -65,15 +65,15 @@ namespace MarketplaceDb
 
             if (shipped==0)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else if (shipped ==1)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where" + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h left join OrderLine l on h.OrderNum=l.OrderNum and h.Channel= l.Channel where" + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where" + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             try
             {
@@ -121,7 +121,20 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-
+        public static void SaveNoteToDb(string orderNum, string channel, string note)
+        {
+            string updateSql = "update OrderHeader set Note='"+note+"' where Channel='"+ channel + "' and OrderNum='"+ orderNum + "'" ;
+            try
+            {
+                SqlHelper.ExecuteNonQuery(updateSql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": SaveNoteToDb ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
         public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
         {
             List<string> sqlList = new List<string>();
@@ -143,6 +156,38 @@ namespace MarketplaceDb
             }
         }
 
+        public static DataRow CheckDuplicatedCustomizedWeight(string customizedInfo)
+        {
+            string sql = "select * from CustomizedWeight where ProductInfo='" + customizedInfo + "'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+
+        public static void SaveCustomizedWeight(string customizedInfo, int customizedWeight)
+        {
+            try
+            {
+                string sql = "insert into CustomizedWeight (ProductInfo, CustomizedWeight) values ('" + customizedInfo + "','" + customizedWeight + "')";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, customizedInfo + ": SaveCustomizedWeight ", customizedWeight + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+
+
+        }
+
+
         public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
             try
@@ -152,7 +197,7 @@ namespace MarketplaceDb
                     (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
              values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
 
-                string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "' ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
+                string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "', ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
                 sqlList.Add(sqlInsert);
                 sqlList.Add(sqlUpdate);
                 SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
@@ -164,6 +209,10 @@ namespace MarketplaceDb
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
+
+
+
+
         public static DataRow GetShipmentInfoByOrder(string orderNum,string channel )
         {
             string sql = "select * from ShipmentInfo where OrderNum ='"+orderNum +"' and Channel='"+channel+"'";
