@@ -169,7 +169,6 @@ namespace MarketplaceDb
             }
         }
 
-
         public static void SaveCustomizedWeight(string customizedInfo, int customizedWeight)
         {
             try
@@ -186,7 +185,6 @@ namespace MarketplaceDb
 
 
         }
-
 
         public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
         {
@@ -209,9 +207,6 @@ namespace MarketplaceDb
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
-
-
-
 
         public static DataRow GetShipmentInfoByOrder(string orderNum,string channel )
         {
