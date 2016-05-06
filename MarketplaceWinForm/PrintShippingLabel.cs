@@ -14,7 +14,6 @@ namespace MarketplaceWinForm
     {
         static Bitmap printBm;
         static Image image;
-
         public static string Print(Dictionary<string, string> labelDict)
         {
             foreach (KeyValuePair<string, string> labelInfo in labelDict)
