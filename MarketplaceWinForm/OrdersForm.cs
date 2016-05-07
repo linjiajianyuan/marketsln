@@ -165,7 +165,7 @@ namespace MarketplaceWinForm
                     string orderNum = this._OrderDgv.SelectedRows[i].Cells[cellOrderNum].Value.ToString();
                     string channel = this._OrderDgv.SelectedRows[i].Cells[cellChannel].Value.ToString();
                     string shippedDate = this._OrderDgv.SelectedRows[i].Cells[cellShippedDate].Value.ToString();
-                    string shipCountry = this._OrderDgv.SelectedRows[i].Cells[cellShippedDate].Value.ToString();
+                    string shipCountry = this._OrderDgv.SelectedRows[i].Cells[cellShipCountry].Value.ToString();
                     string customizedMessage = this._OrderDgv.SelectedRows[i].Cells[cellCustomizedMessage].Value.ToString();
                     DataRow readyToPrintDr = readyToPrintDt.NewRow();
                     if (shippedDate == "1/1/1753 12:00:00 AM")
