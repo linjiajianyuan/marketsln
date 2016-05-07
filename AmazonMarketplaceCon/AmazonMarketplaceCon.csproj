@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{67402CB1-3EE2-40CA-991A-D00541F519D1}</ProjectGuid>
+    <ProjectGuid>{3A5E7400-B9B2-4C64-A6E3-B6AC7D8064A7}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>AmazonMarketplaceCon</RootNamespace>
