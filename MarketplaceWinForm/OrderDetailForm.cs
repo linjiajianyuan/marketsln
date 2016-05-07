@@ -106,7 +106,6 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-
                     string customizedWeight = (Interaction.InputBox("Input Weight", this._OrderNumTxt.Text));
                     Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(this._OrderNumTxt.Text, this._ChannelTxt.Text,customizedWeight,"");
                     string printResult = PrintShippingLabel.Print(labelDict);

@@ -1,7 +1,9 @@
-﻿using PebbledonUtilityLib;
+﻿using Microsoft.VisualBasic;
+using PebbledonUtilityLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace MarketplaceWinForm
         private const int cellChannel = 15;
         private const int cellShippedDate = 13;
         private const int cellShipCountry = 10;
+        private const int cellCustomizedMessage = 4;
 
         private void OrdersForm_Load(object sender, EventArgs e)
         {
@@ -149,22 +152,56 @@ namespace MarketplaceWinForm
             readyToPrintDt.Columns.Add("OrderNum",typeof(string));
             readyToPrintDt.Columns.Add("Channel", typeof(string));
             readyToPrintDt.Columns.Add("ShipCountry", typeof(string));
+            readyToPrintDt.Columns.Add("CustomizedWeight", typeof(string));
+            readyToPrintDt.Columns.Add("CustomizedMessage", typeof(string));
+
 
             int selectedRowCount =this._OrderDgv.Rows.GetRowCount(DataGridViewElementStates.Selected);
             if (selectedRowCount > 0)
             {
+                List<string> customizedItemKeyWordList = ConfigurationManager.AppSettings["CustomizedItemKeyWord"].Split(',').ToList();
                 for (int i = 0; i < selectedRowCount; i++)
                 {
                     string orderNum = this._OrderDgv.SelectedRows[i].Cells[cellOrderNum].Value.ToString();
                     string channel = this._OrderDgv.SelectedRows[i].Cells[cellChannel].Value.ToString();
                     string shippedDate = this._OrderDgv.SelectedRows[i].Cells[cellShippedDate].Value.ToString();
                     string shipCountry = this._OrderDgv.SelectedRows[i].Cells[cellShippedDate].Value.ToString();
+                    string customizedMessage = this._OrderDgv.SelectedRows[i].Cells[cellCustomizedMessage].Value.ToString();
+                    DataRow readyToPrintDr = readyToPrintDt.NewRow();
                     if (shippedDate == "1/1/1753 12:00:00 AM")
                     {
-                        DataRow readyToPrintDr = readyToPrintDt.NewRow();
+                        DataTable orderLineTitleDt = MarketplaceDb.Db.GetOrderLineDtByOrderNum(orderNum,channel);
+                        string orderItems = "";
+                        string itemCustomizedMessage = "";
+                        foreach(DataRow orderLineTitleDr in orderLineTitleDt.Rows)
+                        {
+                            string itemTitle = orderLineTitleDr["ItemDesc"].ToString();
+                            string sku = orderLineTitleDr["ItemNum"].ToString();
+                            string qty = orderLineTitleDr["Quantity"].ToString();
+                            orderItems = orderItems + sku + "(" + qty + ")" + "|";
+                            var ifCustomizedItem = customizedItemKeyWordList.Any(w=>itemTitle.Contains(w));
+                            if(ifCustomizedItem)
+                            {
+                                itemCustomizedMessage = itemCustomizedMessage+"~~~"+ (Interaction.InputBox("Input Customized Message", orderItems, customizedMessage));
+                            }
+                        }
+                        MarketplaceDb.Db.SaveNoteToDb(orderNum,channel,itemCustomizedMessage);
+                        DataRow existingWeightDr = MarketplaceDb.Db.CheckDuplicatedCustomizedWeight(orderItems);
+                        if(existingWeightDr==null)
+                        {
+                            string customizedWeight = (Interaction.InputBox("Input Weight", orderItems));
+                            MarketplaceDb.Db.SaveCustomizedWeight(orderItems, ConvertUtility.ToInt(customizedWeight));
+                            readyToPrintDr["CustomizedWeight"]= customizedWeight;
+                        }
+                        else
+                        {
+                            readyToPrintDr["CustomizedWeight"] = existingWeightDr["CustomizedWeight"].ToString();
+                        }
+                       
                         readyToPrintDr["OrderNum"]= orderNum;
                         readyToPrintDr["Channel"] = channel;
                         readyToPrintDr["ShipCountry"] = shipCountry;
+                        readyToPrintDr["CustomizedMessage"] = itemCustomizedMessage;
                         readyToPrintDt.Rows.Add(readyToPrintDr);
                     }
                     else
@@ -172,24 +209,27 @@ namespace MarketplaceWinForm
                         MessageBox.Show("OrderNum: "+orderNum + " has been printed already. Please go to order details form to reprint it");
                     }
                 }
-                // todo
                 foreach(DataRow dr in readyToPrintDt.Rows)
                 {
                     string orderNum = dr["OrderNum"].ToString();
                     string channel = dr["Channel"].ToString();
                     string shipCountry = dr["ShipCountry"].ToString();
+                    string customizedWeight = dr["CustomizedWeight"].ToString();
+                    string customizedMessage = dr["CustomizedMessage"].ToString();
                     if(shipCountry !="US")
                     {
-                        Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(orderNum, channel);
-                        string printResult = PrintShippingLabel.Print(labelDict);
-                        if(printResult== "Error, Email Sent")
-                        {
-                            MessageBox.Show("Error, Email Sent");
-                        }
+                        MessageBox.Show("Not Support International Shipping Yet!");
+
+                        //Dictionary<string, string> labelDict = ProcessShippingLabel.GetInternationalLabel(orderNum, channel);
+                        //string printResult = PrintShippingLabel.Print(labelDict);
+                        //if(printResult== "Error, Email Sent")
+                        //{
+                        //    MessageBox.Show("Error, Email Sent");
+                        //}
                     }
                     else
                     {
-                        Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(orderNum,channel);
+                        Dictionary<string, string> labelDict = ProcessShippingLabel.GetDomesticLabel(orderNum,channel,customizedWeight,customizedMessage);
                         string printResult = PrintShippingLabel.Print(labelDict);
                         if(printResult== "Error, Email Sent")
                         {

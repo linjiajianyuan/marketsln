@@ -153,7 +153,6 @@ namespace MarketplaceWinForm
             dhlCred.Password = ConfigurationManager.AppSettings["firstMilePassword"];
             dhlLabelReq.UserCredentials = dhlCred;
             dhlLabelReq.WeightOz = weightOz;
-            
             Address shipToAddress = new Address();
             string accountName = orderHeaderInfoDr["AccountName"].ToString();
             string buyerUserId = orderHeaderInfoDr["BuyerUserID"].ToString();
