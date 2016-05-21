@@ -18,10 +18,22 @@ namespace Db
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
 
+        public static DataTable GetAmazonDeveloperInfo()
+        {
+            string sql = "select AccountName, Channel, EbayDeveloperID as SellerID, EbayCertificateID as MarketpalceID, EbayApplicationID as AccessKeyID, Token as SecretKey from SellerAccount where Channel='Amazon'";
+            try
+            {
+                return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["marketplace"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
+        }
         public static DataTable GetEbayDeveloperInfo()
         {
-            string sql = "select AccountName,Token from SellerAccount where Channel='eBay'";
+            string sql = "select AccountName,Token from SellerAccount where Channel='eBay' and AccountName='motovehicleparts'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql,ConfigurationManager.AppSettings["marketplace"]);

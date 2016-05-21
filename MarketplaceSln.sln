@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonMarketplaceCon", "Ama
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonService", "AmazonService\AmazonService.csproj", "{6976668A-EFBC-44F7-89C0-FA900CC4C45E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonMarketplaceMdl", "AmazonMarketplaceMdl\AmazonMarketplaceMdl.csproj", "{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{6976668A-EFBC-44F7-89C0-FA900CC4C45E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6976668A-EFBC-44F7-89C0-FA900CC4C45E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6976668A-EFBC-44F7-89C0-FA900CC4C45E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
