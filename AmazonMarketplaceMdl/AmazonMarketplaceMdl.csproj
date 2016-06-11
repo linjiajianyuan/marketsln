@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PebbledonUtilityLib">
+      <HintPath>..\Lib\PebbledonUtilityLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -45,6 +48,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AmazonMarketplaceComm\AmazonMarketplaceComm.csproj">
+      <Project>{29e20ef0-45fc-4a7d-a084-e31abe3871d6}</Project>
+      <Name>AmazonMarketplaceComm</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AmazonService\AmazonService.csproj">
       <Project>{6976668a-efbc-44f7-89c0-fa900cc4c45e}</Project>
       <Name>AmazonService</Name>

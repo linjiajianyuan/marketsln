@@ -190,6 +190,12 @@ namespace MarketplaceWinForm
                         if(existingWeightDr==null)
                         {
                             string customizedWeight = (Interaction.InputBox("Input Weight", orderItems));
+
+                            while (ConvertUtility.ToInt(customizedWeight) <= 0)
+                            {
+                                MessageBox.Show("Weight must more than 0! Please re-enter one");
+                                customizedWeight = (Interaction.InputBox("Input Weight", orderItems));
+                            }
                             MarketplaceDb.Db.SaveCustomizedWeight(orderItems, ConvertUtility.ToInt(customizedWeight));
                             readyToPrintDr["CustomizedWeight"]= customizedWeight;
                         }

@@ -176,7 +176,47 @@ namespace AmazonService
             }
         }
 
-
+        public static DataSet ListAmazonOrderLine(string amazonOrderid, string merchantId, string marketplaceId, string accessKeyId, string secretAccessKey)
+        {
+            DataSet amazonOrderLineDs = new DataSet();
+            const string applicationName = "<Your Application Name>";
+            const string applicationVersion = "<Your Application Version>";
+            ListOrderItemsRequest request = new ListOrderItemsRequest();
+            string sellerId = merchantId;
+            request.SellerId = sellerId;
+            request.AmazonOrderId = amazonOrderid;
+            MarketplaceWebServiceOrdersConfig config = new MarketplaceWebServiceOrdersConfig();
+            config.ServiceURL = "https://mws.amazonservices.com";
+            MarketplaceWebServiceOrdersClient client = new MarketplaceWebServiceOrdersClient(accessKeyId, secretAccessKey, applicationName, applicationVersion, config);
+            try
+            {
+                IMWSResponse response = null;
+                response = client.ListOrderItems(request);
+                ResponseHeaderMetadata rhmd = response.ResponseHeaderMetadata;
+                Console.WriteLine("RequestId: " + rhmd.RequestId);
+                Console.WriteLine("Timestamp: " + rhmd.Timestamp);
+                string responseXml = response.ToXML();
+                System.IO.File.WriteAllText(ConfigurationManager.AppSettings["orderListLinePath"], responseXml);
+                amazonOrderLineDs.ReadXml(ConfigurationManager.AppSettings["orderListLinePath"], XmlReadMode.InferSchema);
+                return amazonOrderLineDs;
+            }
+            catch (MarketplaceWebServiceOrdersException ex)
+            {
+                // Exception properties are important for diagnostics.
+                ResponseHeaderMetadata rhmd = ex.ResponseHeaderMetadata;
+                Console.WriteLine("Service Exception:");
+                if (rhmd != null)
+                {
+                    Console.WriteLine("RequestId: " + rhmd.RequestId);
+                    Console.WriteLine("Timestamp: " + rhmd.Timestamp);
+                }
+                Console.WriteLine("Message: " + ex.Message);
+                Console.WriteLine("StatusCode: " + ex.StatusCode);
+                Console.WriteLine("ErrorCode: " + ex.ErrorCode);
+                Console.WriteLine("ErrorType: " + ex.ErrorType);
+                throw ex;
+            }
+        }
 
 
 

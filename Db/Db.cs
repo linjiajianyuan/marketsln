@@ -1,4 +1,5 @@
-﻿using EbayComm;
+﻿using AmazonMarketplaceComm;
+using EbayComm;
 using PebbledonUtilityLib;
 using System;
 using System.Collections.Generic;
@@ -182,6 +183,162 @@ namespace Db
                 exceptionUtility.CatchMethod(ex, accountName + ": UpdateShipmentInfoDt ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
+        }
+
+        public static DataRow CheckAmazonOrderDuplicatedDb(string order_id)
+        {
+            string sql = "select [amazon-order-id] from [AmazonOrderLine] where [amazon-order-id] ='" + order_id + "'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["marketplace"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void UpdateAmazonOrderToCancel(string orderId, string orderStatus)
+        {
+            string sql = "update AmazonOrder set [order-status]='" + orderStatus + "' where order-id ='" + orderId + "'";
+            try
+            {
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["marketplace"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public static void AddAmazonOrderTran(string accountName,AmazonOrderType amazonOrder)
+        {
+            List<string> sqlList = BuildAddAmazonOrderTranSql(amazonOrder);
+            try
+            {
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["localDatabaseAmazon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, accountName + ": AddAmazonOrderTran ", amazonOrder.Header.order_id + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+        public static List<string> BuildAddAmazonOrderTranSql(AmazonOrderType amazonOrder)
+        {
+            List<string> sqlList = new List<string>();
+            try
+            {
+                sqlList.Add(BuildAddAmazonOrderSql(amazonOrder.Header));
+                foreach (AmazonOrderLineType orderLineType in amazonOrder.Lines)
+                {
+                    sqlList.Add(BuildAddAmazonOrderLineSql(orderLineType));
+                }
+
+                return sqlList;
+            }
+            catch (Exception ex)
+            {
+                FileUtility.AppendFile(ConfigurationManager.AppSettings["logPath"], "BuildAddAmazonOrderTranSql: " + DateTime.Now.ToString() + " " + ex.Message.ToString());
+                throw new Exception(ex.Message);
+            }
+        }
+
+        private static string BuildAddAmazonOrderSql(AmazonOrderHeaderType amazonOrderType)
+        {
+            return "INSERT INTO [amazon_order] "
+           + "([order-id],[purchase-date] ,[payments-date],[buyer-email],[buyer-name],[buyer-phone-number] ,[currency],"
+           + "[recipient-name],[ship-address-1],[ship-address-2],[ship-address-3],[ship-city],[ship-state],"
+           + "[ship-postal-code],[ship-country],[ship-phone-number],[tax-location-code],[tax-location-city],"
+           + "[tax-location-county] ,[tax-location-state] ,[delivery-Instructions],[sales-channel],[dataTransferStatus],[EnterDate],[UpdateDate]) "
+           + "VALUES"
+           + "('" + amazonOrderType.order_id + "','"
+           + amazonOrderType.purchase_date + "','"
+           + amazonOrderType.payments_date + "','"
+           + amazonOrderType.buyer_email + "','"
+           + amazonOrderType.buyer_name + "','"
+           + amazonOrderType.buyer_phone_number + "','"
+           + amazonOrderType.currency + "','"
+           + amazonOrderType.recipient_name + "','"
+           + amazonOrderType.ship_address_1 + "','"
+           + amazonOrderType.ship_address_2 + "','"
+           + amazonOrderType.ship_address_3 + "','"
+           + amazonOrderType.ship_city + "','"
+           + amazonOrderType.ship_state + "','"
+           + amazonOrderType.ship_postal_code + "','"
+           + amazonOrderType.ship_country + "','"
+           + amazonOrderType.ship_phone_number + "','"
+           + amazonOrderType.tax_location_code + "','"
+           + amazonOrderType.tax_location_city + "','"
+           + amazonOrderType.tax_location_county + "','"
+           + amazonOrderType.tax_location_state + "','"
+           + amazonOrderType.delivery_Instructions + "','"
+           + amazonOrderType.sales_channel + "','"
+           + amazonOrderType.dataTransferStatus + "','"
+           + amazonOrderType.enterDate + "','"
+           + amazonOrderType.updateDate
+           + "')";
+        }
+
+        private static string BuildAddAmazonOrderLineSql(AmazonOrderLineType amazonOrderLineType)
+        {
+            return "INSERT INTO [amazon_order_line] "
+           + "([order-item-id],[amazon-order-id],[sku],[product-name],[quantity-purchased] ,[item-price],"
+           + "[item-tax],[shipping-price],[shipping-tax],[item-promotion-discount],"
+           + "[ship-promotion-discount],"
+           + "[dataTransferStatus]) "
+           + "VALUES"
+           + "('" + amazonOrderLineType.order_item_id + "','"
+           + amazonOrderLineType.amazon_order_id + "','"
+           + amazonOrderLineType.sku + "','"
+           + amazonOrderLineType.product_name + "','"
+           + amazonOrderLineType.quantity_purchased + "','"
+           + amazonOrderLineType.item_price + "','"
+           + amazonOrderLineType.item_tax + "','"
+           + amazonOrderLineType.shipping_price + "','"
+           + amazonOrderLineType.shipping_tax + "','"
+           //+ amazonOrderLineType.ship_service_level + "','"
+           // + amazonOrderLineType.per_unit_item_taxable_district + "','"
+           //+ amazonOrderLineType.per_unit_item_taxable_city + "','"
+           // + amazonOrderLineType.per_unit_item_taxable_county + "','"
+           //+ amazonOrderLineType.per_unit_item_taxable_state + "','"
+           //+ amazonOrderLineType.per_unit_item_non_taxable_district + "','"
+           //+ amazonOrderLineType.per_unit_item_non_taxable_city + "','"
+           //+ amazonOrderLineType.per_unit_item_non_taxable_county + "','"
+           //+ amazonOrderLineType.per_unit_item_non_taxable_state + "','"
+           //+ amazonOrderLineType.per_unit_item_zero_rated_district + "','"
+           //+ amazonOrderLineType.per_unit_item_zero_rated_city + "','"
+           //+ amazonOrderLineType.per_unit_item_zero_rated_county + "','"
+           //+ amazonOrderLineType.per_unit_item_zero_rated_state + "','"
+           //+ amazonOrderLineType.per_unit_item_tax_collected_district + "','"
+           //+ amazonOrderLineType.per_unit_item_tax_collected_city + "','"
+           //+ amazonOrderLineType.per_unit_item_tax_collected_county + "','"
+           //+ amazonOrderLineType.per_unit_item_tax_collected_state + "','"
+           //+ amazonOrderLineType.per_unit_shipping_taxable_district + "','"
+           //+ amazonOrderLineType.per_unit_shipping_taxable_city + "','"
+           //+ amazonOrderLineType.per_unit_shipping_taxable_county + "','"
+           //+ amazonOrderLineType.per_unit_shipping_taxable_state + "','"
+           //+ amazonOrderLineType.per_unit_shipping_non_taxable_district + "','"
+           //+ amazonOrderLineType.per_unit_shipping_non_taxable_city + "','"
+           //+ amazonOrderLineType.per_unit_shipping_non_taxable_county + "','"
+           //+ amazonOrderLineType.per_unit_shipping_non_taxable_state + "','"
+           //+ amazonOrderLineType.per_unit_shipping_zero_rated_district + "','"
+           //+ amazonOrderLineType.per_unit_shipping_zero_rated_city + "','"
+           //+ amazonOrderLineType.per_unit_shipping_zero_rated_county + "','"
+           //+ amazonOrderLineType.per_unit_shipping_zero_rated_state + "','"
+           //+ amazonOrderLineType.per_unit_shipping_tax_collected_district + "','"
+           //+ amazonOrderLineType.per_unit_shipping_tax_collected_city + "','"
+           //+ amazonOrderLineType.per_unit_shipping_tax_collected_county + "','"
+           //+ amazonOrderLineType.per_unit_shipping_tax_collected_state + "','"
+           + amazonOrderLineType.item_promotion_discount + "','"
+           // + amazonOrderLineType.item_promotion_id + "','"
+           + amazonOrderLineType.ship_promotion_discount + "','"
+           //+ amazonOrderLineType.ship_promotion_id + "','"
+           //+ amazonOrderLineType.delivery_start_date + "','"
+           //+ amazonOrderLineType.delivery_end_date + "','"
+           //+ amazonOrderLineType.delivery_time_zone + "','"
+           + amazonOrderLineType.dataTransferStatus
+           + "')";
         }
     }
 }

@@ -181,9 +181,9 @@ namespace MarketplaceWinForm
             dhlLabelReq.IsTest = false;
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
 
-            if (weightOz >= 16)
+            if (weightOz > 16)
             {
-                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusGround;
+                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusExpedited;
             }
             else
             {
@@ -196,7 +196,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsGround;
+                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsExpedited;
                 } 
             }
             dhlLabelReq.LabelImageFormat = ImageFormat.ZPL;
@@ -277,7 +277,7 @@ namespace MarketplaceWinForm
 
             if (weightOz >= 16)
             {
-                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusGround;
+                dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusExpedited;
             }
             else
             {
@@ -290,7 +290,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsGround;
+                    dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsExpedited;
                 }
             }
             dhlLabelReq.LabelImageFormat = ImageFormat.Gif;

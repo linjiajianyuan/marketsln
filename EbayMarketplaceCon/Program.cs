@@ -24,7 +24,7 @@ namespace EbayMarketplaceCon
             catch (Exception ex)
             {
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
-                exceptionUtility.CatchMethod(ex,  "MarketplaceSln Main ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                exceptionUtility.CatchMethod(ex, "Ebay AddOrderToDb Main ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
             }
             
         }
