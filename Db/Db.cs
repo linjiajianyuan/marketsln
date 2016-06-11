@@ -21,7 +21,7 @@ namespace Db
 
         public static DataTable GetAmazonDeveloperInfo()
         {
-            string sql = "select AccountName, Channel, EbayDeveloperID as SellerID, EbayCertificateID as MarketpalceID, EbayApplicationID as AccessKeyID, Token as SecretKey from SellerAccount where Channel='Amazon'";
+            string sql = "select AccountName, Channel, EbayDeveloperID as SellerID, EbayCertificateID as MarketplaceID, EbayApplicationID as AccessKeyID, Token as SecretKey from SellerAccount where Channel='Amazon'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["marketplace"]);
@@ -215,7 +215,7 @@ namespace Db
             List<string> sqlList = BuildAddAmazonOrderTranSql(amazonOrder);
             try
             {
-                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["localDatabaseAmazon"]);
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["marketplace"]);
             }
             catch (Exception ex)
             {
@@ -229,7 +229,7 @@ namespace Db
             List<string> sqlList = new List<string>();
             try
             {
-                sqlList.Add(BuildAddAmazonOrderSql(amazonOrder.Header));
+                sqlList.Add(BuildAddAmazonOrderHeaderSql(amazonOrder.Header));
                 foreach (AmazonOrderLineType orderLineType in amazonOrder.Lines)
                 {
                     sqlList.Add(BuildAddAmazonOrderLineSql(orderLineType));
@@ -239,14 +239,13 @@ namespace Db
             }
             catch (Exception ex)
             {
-                FileUtility.AppendFile(ConfigurationManager.AppSettings["logPath"], "BuildAddAmazonOrderTranSql: " + DateTime.Now.ToString() + " " + ex.Message.ToString());
                 throw new Exception(ex.Message);
             }
         }
 
-        private static string BuildAddAmazonOrderSql(AmazonOrderHeaderType amazonOrderType)
+        private static string BuildAddAmazonOrderHeaderSql(AmazonOrderHeaderType amazonOrderType)
         {
-            return "INSERT INTO [amazon_order] "
+            return "INSERT INTO [AmazonOrderHeader] "
            + "([order-id],[purchase-date] ,[payments-date],[buyer-email],[buyer-name],[buyer-phone-number] ,[currency],"
            + "[recipient-name],[ship-address-1],[ship-address-2],[ship-address-3],[ship-city],[ship-state],"
            + "[ship-postal-code],[ship-country],[ship-phone-number],[tax-location-code],[tax-location-city],"
@@ -282,7 +281,7 @@ namespace Db
 
         private static string BuildAddAmazonOrderLineSql(AmazonOrderLineType amazonOrderLineType)
         {
-            return "INSERT INTO [amazon_order_line] "
+            return "INSERT INTO [AmazonOrderLine] "
            + "([order-item-id],[amazon-order-id],[sku],[product-name],[quantity-purchased] ,[item-price],"
            + "[item-tax],[shipping-price],[shipping-tax],[item-promotion-discount],"
            + "[ship-promotion-discount],"

@@ -196,8 +196,8 @@ namespace AmazonService
                 Console.WriteLine("RequestId: " + rhmd.RequestId);
                 Console.WriteLine("Timestamp: " + rhmd.Timestamp);
                 string responseXml = response.ToXML();
-                System.IO.File.WriteAllText(ConfigurationManager.AppSettings["orderListLinePath"], responseXml);
-                amazonOrderLineDs.ReadXml(ConfigurationManager.AppSettings["orderListLinePath"], XmlReadMode.InferSchema);
+                System.IO.File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonOrderLineList.xml", responseXml);
+                amazonOrderLineDs.ReadXml(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonOrderLineList.xml",XmlReadMode.InferSchema);
                 return amazonOrderLineDs;
             }
             catch (MarketplaceWebServiceOrdersException ex)

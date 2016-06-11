@@ -87,12 +87,12 @@ namespace AmazonMarketplaceMdl
             {
                 try
                 {
-                    string merchantId = ConfigurationManager.AppSettings["SellerID"];
-                    string marketplaceId = ConfigurationManager.AppSettings["MarketplaceID"];
-                    string accessKeyId = ConfigurationManager.AppSettings["AccessKeyID"];
-                    string secretAccessKey = ConfigurationManager.AppSettings["Token"];
-                    string accountName = ConfigurationManager.AppSettings["AccountName"];
-                    string channel = ConfigurationManager.AppSettings["Channel"];
+                    string merchantId = sellerAccountDr["SellerID"].ToString();
+                    string marketplaceId = sellerAccountDr["MarketplaceID"].ToString();
+                    string accessKeyId = sellerAccountDr["AccessKeyID"].ToString();
+                    string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
+                    string accountName = sellerAccountDr["AccountName"].ToString();
+                    string channel = sellerAccountDr["Channel"].ToString();
                     DataSet amazonOrderHeaderDs = new DataSet();
                     amazonOrderHeaderDs = AmazonService.ListOrders.ListAmazonOrderHeader(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
                     DataTable amazonOrderHeaderListOrdersResultDt = amazonOrderHeaderDs.Tables["ListOrdersResult"];
