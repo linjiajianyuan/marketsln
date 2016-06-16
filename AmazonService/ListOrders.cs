@@ -82,12 +82,12 @@ namespace AmazonService
             ListOrdersRequest request = new ListOrdersRequest();
             string sellerId = merchantId;
             request.SellerId = sellerId;
-            DateTime createdAfter = System.DateTime.Now.AddDays(-5);
+            DateTime createdAfter = System.DateTime.Now.AddDays(-15);
             request.CreatedAfter = createdAfter;
             List<string> orderStatusList = new List<string>();
             orderStatusList.Add("Unshipped");
             orderStatusList.Add("PartiallyShipped");
-            orderStatusList.Add("Shipped");
+            //orderStatusList.Add("Shipped");
             //orderStatusList.Add("Pending");
             //orderStatusList.Add("Canceled");
             request.OrderStatus = orderStatusList;
