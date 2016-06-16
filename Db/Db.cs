@@ -249,7 +249,7 @@ namespace Db
            + "([order-id],[purchase-date] ,[payments-date],[buyer-email],[buyer-name],[buyer-phone-number] ,[currency],"
            + "[recipient-name],[ship-address-1],[ship-address-2],[ship-address-3],[ship-city],[ship-state],"
            + "[ship-postal-code],[ship-country],[ship-phone-number],[tax-location-code],[tax-location-city],"
-           + "[tax-location-county] ,[tax-location-state] ,[delivery-Instructions],[sales-channel],[dataTransferStatus],[EnterDate],[UpdateDate],[order-status],CustomizedMessage) "
+           + "[tax-location-county] ,[tax-location-state] ,[delivery-Instructions],[sales-channel],[dataTransferStatus],[EnterDate],[UpdateDate],[order-status],AccountName,CustomizedMessage) "
            + "VALUES"
            + "('" + amazonOrderType.order_id + "','"
            + amazonOrderType.purchase_date + "','"
@@ -277,6 +277,7 @@ namespace Db
            + amazonOrderType.enterDate + "','"
            + amazonOrderType.updateDate + "','"
            + amazonOrderType.orderStatus + "','"
+           + amazonOrderType.accountName + "','"
            + amazonOrderType.customizedMessage
            + "')";
         }
