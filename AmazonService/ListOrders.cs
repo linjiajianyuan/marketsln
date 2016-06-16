@@ -82,12 +82,12 @@ namespace AmazonService
             ListOrdersRequest request = new ListOrdersRequest();
             string sellerId = merchantId;
             request.SellerId = sellerId;
-            DateTime createdAfter = System.DateTime.Now.AddDays(-15);
+            DateTime createdAfter = System.DateTime.Now.AddDays(-5);
             request.CreatedAfter = createdAfter;
             List<string> orderStatusList = new List<string>();
             orderStatusList.Add("Unshipped");
             orderStatusList.Add("PartiallyShipped");
-            //orderStatusList.Add("Shipped");
+            orderStatusList.Add("Shipped");
             //orderStatusList.Add("Pending");
             //orderStatusList.Add("Canceled");
             request.OrderStatus = orderStatusList;
@@ -154,8 +154,8 @@ namespace AmazonService
                 Console.WriteLine("RequestId: " + rhmd.RequestId);
                 Console.WriteLine("Timestamp: " + rhmd.Timestamp);
                 string responseXml = response.ToXML();
-                System.IO.File.WriteAllText(ConfigurationManager.AppSettings["orderListHeaderNextTokenPath"], responseXml);
-                amazonOrderHeaderListDs.ReadXml(ConfigurationManager.AppSettings["orderListHeaderNextTokenPath"], XmlReadMode.InferSchema);
+                System.IO.File.WriteAllText(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonOrderHeaderListNextToken.xml", responseXml);
+                amazonOrderHeaderListDs.ReadXml(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonOrderHeaderListNextToken.xml", XmlReadMode.InferSchema);
                 return amazonOrderHeaderListDs;
             }
             catch (MarketplaceWebServiceOrdersException ex)

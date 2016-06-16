@@ -34,5 +34,6 @@ namespace AmazonMarketplaceComm
         public DateTime enterDate { set; get; }
         public DateTime updateDate { set; get; }
         public string orderStatus { set; get; }
+        public string customizedMessage { set; get;}
     }
 }

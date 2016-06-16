@@ -30,11 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MWSClientCsRuntime-1.0, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null" />
-    <Reference Include="MWSOrders_2013-09-01_v2013-09-01">
-      <HintPath>..\..\..\..\C#\AmazonMarketplaceSln\AmazonMarketplaceSln\AmazonService\bin\Release\MWSOrders_2013-09-01_v2013-09-01.dll</HintPath>
+    <Reference Include="MWSClientCsRuntime-1.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\MWSClientCsRuntime-1.0.dll</HintPath>
     </Reference>
-    <Reference Include="MWSProducts_2011-10-01_v2014-12-16">
+    <Reference Include="MWSOrders_2013-09-01_v2015-09-24">
+      <HintPath>..\Lib\MWSOrders_2013-09-01_v2015-09-24.dll</HintPath>
+    </Reference>
+    <Reference Include="MWSProducts_2011-10-01_v2014-12-16, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\MWSProducts_2011-10-01_v2014-12-16.dll</HintPath>
     </Reference>
     <Reference Include="PebbledonUtilityLib">
