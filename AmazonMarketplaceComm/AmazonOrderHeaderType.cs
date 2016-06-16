@@ -36,5 +36,6 @@ namespace AmazonMarketplaceComm
         public string orderStatus { set; get; }
         public string customizedMessage { set; get;}
         public string accountName { set; get; }
+        public string amount { set; get; }
     }
 }

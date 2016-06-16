@@ -26,6 +26,7 @@ namespace AmazonMarketplaceMdl
             amazonOrderType.Header.buyer_name = shippingAddressDr[0]["Name"].ToString().Replace("'", "''");
             amazonOrderType.Header.buyer_phone_number = shippingAddressDr[0]["Phone"].ToString();
             amazonOrderType.Header.currency = orderTotalDr[0]["CurrencyCode"].ToString();
+            amazonOrderType.Header.amount = orderTotalDr[0]["Amount"].ToString();
             amazonOrderType.Header.recipient_name = shippingAddressDr[0]["Name"].ToString().Replace("'", "''");
             amazonOrderType.Header.ship_address_1 = shippingAddressDr[0]["AddressLine1"].ToString().Replace("'", "''");
             if (shippingAddressDr[0].Table.Columns.Contains("AddressLine2"))
