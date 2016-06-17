@@ -280,8 +280,8 @@ namespace Db
            + amazonOrderType.orderStatus + "','"
            + amazonOrderType.accountName + "','"
            + amazonOrderType.amount + "','"
-           + amazonOrderType.customizedMessage
-           + "')";
+           + amazonOrderType.customizedMessage.Replace("'", "''")
+            + "')";
         }
 
         private static string BuildAddAmazonOrderLineSql(AmazonOrderLineType amazonOrderLineType)

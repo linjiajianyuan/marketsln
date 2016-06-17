@@ -20,7 +20,7 @@ namespace AmazonMarketplaceCon
             try
             {
                 AmazonMarketplaceMdl.Mdl.GetAmazonOrder();
-                AmazonMarketplaceMdl.Mdl.CreateAmazonUploadTrackingXml();
+                //AmazonMarketplaceMdl.Mdl.CreateAmazonUploadTrackingXml();
             }
             catch (Exception ex)
             {

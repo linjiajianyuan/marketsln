@@ -87,7 +87,7 @@ namespace AmazonService
             List<string> orderStatusList = new List<string>();
             orderStatusList.Add("Unshipped");
             orderStatusList.Add("PartiallyShipped");
-            //orderStatusList.Add("Shipped");
+            orderStatusList.Add("Shipped");
             //orderStatusList.Add("Pending");
             //orderStatusList.Add("Canceled");
             request.OrderStatus = orderStatusList;
