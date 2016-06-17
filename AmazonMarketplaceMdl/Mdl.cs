@@ -96,11 +96,6 @@ namespace AmazonMarketplaceMdl
         }
         public static void AddAmazonOrderLine(AmazonOrderType amazonOrderType, string amazonOrderId, AmazonOrderLineType lineType, DataRow[] orderItemDr, DataRow[] itemPriceDr, DataRow[] shippingPriceDr, DataRow[] promotionDiscountDr, DataRow[] itemTaxDr, DataRow[] itemShippingDiscountDr, DataRow[] itemShippingTaxDr,DataRow[] itemCustomizedInfoDr)
         {
-            if(amazonOrderId== "107-1207458-2691452")
-            {
-                Console.WriteLine("");
-            }
-
             lineType.amazon_order_id = amazonOrderId;
             lineType.order_item_id = orderItemDr[0]["OrderItemId"].ToString();
             lineType.sku = orderItemDr[0]["SellerSKU"].ToString();
