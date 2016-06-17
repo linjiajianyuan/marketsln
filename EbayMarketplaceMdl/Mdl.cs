@@ -26,9 +26,9 @@ namespace EbayMarketplaceMdl
                     foreach(DataRow dr in shippedInfoDt.Rows)
                     {
                         string trackingNum =dr["TrackingNum"].ToString() ;
-                        string orderNum = dr["TrackingNum"].ToString();
+                        string orderNum = dr["OrderNum"].ToString();
                         string carrier = ConfigurationManager.AppSettings["defaultCarrier"];
-
+                        EbayService.UploadTrackingNum.UploadSingleTrackingNum(trackingNum, orderNum, carrier, accountName, token);
                     }
                 }
                 catch(Exception ex)
