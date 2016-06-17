@@ -108,6 +108,10 @@ namespace AmazonMarketplaceMdl
             lineType.shipping_tax = itemShippingTaxDr==null?0: ConvertUtility.ToDecimal(itemShippingTaxDr[0]["Amount"]);
             lineType.item_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
             lineType.ship_promotion_discount = itemShippingDiscountDr==null?0: ConvertUtility.ToDecimal(itemShippingDiscountDr[0]["Amount"]);
+            if(shippingPriceDr == null&& itemShippingTaxDr == null&& itemShippingDiscountDr == null)
+            {
+                amazonOrderType.Header.delivery_Instructions = "AmazonFullfillment";
+            }
             string customizedUrl = itemCustomizedInfoDr==null?null: itemCustomizedInfoDr[0]["CustomizedURL"].ToString();
             if(customizedUrl==null)
             {
