@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MarketplaceWebService">
+      <HintPath>..\Lib\MarketplaceWebService.dll</HintPath>
+    </Reference>
     <Reference Include="MWSClientCsRuntime-1.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Lib\MWSClientCsRuntime-1.0.dll</HintPath>
@@ -55,8 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenerateXml.cs" />
+    <Compile Include="GetFeedSubmissionResult.cs" />
     <Compile Include="ListOrders.cs" />
+    <Compile Include="LoadXml.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubmitTrackingFeed.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

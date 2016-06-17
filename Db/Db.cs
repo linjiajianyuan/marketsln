@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -158,9 +159,9 @@ namespace Db
                 throw new Exception(ex.Message);
             }
         }
-        public static DataTable GetShippedOrderInfo(string accountName)
+        public static DataTable GetEbayShippedOrderInfo(string accountName)
         {
-            string sql = "select * from ShipmentInfo where IsUpload=0 and AccountName='" + accountName + "'";
+            string sql = "select * from ShipmentInfo where IsUpload=0 and Channel='eBay' and AccountName='" + accountName + "'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
@@ -343,5 +344,35 @@ namespace Db
            + amazonOrderLineType.dataTransferStatus
            + "')";
         }
+
+        public static DataTable GetAmazonShippedOrderInfo(string accountName)
+        {
+            string sql = "select * from ShipmentInfo where IsUpload=0 and Channel='Amazon' and AccountName='" + accountName + "'";
+            try
+            {
+                return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void BuildUpdateTrackingTableTran(string orderId, string note, int status)
+        {
+            string sql = "update ShipmentInfo set UploadNote = '" + note + "', IsUpload ='" + status + "', UploadTime='" + (DateTime)SqlDateTime.MinValue + "' where Channel='Amazon' and OrderID ='" + orderId + "'";
+            List<string> sqlList = new List<string>();
+            try
+            {
+                sqlList.Add(sql);
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderId + ": BuildUpdateTrackingTableTran: ", orderId + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+        
     }
 }

@@ -12,6 +12,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
+using System.Xml;
 
 namespace AmazonMarketplaceMdl
 {
@@ -387,6 +388,118 @@ namespace AmazonMarketplaceMdl
                     exceptionUtility.CatchMethod(ex, "GetAmazonOrder Error:", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                     continue; 
                 }
+            }
+        }
+
+        public static void CreateAmazonUploadTrackingXml()
+        {
+            try
+            {
+                DataTable sellerAccountDt = Db.Db.GetAmazonDeveloperInfo();
+                foreach (DataRow sellerAccountDr in sellerAccountDt.Rows)
+                {
+                    string merchantId = sellerAccountDr["SellerID"].ToString();
+                    string marketplaceId = sellerAccountDr["MarketplaceID"].ToString();
+                    string accessKeyId = sellerAccountDr["AccessKeyID"].ToString();
+                    string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
+                    string accountName = sellerAccountDr["AccountName"].ToString();
+                    DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
+                    if (shippedInfoDt.Rows.Count > 0)
+                    {
+                        DataTable amazonUploadTrackingDt = new DataTable();
+                        amazonUploadTrackingDt.Columns.Add("MerchantOrderID", typeof(System.String));
+                        amazonUploadTrackingDt.Columns.Add("FulfillmentDate", typeof(System.String));
+                        amazonUploadTrackingDt.Columns.Add("CarrierCode", typeof(System.String));
+                        amazonUploadTrackingDt.Columns.Add("ShippingMethod", typeof(System.String));
+                        amazonUploadTrackingDt.Columns.Add("ShipperTrackingNumber", typeof(System.String));
+                        string orderId = "";
+                        DateTime shipDate;
+                        string carrierCode = "";
+                        string trackingNumber = "";
+                        string shippingMethod = "";
+
+                        foreach (DataRow dr in shippedInfoDt.Rows)
+                        {
+                            orderId = dr["OrderNum"].ToString();
+                            shipDate = ConvertUtility.ToDateTime(dr["EnterDate"]);
+                            carrierCode = ConfigurationManager.AppSettings["defaultCarrier"];
+                            trackingNumber = dr["TrackingNum"].ToString();
+                            shippingMethod = ConfigurationManager.AppSettings["defaultShippingMethod"];
+                            TimeZone zone = TimeZone.CurrentTimeZone;
+                            DateTime universal = zone.ToUniversalTime(shipDate).AddHours(0);
+                            var ISO8601String = universal.ToString(@"yyyy-MM-dd\THH:mm:ss");
+                            DataRow amazonUploadTrackingDr = amazonUploadTrackingDt.NewRow();
+                            amazonUploadTrackingDr["MerchantOrderID"] = orderId;
+                            amazonUploadTrackingDr["FulfillmentDate"] = ISO8601String;
+                            amazonUploadTrackingDr["CarrierCode"] = carrierCode;
+                            amazonUploadTrackingDr["ShipperTrackingNumber"] = trackingNumber;
+                            amazonUploadTrackingDr["ShippingMethod"] = shippingMethod;
+                            amazonUploadTrackingDt.Rows.Add(amazonUploadTrackingDr);
+                            Db.Db.BuildUpdateTrackingTableTran(orderId, "Add To XML", 1);
+                        }
+                        XmlDocument amazonUploadTracingXml = new XmlDocument();
+                        amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
+                        amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml");
+                        string feedSubmissionId = "";
+                        try
+                        {
+                            feedSubmissionId = AmazonService.SubmitTrackingFeed.SubmitAmazonTrackingFeed(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml", merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                            if (feedSubmissionId == "")
+                            {
+                                foreach (DataRow dr in shippedInfoDt.Rows)
+                                {
+                                    Db.Db.BuildUpdateTrackingTableTran(dr["OrderID"].ToString(), "Failed", 0);
+                                }
+                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                exceptionUtility.ErrorWarningMethod("SubmitAmazonTrackingXml ERROR: ",feedSubmissionId + ": SubmitAmazonTrackingXml ERROR: ", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                            }
+                            else
+                            {
+                                System.Threading.Thread.Sleep(3600000);
+                                AmazonService.GetFeedSubmissionResult.GetAmazonTrackingFeedSubmissionResult(feedSubmissionId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                DataSet amazonTrackingUploadResultDs = AmazonService.LoadXml.LoadAmazonTrackingUploadResultXml();
+                                if (amazonTrackingUploadResultDs.Tables.Count <= 0)
+                                {
+                                    ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                    exceptionUtility.ErrorWarningMethod("LoadTrackingResultReport: ", feedSubmissionId + ": Wait To Long for getting result Feed ID" , senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                }
+                                else
+                                {
+                                    DataTable resultProcessingSummaryDt = amazonTrackingUploadResultDs.Tables["ProcessingSummary"];
+                                    int messagesProcessed = 0;
+                                    int messagesWithError = 0;
+                                    int messagesSuccessful = 0;
+                                    foreach (DataRow resultProcessingSummaryDr in resultProcessingSummaryDt.Rows)
+                                    {
+                                        messagesProcessed = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesProcessed"]);
+                                        messagesWithError = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesWithError"]);
+                                        messagesSuccessful = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesSuccessful"]);
+                                    }
+                                    if (messagesProcessed <= 0 || (messagesProcessed > 0 && messagesWithError > 0))
+                                    {
+                                        ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                        exceptionUtility.ErrorWarningMethod("Submit Amazon Tracking Error: ", "Processed:"+ messagesProcessed + " | Error:" + messagesWithError + " | " + " Successful: " + messagesSuccessful + " " + feedSubmissionId, senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                    }
+
+                                }
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            ExceptionUtility exceptionUtility = new ExceptionUtility();
+                            exceptionUtility.CatchMethod(ex, accountName + ": UploadAmazonTrackingXmlAndGetResult ERROR: ",  ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        continue; // no tracking number need to be uploaded
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
     }

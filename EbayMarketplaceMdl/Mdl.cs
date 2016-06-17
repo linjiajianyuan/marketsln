@@ -22,7 +22,7 @@ namespace EbayMarketplaceMdl
                 {
                     string token = sellerAccountDr["Token"].ToString();
                     string accountName = sellerAccountDr["AccountName"].ToString();
-                    DataTable shippedInfoDt = Db.Db.GetShippedOrderInfo(accountName);
+                    DataTable shippedInfoDt = Db.Db.GetEbayShippedOrderInfo(accountName);
                     foreach(DataRow dr in shippedInfoDt.Rows)
                     {
                         string trackingNum =dr["TrackingNum"].ToString() ;
