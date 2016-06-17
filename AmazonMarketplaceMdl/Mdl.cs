@@ -85,14 +85,22 @@ namespace AmazonMarketplaceMdl
                 var surfaces = customInfo["surfaces"];
                 var surfaces0 = surfaces[0];
                 var areas = surfaces0["areas"];
-                var areas0 = areas[0];
-                customizedInfo = customizedInfo + "|" + areas0["fontFamily"].ToString() + "," + areas0["label"].ToString() + "," + areas0["fill"].ToString() + "," + areas0["text"].ToString();
+                foreach(var area in areas)
+                {
+                    customizedInfo = customizedInfo + "|" + area["fontFamily"].ToString() + "," + area["label"].ToString() + "," + area["text"].ToString();
+                }
+                
                 File.Delete(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\CustomizedInfo\\" + fileName);
             }
             return customizedInfo;
         }
         public static void AddAmazonOrderLine(AmazonOrderType amazonOrderType, string amazonOrderId, AmazonOrderLineType lineType, DataRow[] orderItemDr, DataRow[] itemPriceDr, DataRow[] shippingPriceDr, DataRow[] promotionDiscountDr, DataRow[] itemTaxDr, DataRow[] itemShippingDiscountDr, DataRow[] itemShippingTaxDr,DataRow[] itemCustomizedInfoDr)
         {
+            if(amazonOrderId== "107-1207458-2691452")
+            {
+                Console.WriteLine("");
+            }
+
             lineType.amazon_order_id = amazonOrderId;
             lineType.order_item_id = orderItemDr[0]["OrderItemId"].ToString();
             lineType.sku = orderItemDr[0]["SellerSKU"].ToString();
