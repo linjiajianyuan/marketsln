@@ -198,7 +198,7 @@ namespace EbayService
             GetOrderCall.DetailLevelList = new DetailLevelCodeTypeCollection();
             GetOrderCall.DetailLevelList.Add(DetailLevelCodeType.ReturnAll);
 
-            createTimeFrom = DateTime.Now.AddDays(-3).ToUniversalTime();
+            createTimeFrom = DateTime.Now.AddDays(-15).ToUniversalTime();
             createTimeTo = DateTime.Now.ToUniversalTime();
 
             int pageNumber = 1;
