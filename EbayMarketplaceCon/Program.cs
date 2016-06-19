@@ -20,6 +20,7 @@ namespace EbayMarketplaceCon
             try
             {
                 EbayMarketplaceMdl.Mdl.AddOrderToDb();
+                EbayMarketplaceMdl.Mdl.UploadTrackingNum();
             }
             catch (Exception ex)
             {
