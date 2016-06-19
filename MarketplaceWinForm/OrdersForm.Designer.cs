@@ -39,14 +39,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this._TotalLabel = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this._EbayItemNumTxt = new System.Windows.Forms.TextBox();
+            this._EmailTxt = new System.Windows.Forms.TextBox();
+            this._NameTxt = new System.Windows.Forms.TextBox();
+            this._BuyerUserIdTxt = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this._BuyerUserIdTxt = new System.Windows.Forms.TextBox();
-            this._NameTxt = new System.Windows.Forms.TextBox();
-            this._EmailTxt = new System.Windows.Forms.TextBox();
-            this._EbayItemNumTxt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this._OrderDgv)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -61,7 +61,7 @@
             this._OrderDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._OrderDgv.Location = new System.Drawing.Point(12, 32);
             this._OrderDgv.Name = "_OrderDgv";
-            this._OrderDgv.Size = new System.Drawing.Size(903, 414);
+            this._OrderDgv.Size = new System.Drawing.Size(817, 414);
             this._OrderDgv.TabIndex = 0;
             this._OrderDgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._CellContentDoubleClick);
             // 
@@ -71,7 +71,7 @@
             this._UnshippedCheckBox.AutoSize = true;
             this._UnshippedCheckBox.Checked = true;
             this._UnshippedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this._UnshippedCheckBox.Location = new System.Drawing.Point(933, 32);
+            this._UnshippedCheckBox.Location = new System.Drawing.Point(847, 32);
             this._UnshippedCheckBox.Name = "_UnshippedCheckBox";
             this._UnshippedCheckBox.Size = new System.Drawing.Size(77, 17);
             this._UnshippedCheckBox.TabIndex = 1;
@@ -83,7 +83,7 @@
             // 
             this._ShippedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._ShippedCheckBox.AutoSize = true;
-            this._ShippedCheckBox.Location = new System.Drawing.Point(933, 55);
+            this._ShippedCheckBox.Location = new System.Drawing.Point(847, 55);
             this._ShippedCheckBox.Name = "_ShippedCheckBox";
             this._ShippedCheckBox.Size = new System.Drawing.Size(65, 17);
             this._ShippedCheckBox.TabIndex = 2;
@@ -169,12 +169,58 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this._EndDatePicker);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(933, 89);
+            this.groupBox1.Location = new System.Drawing.Point(847, 89);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(297, 357);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Advance Search";
+            // 
+            // _EbayItemNumTxt
+            // 
+            this._EbayItemNumTxt.Location = new System.Drawing.Point(116, 102);
+            this._EbayItemNumTxt.Name = "_EbayItemNumTxt";
+            this._EbayItemNumTxt.Size = new System.Drawing.Size(169, 20);
+            this._EbayItemNumTxt.TabIndex = 18;
+            // 
+            // _EmailTxt
+            // 
+            this._EmailTxt.Location = new System.Drawing.Point(116, 197);
+            this._EmailTxt.Name = "_EmailTxt";
+            this._EmailTxt.Size = new System.Drawing.Size(169, 20);
+            this._EmailTxt.TabIndex = 17;
+            // 
+            // _NameTxt
+            // 
+            this._NameTxt.Location = new System.Drawing.Point(116, 162);
+            this._NameTxt.Name = "_NameTxt";
+            this._NameTxt.Size = new System.Drawing.Size(169, 20);
+            this._NameTxt.TabIndex = 15;
+            // 
+            // _BuyerUserIdTxt
+            // 
+            this._BuyerUserIdTxt.Location = new System.Drawing.Point(116, 133);
+            this._BuyerUserIdTxt.Name = "_BuyerUserIdTxt";
+            this._BuyerUserIdTxt.Size = new System.Drawing.Size(169, 20);
+            this._BuyerUserIdTxt.TabIndex = 14;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(13, 197);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 13);
+            this.label7.TabIndex = 13;
+            this.label7.Text = "Email";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(12, 165);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(35, 13);
+            this.label5.TabIndex = 11;
+            this.label5.Text = "Name";
             // 
             // label4
             // 
@@ -194,57 +240,11 @@
             this.label3.TabIndex = 9;
             this.label3.Text = "eBay Item Number:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 165);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(35, 13);
-            this.label5.TabIndex = 11;
-            this.label5.Text = "Name";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 197);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(32, 13);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "Email";
-            // 
-            // _BuyerUserIdTxt
-            // 
-            this._BuyerUserIdTxt.Location = new System.Drawing.Point(116, 133);
-            this._BuyerUserIdTxt.Name = "_BuyerUserIdTxt";
-            this._BuyerUserIdTxt.Size = new System.Drawing.Size(169, 20);
-            this._BuyerUserIdTxt.TabIndex = 14;
-            // 
-            // _NameTxt
-            // 
-            this._NameTxt.Location = new System.Drawing.Point(116, 162);
-            this._NameTxt.Name = "_NameTxt";
-            this._NameTxt.Size = new System.Drawing.Size(169, 20);
-            this._NameTxt.TabIndex = 15;
-            // 
-            // _EmailTxt
-            // 
-            this._EmailTxt.Location = new System.Drawing.Point(116, 197);
-            this._EmailTxt.Name = "_EmailTxt";
-            this._EmailTxt.Size = new System.Drawing.Size(169, 20);
-            this._EmailTxt.TabIndex = 17;
-            // 
-            // _EbayItemNumTxt
-            // 
-            this._EbayItemNumTxt.Location = new System.Drawing.Point(116, 102);
-            this._EbayItemNumTxt.Name = "_EbayItemNumTxt";
-            this._EbayItemNumTxt.Size = new System.Drawing.Size(169, 20);
-            this._EbayItemNumTxt.TabIndex = 18;
-            // 
             // OrdersForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1242, 461);
+            this.ClientSize = new System.Drawing.Size(1156, 461);
             this.Controls.Add(this._TotalLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this._ShippedCheckBox);
