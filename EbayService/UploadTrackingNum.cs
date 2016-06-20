@@ -38,7 +38,7 @@ namespace EbayService
             ShipmentTrackingDetailsType shpmnt = new ShipmentTrackingDetailsType();
             shpmnt.ShipmentTrackingNumber = trackingNum;
             shpmnt.ShippingCarrierUsed = carrier;
-            completeSaleCall.Shipment.ShipmentTrackingDetails.Add(shpmnt);
+            completeSaleCall.Shipment.ShipmentTrackingDetails.Add(shpmnt); 
             try
             {
                 completeSaleCall.Execute();
