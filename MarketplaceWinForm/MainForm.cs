@@ -36,5 +36,12 @@ namespace MarketplaceWinForm
             frm.MdiParent = this;
             frm.Show();
         }
+
+        private void EndOfDayToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EndOfDayForm frm = new EndOfDayForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
     }
 }

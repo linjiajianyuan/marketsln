@@ -60,6 +60,13 @@
     <Compile Include="AddShipmentToOrderForm.Designer.cs">
       <DependentUpon>AddShipmentToOrderForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EndOfDay.cs" />
+    <Compile Include="EndOfDayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EndOfDayForm.Designer.cs">
+      <DependentUpon>EndOfDayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +97,9 @@
     </Compile>
     <EmbeddedResource Include="AddShipmentToOrderForm.resx">
       <DependentUpon>AddShipmentToOrderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EndOfDayForm.resx">
+      <DependentUpon>EndOfDayForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -31,8 +31,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.orderAndInvoicesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addShipmentToOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.domesticEndOfDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -58,16 +59,11 @@
             // shipmentToolStripMenuItem
             // 
             this.shipmentToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.addShipmentToOrderToolStripMenuItem});
+            this.addShipmentToOrderToolStripMenuItem,
+            this.domesticEndOfDayToolStripMenuItem});
             this.shipmentToolStripMenuItem.Name = "shipmentToolStripMenuItem";
             this.shipmentToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
             this.shipmentToolStripMenuItem.Text = "Shipment";
-            // 
-            // inventoryToolStripMenuItem
-            // 
-            this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
-            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.inventoryToolStripMenuItem.Text = "Inventory";
             // 
             // addShipmentToOrderToolStripMenuItem
             // 
@@ -75,6 +71,19 @@
             this.addShipmentToOrderToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.addShipmentToOrderToolStripMenuItem.Text = "Add Shipment To Order";
             this.addShipmentToOrderToolStripMenuItem.Click += new System.EventHandler(this.addShipmentToOrderToolStripMenuItem_Click);
+            // 
+            // inventoryToolStripMenuItem
+            // 
+            this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
+            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.inventoryToolStripMenuItem.Text = "Inventory";
+            // 
+            // domesticEndOfDayToolStripMenuItem
+            // 
+            this.domesticEndOfDayToolStripMenuItem.Name = "domesticEndOfDayToolStripMenuItem";
+            this.domesticEndOfDayToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.domesticEndOfDayToolStripMenuItem.Text = "End of Day";
+            this.domesticEndOfDayToolStripMenuItem.Click += new System.EventHandler(this.EndOfDayToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -100,6 +109,7 @@
         private System.Windows.Forms.ToolStripMenuItem shipmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inventoryToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addShipmentToOrderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem domesticEndOfDayToolStripMenuItem;
     }
 }
 
