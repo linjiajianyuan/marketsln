@@ -20,7 +20,7 @@ namespace MarketplaceWinForm
             dhlCred.Username = ConfigurationManager.AppSettings["firstMileAccount"];
             dhlCred.Password = ConfigurationManager.AppSettings["firstMilePassword"];
             request.UserCredentials = dhlCred;
-            request.IsTest = true;
+            request.IsTest = false;
             DhlWebApiClient client = new DhlWebApiClient("DhlApi", "http://ifslabelservice.com/api/DhlApi.svc");
             CloseDomesticShippingDayResponse reponse = client.CloseDomesticShippingDay(request);
             domesticEndOfDayDic.Add("IsSuccessful", reponse.Successful);
