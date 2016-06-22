@@ -186,14 +186,14 @@ namespace MarketplaceDb
 
         }
 
-        public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, decimal cost, string nativeCommand)
+        public static void SaveShipmentInfo(string orderNum, string accountName, string channel,string trackingNum,string reference, string reference2, decimal cost, string nativeCommand)
         {
             try
             {
                 List<string> sqlList = new List<string>();
                 string sqlInsert = @"insert into  ShipmentInfo 
-                    (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
-             values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + nativeCommand + "')";
+                    (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,Reference2, LabelCommand) 
+             values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + cost + "','" + reference + "','" + reference2 + "','" + nativeCommand + "')";
 
                 string sqlUpdate = "update OrderHeader set TrackingNum='"+ trackingNum + "', ShippedDate ='"+System.DateTime.Now+"' where OrderNum ='"+orderNum+"' and Channel='"+channel+"'";
                 sqlList.Add(sqlInsert);
@@ -220,5 +220,30 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
+        public static DataTable GetShipmentInfo()
+        {
+            string sql = "select * from ShipmentInfo";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static DataTable GetEndOfDayInfo(string startDateTime, string endDateTime)
+        {
+            string sql = "select distinct count(TrackingNum) as package,Reference2 from ShipmentInfo where EnterDate>='"+ startDateTime + "' and EnterDate<='"+endDateTime+"' group by Reference2";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
     }
 }

@@ -43,5 +43,12 @@ namespace MarketplaceWinForm
             frm.MdiParent = this;
             frm.Show();
         }
+
+        private void checkShipmentInformationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShipmentInfoForm frm = new ShipmentInfoForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
     }
 }

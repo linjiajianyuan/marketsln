@@ -74,6 +74,7 @@ namespace MarketplaceWinForm
             intelLabelReq.FromAddress = fromAddress;
             intelLabelReq.IsoCurrencyCode = "USD";
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
+            string reference2 = "";
             List<string> dhlGmParcelDirectCountryList = ConfigurationManager.AppSettings["DHLGMParcelDirectCountryList"].Split(',').ToList();
             if(weightOz >= 704)
             {
@@ -87,10 +88,12 @@ namespace MarketplaceWinForm
                 if (dhlGmParcelDirectCountryList.Contains(shipCountry))
                 {
                     intelLabelReq.LabelType = LabelType.DhlGMParcelDirect;
+                    reference2 = "DhlGMParcelDirect";
                 }
                 else
                 {
                     intelLabelReq.LabelType = LabelType.DhlGMParcelPriority;
+                    reference2 = "DhlGMParcelPriority";
                 }
             }
             intelLabelReq.TaxIdNumber = ConfigurationManager.AppSettings["TaxId"];
@@ -114,7 +117,7 @@ namespace MarketplaceWinForm
             decimal cost = irres.Cost;
             string nativeCommand = labelImagesBase64.ToString();
             shippingLabelDic.Add(trackingNum, nativeCommand);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum, channel, accountName, trackingNum, reference, cost, nativeCommand);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum, channel, accountName, trackingNum, reference, reference2, cost, nativeCommand);
             return shippingLabelDic;
         }
 
@@ -180,10 +183,12 @@ namespace MarketplaceWinForm
             dhlLabelReq.FromAddress = fromAddress;
             dhlLabelReq.IsTest = false;
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
+            string reference2 = "";
 
             if (weightOz > 16)
             {
                 dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusExpedited;
+                reference2 = "DhlSmParcelPlusExpedited";
             }
             else
             {
@@ -197,6 +202,7 @@ namespace MarketplaceWinForm
                 else
                 {
                     dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsExpedited;
+                    reference2 = "DhlSmParcelsExpedited";
                 } 
             }
             dhlLabelReq.LabelImageFormat = ImageFormat.ZPL;
@@ -212,7 +218,7 @@ namespace MarketplaceWinForm
             DomesticRateResponse drres = dhlLabelRes.RateInfo;
             decimal cost = drres.Cost;
             shippingLabelDic.Add(trackingNum, nativeCommand);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum, accountName,channel, trackingNum, reference, cost, nativeCommand);
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum, accountName,channel, trackingNum, reference,reference2, cost, nativeCommand);
             return shippingLabelDic;
         }
 
@@ -273,11 +279,13 @@ namespace MarketplaceWinForm
             fromAddress.PhoneNumber = ConfigurationManager.AppSettings["FromPhoneNum"];
             dhlLabelReq.FromAddress = fromAddress;
             dhlLabelReq.IsTest = false;
+            string reference2 = "";
             string shipCountry = orderHeaderInfoDr["ShipCountry"].ToString();
 
             if (weightOz >= 16)
             {
                 dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelPlusExpedited;
+                reference2 = "DhlSmParcelPlusExpedited";
             }
             else
             {
@@ -291,10 +299,12 @@ namespace MarketplaceWinForm
                 else
                 {
                     dhlLabelReq.LabelType = DomesticLabelType.DhlSmParcelsExpedited;
+                    reference2 = "DhlSmParcelsExpedited";
                 }
             }
             dhlLabelReq.LabelImageFormat = ImageFormat.Gif;
             dhlLabelReq.LabelSize = LabelSize.Label4X6;
+           
             dhlLabelReq.Reference1 = orderHeaderInfoDr["OrderNum"].ToString();// order number
             dhlLabelReq.DocTabValues = infoList.ToArray();
             dhlLabelReq.GetRate = true;
@@ -307,7 +317,7 @@ namespace MarketplaceWinForm
             DomesticRateResponse drres = dhlLabelRes.RateInfo;
             decimal cost = drres.Cost;
             shippingLabelDic.Add(trackingNum, labelImg);
-            MarketplaceDb.Db.SaveShipmentInfo(orderNum, accountName, channel, trackingNum, reference, cost, "");
+            MarketplaceDb.Db.SaveShipmentInfo(orderNum, accountName, channel, trackingNum, reference,reference2, cost, "");
             return shippingLabelDic;
 
 
