@@ -4,6 +4,7 @@ using PebbledonUtilityLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -90,7 +91,7 @@ namespace MarketplaceWinForm
                 string nativeCommand = dr["LabelCommand"].ToString();
                 byte[] data = Convert.FromBase64String(nativeCommand);
                 string encodedLabelBinary = Encoding.UTF8.GetString(data);
-                RawPrinterHelper.SendStringToPrinter("Zebra ZP 500 (ZPL)", encodedLabelBinary);
+                RawPrinterHelper.SendStringToPrinter(ConfigurationManager.AppSettings["printerName"], encodedLabelBinary);
             }
             else if(dialog==DialogResult.No)
             {
