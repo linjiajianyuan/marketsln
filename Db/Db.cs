@@ -173,7 +173,7 @@ namespace Db
         }
         public static void UpdateShipmentInfoDt(string orderNum, string accountName, DateTime uploadDate)
         {
-            string sql = "update ShipmentInfo set isUpload = 1, UploadTime='"+uploadDate+"' where OrderNum='"+orderNum+"' and AccountName='"+accountName+"'";
+            string sql = "update ShipmentInfo set IsUpload = 1, UploadTime='"+uploadDate+"' where OrderNum='"+orderNum+"' and AccountName='"+accountName+"'";
             try
             {
                 SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);

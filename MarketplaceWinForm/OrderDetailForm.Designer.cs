@@ -319,6 +319,7 @@
             this._TrackingLinkLab.TabIndex = 26;
             this._TrackingLinkLab.TabStop = true;
             this._TrackingLinkLab.Text = "___________";
+            this._TrackingLinkLab.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this._TrackingLinkLab_LinkClicked);
             // 
             // _Address1Txt
             // 

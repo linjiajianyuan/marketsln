@@ -127,5 +127,10 @@ namespace MarketplaceWinForm
             _NoteTxt.ReadOnly = true;
             Db.SaveNoteToDb(_OrderNumTxt.Text,_ChannelTxt.Text,_NoteTxt.Text);
         }
+
+        private void _TrackingLinkLab_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://tools.usps.com/go/TrackConfirmAction?tLabels=" + this._TrackingLinkLab.Text);
+        }
     }
 }
