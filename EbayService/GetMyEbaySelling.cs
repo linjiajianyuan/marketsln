@@ -94,7 +94,7 @@ namespace EbayService
                                         else
                                         {
                                             double startPrice = itemType.BuyItNowPrice.Value;
-                                            if (quantityAvailable == 1)
+                                            if (quantityAvailable <= 2)
                                             {
                                                 DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
                                                 sellingInventoryDr["ItemID"] = productId;

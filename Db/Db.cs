@@ -35,7 +35,7 @@ namespace Db
         }
         public static DataTable GetEbayDeveloperInfo()
         {
-            string sql = "select AccountName,Token from SellerAccount where Channel='eBay' and AccountName='motovehicleparts'";
+            string sql = "select AccountName,Token from SellerAccount where Channel='eBay'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql,ConfigurationManager.AppSettings["marketplace"]);
