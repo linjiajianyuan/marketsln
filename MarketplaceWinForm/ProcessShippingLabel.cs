@@ -121,6 +121,7 @@ namespace MarketplaceWinForm
             return shippingLabelDic;
         }
 
+
         public static Dictionary<string, string> GetDomesticLabel(string orderNum,string channel,string weight,string message)
         {
             Dictionary<string, string> shippingLabelDic = new Dictionary<string, string>();
