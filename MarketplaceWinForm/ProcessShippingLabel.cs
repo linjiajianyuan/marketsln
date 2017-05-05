@@ -120,7 +120,6 @@ namespace MarketplaceWinForm
             MarketplaceDb.Db.SaveShipmentInfo(orderNum, channel, accountName, trackingNum, reference, reference2, cost, nativeCommand);
             return shippingLabelDic;
         }
-
         public static Dictionary<string, string> GetDomesticLabel(string orderNum,string channel,string weight,string message)
         {
             Dictionary<string, string> shippingLabelDic = new Dictionary<string, string>();
