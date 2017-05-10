@@ -95,37 +95,67 @@ namespace AmazonMarketplaceMdl
             }
             return customizedInfo;
         }
-        public static void AddAmazonOrderLine(AmazonOrderType amazonOrderType, string amazonOrderId, AmazonOrderLineType lineType, DataRow[] orderItemDr, DataRow[] itemPriceDr, DataRow[] shippingPriceDr, DataRow[] promotionDiscountDr, DataRow[] itemTaxDr, DataRow[] itemShippingDiscountDr, DataRow[] itemShippingTaxDr,DataRow[] itemCustomizedInfoDr)
+        public static void AddAmazonOrderLine(AmazonOrderType amazonOrderType, string amazonOrderId, AmazonOrderLineType lineType, DataRow[] orderItemDr, DataRow[] itemPriceDr, DataRow[] shippingPriceDr, DataRow[] promotionDiscountDr, DataRow[] itemTaxDr, DataRow[] itemShippingDiscountDr, DataRow[] itemShippingTaxDr, DataRow[] itemCustomizedInfoDr)
         {
             lineType.amazon_order_id = amazonOrderId;
             lineType.order_item_id = orderItemDr[0]["OrderItemId"].ToString();
             lineType.sku = orderItemDr[0]["SellerSKU"].ToString();
             lineType.product_name = orderItemDr[0]["Title"].ToString().Replace("'", "''");
             lineType.quantity_purchased = ConvertUtility.ToInt16(orderItemDr[0]["QuantityOrdered"]);
-            if(itemPriceDr.Count()==0)
+            if (itemPriceDr == null || itemPriceDr.Count() == 0)
             {
                 lineType.item_price = 0;
-                lineType.item_tax = 0;
-                lineType.shipping_price = 0;
-                lineType.shipping_tax = 0;
-                lineType.item_promotion_discount = 0;
-                lineType.ship_promotion_discount = 0;
             }
             else
             {
                 lineType.item_price = ConvertUtility.ToDecimal(itemPriceDr[0]["Amount"]);
-                lineType.item_tax = ConvertUtility.ToDecimal(itemTaxDr[0]["Amount"]);
-                lineType.shipping_price = Convert.ToDecimal(shippingPriceDr[0]["Amount"]);
-                lineType.shipping_tax = ConvertUtility.ToDecimal(itemShippingTaxDr[0]["Amount"]);
-                lineType.item_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
-                lineType.ship_promotion_discount = ConvertUtility.ToDecimal(itemShippingDiscountDr[0]["Amount"]);
             }
-            if (shippingPriceDr == null&& itemShippingTaxDr == null&& itemShippingDiscountDr == null)
+            if (itemTaxDr == null || itemTaxDr.Count() == 0)
+            {
+                lineType.item_tax = 0;
+            }
+            else
+            {
+                lineType.item_tax = ConvertUtility.ToDecimal(itemTaxDr[0]["Amount"]);
+            }
+            if (shippingPriceDr == null || shippingPriceDr.Count() == 0)
+            {
+                lineType.shipping_price = 0;
+            }
+            else
+            {
+                lineType.shipping_price = ConvertUtility.ToDecimal(shippingPriceDr[0]["Amount"]);
+            }
+            if (itemShippingTaxDr == null || itemShippingTaxDr.Count() == 0)
+            {
+                lineType.shipping_tax = 0;
+            }
+            else
+            {
+                lineType.shipping_tax = ConvertUtility.ToDecimal(itemShippingTaxDr[0]["Amount"]);
+            }
+            if (promotionDiscountDr == null || promotionDiscountDr.Count() == 0)
+            {
+                lineType.item_promotion_discount = 0;
+            }
+            else
+            {
+                lineType.item_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
+            }
+            if (itemShippingDiscountDr == null || itemShippingDiscountDr.Count() == 0)
+            {
+                lineType.ship_promotion_discount = 0;
+            }
+            else
+            {
+                lineType.ship_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
+            }
+            if ((shippingPriceDr == null || shippingPriceDr.Count() == 0) && (itemShippingTaxDr == null || itemShippingTaxDr.Count() == 0) && (itemShippingDiscountDr == null || itemShippingDiscountDr.Count() == 0))
             {
                 amazonOrderType.Header.delivery_Instructions = "AmazonFullfillment";
             }
-            string customizedUrl = itemCustomizedInfoDr==null?null: itemCustomizedInfoDr[0]["CustomizedURL"].ToString();
-            if(customizedUrl==null)
+            string customizedUrl = itemCustomizedInfoDr == null ? "" : itemCustomizedInfoDr[0]["CustomizedURL"].ToString();
+            if (customizedUrl == "")
             {
                 amazonOrderType.Header.customizedMessage = amazonOrderType.Header.customizedMessage + "";
             }
@@ -134,7 +164,7 @@ namespace AmazonMarketplaceMdl
                 string customizedMessage = GetCustomizedDataFromURL(customizedUrl);
                 amazonOrderType.Header.customizedMessage = amazonOrderType.Header.customizedMessage + "|" + lineType.sku + "(" + customizedMessage + ")";
             }
-            
+
             lineType.dataTransferStatus = 0;
         }
 
