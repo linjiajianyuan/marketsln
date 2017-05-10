@@ -102,13 +102,25 @@ namespace AmazonMarketplaceMdl
             lineType.sku = orderItemDr[0]["SellerSKU"].ToString();
             lineType.product_name = orderItemDr[0]["Title"].ToString().Replace("'", "''");
             lineType.quantity_purchased = ConvertUtility.ToInt16(orderItemDr[0]["QuantityOrdered"]);
-            lineType.item_price = ConvertUtility.ToDecimal(itemPriceDr[0]["Amount"]);
-            lineType.item_tax = ConvertUtility.ToDecimal(itemTaxDr[0]["Amount"]);
-            lineType.shipping_price = shippingPriceDr == null ? 0: Convert.ToDecimal(shippingPriceDr[0]["Amount"]);
-            lineType.shipping_tax = itemShippingTaxDr==null?0: ConvertUtility.ToDecimal(itemShippingTaxDr[0]["Amount"]);
-            lineType.item_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
-            lineType.ship_promotion_discount = itemShippingDiscountDr==null?0: ConvertUtility.ToDecimal(itemShippingDiscountDr[0]["Amount"]);
-            if(shippingPriceDr == null&& itemShippingTaxDr == null&& itemShippingDiscountDr == null)
+            if(itemPriceDr.Count()==0)
+            {
+                lineType.item_price = 0;
+                lineType.item_tax = 0;
+                lineType.shipping_price = 0;
+                lineType.shipping_tax = 0;
+                lineType.item_promotion_discount = 0;
+                lineType.ship_promotion_discount = 0;
+            }
+            else
+            {
+                lineType.item_price = ConvertUtility.ToDecimal(itemPriceDr[0]["Amount"]);
+                lineType.item_tax = ConvertUtility.ToDecimal(itemTaxDr[0]["Amount"]);
+                lineType.shipping_price = Convert.ToDecimal(shippingPriceDr[0]["Amount"]);
+                lineType.shipping_tax = ConvertUtility.ToDecimal(itemShippingTaxDr[0]["Amount"]);
+                lineType.item_promotion_discount = ConvertUtility.ToDecimal(promotionDiscountDr[0]["Amount"]);
+                lineType.ship_promotion_discount = ConvertUtility.ToDecimal(itemShippingDiscountDr[0]["Amount"]);
+            }
+            if (shippingPriceDr == null&& itemShippingTaxDr == null&& itemShippingDiscountDr == null)
             {
                 amazonOrderType.Header.delivery_Instructions = "AmazonFullfillment";
             }
