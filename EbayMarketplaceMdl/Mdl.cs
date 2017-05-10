@@ -49,16 +49,24 @@ namespace EbayMarketplaceMdl
                 {
                     string token = sellerAccountDr["Token"].ToString();
                     string accountName = sellerAccountDr["AccountName"].ToString();
-                    List<EbayOrderType> orderList = GetOrder.GetOrderFromEbay(token, accountName);
-                    foreach (EbayOrderType ebayOrderType in orderList)
+                    List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                    if (exceptList.Contains(accountName))
                     {
-                        try
+                        continue;
+                    }
+                    else
+                    {
+                        List<EbayOrderType> orderList = GetOrder.GetOrderFromEbay(token, accountName);
+                        foreach (EbayOrderType ebayOrderType in orderList)
                         {
-                            Db.Db.AddEbayOrderToDb(ebayOrderType);
-                        }
-                        catch (Exception)
-                        {
-                            continue;// continue if order already exist in DB
+                            try
+                            {
+                                Db.Db.AddEbayOrderToDb(ebayOrderType);
+                            }
+                            catch (Exception)
+                            {
+                                continue;// continue if order already exist in DB
+                            }
                         }
                     }
                 }
