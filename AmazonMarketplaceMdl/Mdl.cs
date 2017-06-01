@@ -240,6 +240,10 @@ namespace AmazonMarketplaceMdl
                                 AmazonOrderType amazonOrderType = new AmazonOrderType();
                                 int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
                                 string amazonOrderId = headerDr["AmazonOrderId"].ToString();
+                                if(amazonOrderId == "111-8554561-7352267")
+                                {
+                                    Console.WriteLine("");
+                                }
                                 string orderStatus = headerDr["OrderStatus"].ToString();
                                 DataRow checker = Db.Db.CheckAmazonOrderDuplicatedDb(amazonOrderId);
                                 if (checker == null)
@@ -273,6 +277,10 @@ namespace AmazonMarketplaceMdl
                                             DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountNextTokenDt==null?null: amazonOrderLineShippingDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
                                             DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxNextTokenDt == null ? null : amazonOrderLineShippingTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
                                             DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
+                                            if(itemCustomizedInfoDr.Length <= 0)
+                                            {
+                                                itemCustomizedInfoDr = null;
+                                            }
                                             AmazonOrderLineType lineType = new AmazonOrderLineType();
                                             AddAmazonOrderLine(amazonOrderType, amazonOrderId, lineType, orderItemDr, itemPriceDr, shippingPriceDr, promotionDiscountDr, itemTaxDr, itemShippingDiscountDr, itemShippingTaxDr, itemCustomizedInfoDr);
                                             amazonOrderType.Lines.Add(lineType);
