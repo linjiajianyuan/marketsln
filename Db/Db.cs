@@ -161,7 +161,7 @@ namespace Db
         }
         public static DataTable GetEbayShippedOrderInfo(string accountName)
         {
-            string sql = "select * from ShipmentInfo where IsUpload=0 and Channel='eBay' and AccountName='" + accountName + "'";
+            string sql = "select * from OrderHeader where Reference2 = '' and TrackingNum <> '' and Channel = 'eBay' and AccountName='" + accountName + "'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
@@ -173,7 +173,7 @@ namespace Db
         }
         public static void UpdateShipmentInfoDt(string orderNum, string accountName, DateTime uploadDate)
         {
-            string sql = "update ShipmentInfo set IsUpload = 1, UploadTime='"+uploadDate+"' where OrderNum='"+orderNum+"' and AccountName='"+accountName+"'";
+            string sql = "update OrderHeader set Reference2='" + uploadDate+"' where OrderNum='"+orderNum+"' and AccountName='"+accountName+"'";
             try
             {
                 SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);

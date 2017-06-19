@@ -18,20 +18,29 @@ namespace EbayMarketplaceMdl
             DataTable sellerAccountDt = Db.Db.GetEbayDeveloperInfo();
             foreach (DataRow sellerAccountDr in sellerAccountDt.Rows)
             {
+                string accountName = sellerAccountDr["AccountName"].ToString();
                 try
                 {
                     string token = sellerAccountDr["Token"].ToString();
-                    string accountName = sellerAccountDr["AccountName"].ToString();
-                    DataTable shippedInfoDt = Db.Db.GetEbayShippedOrderInfo(accountName);
-                    foreach(DataRow dr in shippedInfoDt.Rows)
+                    List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                    List<string> exceptSKUList = ConfigurationManager.AppSettings["exceptSKUList"].Split(',').ToList();
+                    if (exceptList.Contains(accountName))
                     {
-                        string trackingNum =dr["TrackingNum"].ToString() ;
-                        string orderNum = dr["OrderNum"].ToString();
-                        string carrier = ConfigurationManager.AppSettings["defaultCarrier"];
-                        EbayService.UploadTrackingNum.UploadSingleTrackingNum(trackingNum, orderNum, carrier, accountName, token);
+                        continue;
+                    }
+                    else
+                    {
+                        DataTable shippedInfoDt = Db.Db.GetEbayShippedOrderInfo(accountName);
+                        foreach (DataRow dr in shippedInfoDt.Rows)
+                        {
+                            string trackingNum = dr["TrackingNum"].ToString();
+                            string orderNum = dr["OrderNum"].ToString();
+                            string carrier = ConfigurationManager.AppSettings["defaultCarrier"];
+                            EbayService.UploadTrackingNum.UploadSingleTrackingNum(trackingNum, orderNum, carrier, accountName, token);
+                        }
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw ExceptionUtility.GetCustomizeException(ex);
                 }

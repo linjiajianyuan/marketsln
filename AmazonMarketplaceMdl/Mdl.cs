@@ -240,7 +240,7 @@ namespace AmazonMarketplaceMdl
                                 AmazonOrderType amazonOrderType = new AmazonOrderType();
                                 int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
                                 string amazonOrderId = headerDr["AmazonOrderId"].ToString();
-                                if(amazonOrderId == "111-8554561-7352267")
+                                if(amazonOrderId == "113-0789979-8852265")
                                 {
                                     Console.WriteLine("");
                                 }
@@ -277,7 +277,7 @@ namespace AmazonMarketplaceMdl
                                             DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountNextTokenDt==null?null: amazonOrderLineShippingDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
                                             DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxNextTokenDt == null ? null : amazonOrderLineShippingTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
                                             DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
-                                            if(itemCustomizedInfoDr.Length <= 0)
+                                            if(itemCustomizedInfoDr == null || itemCustomizedInfoDr.Length <= 0)
                                             {
                                                 itemCustomizedInfoDr = null;
                                             }

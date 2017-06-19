@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayMarketplaceCon", "EbayMarketplaceCon\EbayMarketplaceCon.csproj", "{0E442CAF-1BB4-41C5-9405-B4FE24FF0015}"
 EndProject
@@ -30,6 +30,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonMarketplaceMdl", "AmazonMarketplaceMdl\AmazonMarketplaceMdl.csproj", "{1CEA51DD-F3B6-4C14-8FB9-F1E604DA2236}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmazonMarketplaceComm", "AmazonMarketplaceComm\AmazonMarketplaceComm.csproj", "{29E20EF0-45FC-4A7D-A084-E31ABE3871D6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayUploadTrackingCon", "EbayUploadTrackingCon\EbayUploadTrackingCon.csproj", "{1B903F54-3687-4BEF-BDC7-9C5733D01655}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{29E20EF0-45FC-4A7D-A084-E31ABE3871D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29E20EF0-45FC-4A7D-A084-E31ABE3871D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29E20EF0-45FC-4A7D-A084-E31ABE3871D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B903F54-3687-4BEF-BDC7-9C5733D01655}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B903F54-3687-4BEF-BDC7-9C5733D01655}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B903F54-3687-4BEF-BDC7-9C5733D01655}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B903F54-3687-4BEF-BDC7-9C5733D01655}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
