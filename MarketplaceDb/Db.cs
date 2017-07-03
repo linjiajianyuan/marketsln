@@ -135,9 +135,23 @@ namespace MarketplaceDb
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
-        public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
+        public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier, string combineToOrderNum)
         {
-            List<string> sqlList = new List<string>();
+            string sqlUpdate = @"update OrderHeader set TrackingNum='" + trackingNum 
+                               + "' ShippedDate ='" + System.DateTime.Now + "' Reference1='"+combineToOrderNum+"' ShippingCarrier='"+carrier
+                               + "' where OrderNum ='" + orderNum + "' and Channel='" 
+                               + channel + "'";
+            try
+            {
+                SqlHelper.ExecuteNonQuery(sqlUpdate, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": SaveShipmentInfo ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+            /*List<string> sqlList = new List<string>();
             string sqlInsert = @"insert into  ShipmentInfo 
                     (TrackingNum, AccountName, OrderNum, Channel, Cost, Reference1,LabelCommand) 
              values ('" + trackingNum + "','" +accountName + "','" + orderNum + "','" + channel + "','" + 0 + "','" + carrier + "','" + "" + "')";
@@ -153,7 +167,7 @@ namespace MarketplaceDb
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
                 exceptionUtility.CatchMethod(ex, orderNum + ": SaveShipmentInfo ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                 throw ExceptionUtility.GetCustomizeException(ex);
-            }
+            }*/
         }
 
         public static DataRow CheckDuplicatedCustomizedWeight(string customizedInfo)

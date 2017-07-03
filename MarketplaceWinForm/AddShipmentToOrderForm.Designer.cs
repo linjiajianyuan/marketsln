@@ -39,6 +39,8 @@
             this._ChannelComboBox = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this._AccountCombox = new System.Windows.Forms.ComboBox();
+            this._combineToOrderNum = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -62,7 +64,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(37, 211);
+            this.label3.Location = new System.Drawing.Point(37, 177);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 13);
             this.label3.TabIndex = 2;
@@ -84,7 +86,7 @@
             // 
             // _CarrierTxt
             // 
-            this._CarrierTxt.Location = new System.Drawing.Point(135, 211);
+            this._CarrierTxt.Location = new System.Drawing.Point(135, 177);
             this._CarrierTxt.Name = "_CarrierTxt";
             this._CarrierTxt.Size = new System.Drawing.Size(309, 20);
             this._CarrierTxt.TabIndex = 5;
@@ -133,11 +135,29 @@
             this._AccountCombox.Size = new System.Drawing.Size(166, 21);
             this._AccountCombox.TabIndex = 10;
             // 
+            // _combineToOrderNum
+            // 
+            this._combineToOrderNum.Location = new System.Drawing.Point(176, 216);
+            this._combineToOrderNum.Name = "_combineToOrderNum";
+            this._combineToOrderNum.Size = new System.Drawing.Size(290, 20);
+            this._combineToOrderNum.TabIndex = 12;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(37, 220);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(136, 13);
+            this.label6.TabIndex = 11;
+            this.label6.Text = "Combine To Order Number:";
+            // 
             // AddShipmentToOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(502, 281);
+            this.Controls.Add(this._combineToOrderNum);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this._AccountCombox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this._ChannelComboBox);
@@ -169,5 +189,7 @@
         private System.Windows.Forms.ComboBox _ChannelComboBox;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox _AccountCombox;
+        private System.Windows.Forms.TextBox _combineToOrderNum;
+        private System.Windows.Forms.Label label6;
     }
 }

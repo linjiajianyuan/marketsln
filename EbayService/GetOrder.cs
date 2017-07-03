@@ -205,7 +205,7 @@ namespace EbayService
             int errorCount = 0;
             GetOrderCall.CreateTimeFrom = createTimeFrom;
             GetOrderCall.CreateTimeTo = createTimeTo;
-            GetOrderCall.OrderStatus = OrderStatusCodeType.All;
+            GetOrderCall.OrderStatus = OrderStatusCodeType.Completed;
 
             while (pageNumber<100)
             {

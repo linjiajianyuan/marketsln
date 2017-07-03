@@ -35,6 +35,7 @@ namespace MarketplaceWinForm
             string carrier = this._CarrierTxt.Text.Trim();
             string channel = this._ChannelComboBox.Text.Trim();
             string account = this._AccountCombox.Text.Trim();
+            string combineToOrderNum = this._combineToOrderNum.Text.Trim();
             if (orderNum==""||trackingNum==""||carrier=="")
             {
                 MessageBox.Show("Please fill up all fields!");
@@ -47,7 +48,7 @@ namespace MarketplaceWinForm
                     DialogResult dialog = MessageBox.Show("This order has been shipped already, Are you sure want to save tracking again?","Warning", MessageBoxButtons.YesNo);
                     if (dialog == DialogResult.Yes)
                     {
-                        Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier);
+                        Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
                     }
                     else if (dialog == DialogResult.No)
                     {
@@ -56,7 +57,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier);
+                    Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
                 }
             }
         }

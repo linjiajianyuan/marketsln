@@ -33,8 +33,8 @@
             this.shipmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addShipmentToOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.domesticEndOfDayToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.checkShipmentInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
             this.inventoryToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1156, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1148, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -81,12 +81,6 @@
             this.domesticEndOfDayToolStripMenuItem.Text = "End of Day";
             this.domesticEndOfDayToolStripMenuItem.Click += new System.EventHandler(this.EndOfDayToolStripMenuItem_Click);
             // 
-            // inventoryToolStripMenuItem
-            // 
-            this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
-            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.inventoryToolStripMenuItem.Text = "Inventory";
-            // 
             // checkShipmentInformationToolStripMenuItem
             // 
             this.checkShipmentInformationToolStripMenuItem.Name = "checkShipmentInformationToolStripMenuItem";
@@ -94,11 +88,18 @@
             this.checkShipmentInformationToolStripMenuItem.Text = "CheckShipment Information";
             this.checkShipmentInformationToolStripMenuItem.Click += new System.EventHandler(this.checkShipmentInformationToolStripMenuItem_Click);
             // 
+            // inventoryToolStripMenuItem
+            // 
+            this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
+            this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.inventoryToolStripMenuItem.Text = "Inventory";
+            this.inventoryToolStripMenuItem.Click += new System.EventHandler(this.inventoryToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1156, 568);
+            this.ClientSize = new System.Drawing.Size(1148, 568);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
