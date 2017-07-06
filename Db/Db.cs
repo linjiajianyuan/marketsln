@@ -149,7 +149,7 @@ namespace Db
         }
         public static DataRow CheckDuplicatedOrderID(string orderId)
         {
-            string sql="select OrderID from EbayOrderHeader where OrderID='"+orderId+"'";
+            string sql="select OrderID, OrderStatus from EbayOrderHeader where OrderID='"+orderId+"'";
             try
             {
                 return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["marketplace"]);
@@ -374,5 +374,27 @@ namespace Db
             }
         }
         
+        public static void DeleteUncompletedEbayOrder(string orderId)
+        {
+            string sqlLine = "delete from EbayOrderLine where OrderID ='"+orderId+"'";
+            string sqlHeader = "delete from EbayOrderHeader where OrderID = '"+orderId+"'";
+            string sqlPaymentTransaction = "delete from EbayPaymentTransaction where OrderID = '"+orderId+"'";
+            List<string> sqlList = new List<string>();
+            try
+            {
+                sqlList.Add(sqlLine);
+                sqlList.Add(sqlHeader);
+                sqlList.Add(sqlPaymentTransaction);
+                SqlHelper.ExecuteNonQuery(sqlList, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderId + ": DeleteUncompletedEbayOrder: ", orderId + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+
+
     }
 }

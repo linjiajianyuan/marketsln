@@ -234,6 +234,41 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
+        public static DataRow GetSKUMapColumnName()
+        {
+            string sql = @"Select Stuff(
+                                (
+                                Select ',' + C.COLUMN_NAME
+                                From INFORMATION_SCHEMA.COLUMNS As C
+                                Where C.TABLE_SCHEMA = T.TABLE_SCHEMA
+                                    And C.TABLE_NAME = T.TABLE_NAME
+                                Order By C.ORDINAL_POSITION
+                                For Xml Path('')
+                                ), 1, 2, '') As Columns
+                        From INFORMATION_SCHEMA.TABLES As T
+                        WHERE TABLE_NAME = 'SKUMap'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static DataRow CheckIsVendorSKUExist(string vendorSKU)
+        {
+            string sql = "select * from SKUMap where VendorSKU ='"+ vendorSKU + "'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static DataTable GetShipmentInfo()
         {
             string sql = "select * from ShipmentInfo";

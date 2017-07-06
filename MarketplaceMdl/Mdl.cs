@@ -15,5 +15,16 @@ namespace MarketplaceMdl
             dt=MarketplaceDb.Db.GetOrderInfoDt(shipped,startDate,endDate, ebayItemNum, buyerUserId, name, email);
             return dt;
         }
+        public static string GetSKUMapColumnName()
+        {
+            DataRow dr = MarketplaceDb.Db.GetSKUMapColumnName();
+            string columnName = dr["Columns"].ToString();
+            return columnName;
+        }
+        public static DataRow CheckIsVendorSKUExist(string vendorSKU)
+        {
+            DataRow dr = MarketplaceDb.Db.CheckIsVendorSKUExist(vendorSKU.ToUpper());
+            return dr;
+        }
     }
 }

@@ -237,23 +237,33 @@ namespace EbayService
                                         DataRow checkDuplidatedDr = Db.Db.CheckDuplicatedOrderID(orderId);
                                         if (checkDuplidatedDr!=null)
                                         {
-                                            continue; // continue if order already exist
+                                            if(checkDuplidatedDr["OrderStatus"].ToString() == "Completed")
+                                            {
+                                                continue; // continue if order already exist
+                                            }
+                                            else
+                                            {
+                                                Db.Db.DeleteUncompletedEbayOrder(orderId);
+                                            }
                                         }
-                                        EbayOrderHeaderType ebayOrderHeaderType = AddOrderHeader(orderType);//add header info
-                                        foreach (ExternalTransactionType externalTransactionType in orderType.ExternalTransaction)//add external trasnaction info
+                                        else
                                         {
-                                            EbayOrderPaymentTransactionType ebayOrderPaymentTransactionType = AddOrderPaymentTransaction(orderId, externalTransactionType);
-                                            ebayOrderType.paymentTransaction.Add(ebayOrderPaymentTransactionType);
+                                            EbayOrderHeaderType ebayOrderHeaderType = AddOrderHeader(orderType);//add header info
+                                            foreach (ExternalTransactionType externalTransactionType in orderType.ExternalTransaction)//add external trasnaction info
+                                            {
+                                                EbayOrderPaymentTransactionType ebayOrderPaymentTransactionType = AddOrderPaymentTransaction(orderId, externalTransactionType);
+                                                ebayOrderType.paymentTransaction.Add(ebayOrderPaymentTransactionType);
+                                            }
+                                            ebayOrderType.Header = ebayOrderHeaderType;
+                                            int lineId = 0;
+                                            foreach (TransactionType transactionType in orderType.TransactionArray)//add line info
+                                            {
+                                                lineId = lineId + 1;
+                                                EbayOrderLineType ebayOrderLineType = AddOrderLine(orderId, transactionType, lineId);
+                                                ebayOrderType.Line.Add(ebayOrderLineType);
+                                            }
+                                            OrderList.Add(ebayOrderType);
                                         }
-                                        ebayOrderType.Header = ebayOrderHeaderType;
-                                        int lineId = 0;
-                                        foreach (TransactionType transactionType in orderType.TransactionArray)//add line info
-                                        {
-                                            lineId = lineId + 1;
-                                            EbayOrderLineType ebayOrderLineType = AddOrderLine(orderId, transactionType, lineId);
-                                            ebayOrderType.Line.Add(ebayOrderLineType);
-                                        }
-                                        OrderList.Add(ebayOrderType);
                                     }
                                     catch(Exception ex)
                                     {

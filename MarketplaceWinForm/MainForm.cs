@@ -55,5 +55,12 @@ namespace MarketplaceWinForm
         {
 
         }
+
+        private void SKUMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SKUMapForm frm = new SKUMapForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
     }
 }
