@@ -93,6 +93,7 @@
             // 
             // _PrintShippingLabelBtn
             // 
+            this._PrintShippingLabelBtn.Enabled = false;
             this._PrintShippingLabelBtn.Location = new System.Drawing.Point(153, 296);
             this._PrintShippingLabelBtn.Name = "_PrintShippingLabelBtn";
             this._PrintShippingLabelBtn.Size = new System.Drawing.Size(111, 44);

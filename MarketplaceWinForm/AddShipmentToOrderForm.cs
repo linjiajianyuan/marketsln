@@ -48,7 +48,7 @@ namespace MarketplaceWinForm
                     DialogResult dialog = MessageBox.Show("This order has been shipped already, Are you sure want to save tracking again?","Warning", MessageBoxButtons.YesNo);
                     if (dialog == DialogResult.Yes)
                     {
-                        Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
+                        //Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
                     }
                     else if (dialog == DialogResult.No)
                     {
@@ -57,7 +57,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
+                   // Db.SaveSingleShipmentInfo(orderNum, account, channel, trackingNum, carrier, combineToOrderNum);
                 }
             }
         }

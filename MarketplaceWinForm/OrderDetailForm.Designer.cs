@@ -80,6 +80,8 @@
             this.label25 = new System.Windows.Forms.Label();
             this._PaidAmountTxt = new System.Windows.Forms.TextBox();
             this._ReprintBtn = new System.Windows.Forms.Button();
+            this._AddTrackingNumBtn = new System.Windows.Forms.Button();
+            this._TrackingAddTxt = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -195,7 +197,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 294);
+            this.label13.Location = new System.Drawing.Point(399, 262);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(58, 13);
             this.label13.TabIndex = 12;
@@ -246,7 +248,7 @@
             // 
             this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(12, 490);
+            this.label16.Location = new System.Drawing.Point(12, 450);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(72, 13);
             this.label16.TabIndex = 17;
@@ -294,7 +296,7 @@
             // 
             // _EnterDateTxt
             // 
-            this._EnterDateTxt.Location = new System.Drawing.Point(76, 291);
+            this._EnterDateTxt.Location = new System.Drawing.Point(463, 259);
             this._EnterDateTxt.Name = "_EnterDateTxt";
             this._EnterDateTxt.ReadOnly = true;
             this._EnterDateTxt.Size = new System.Drawing.Size(313, 20);
@@ -303,7 +305,7 @@
             // label17
             // 
             this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(395, 262);
+            this.label17.Location = new System.Drawing.Point(12, 492);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(81, 13);
             this.label17.TabIndex = 25;
@@ -313,7 +315,7 @@
             // 
             this._TrackingLinkLab.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this._TrackingLinkLab.AutoSize = true;
-            this._TrackingLinkLab.Location = new System.Drawing.Point(90, 490);
+            this._TrackingLinkLab.Location = new System.Drawing.Point(90, 450);
             this._TrackingLinkLab.Name = "_TrackingLinkLab";
             this._TrackingLinkLab.Size = new System.Drawing.Size(73, 13);
             this._TrackingLinkLab.TabIndex = 26;
@@ -379,10 +381,10 @@
             // 
             // _ShippingCarrierTxt
             // 
-            this._ShippingCarrierTxt.Location = new System.Drawing.Point(479, 259);
+            this._ShippingCarrierTxt.Location = new System.Drawing.Point(93, 489);
             this._ShippingCarrierTxt.Name = "_ShippingCarrierTxt";
             this._ShippingCarrierTxt.ReadOnly = true;
-            this._ShippingCarrierTxt.Size = new System.Drawing.Size(367, 20);
+            this._ShippingCarrierTxt.Size = new System.Drawing.Size(329, 20);
             this._ShippingCarrierTxt.TabIndex = 34;
             // 
             // label18
@@ -547,6 +549,7 @@
             // 
             // _ReprintBtn
             // 
+            this._ReprintBtn.Enabled = false;
             this._ReprintBtn.Location = new System.Drawing.Point(729, 285);
             this._ReprintBtn.Name = "_ReprintBtn";
             this._ReprintBtn.Size = new System.Drawing.Size(151, 23);
@@ -555,11 +558,31 @@
             this._ReprintBtn.UseVisualStyleBackColor = true;
             this._ReprintBtn.Click += new System.EventHandler(this._ReprintBtn_Click);
             // 
+            // _AddTrackingNumBtn
+            // 
+            this._AddTrackingNumBtn.Location = new System.Drawing.Point(479, 487);
+            this._AddTrackingNumBtn.Name = "_AddTrackingNumBtn";
+            this._AddTrackingNumBtn.Size = new System.Drawing.Size(105, 23);
+            this._AddTrackingNumBtn.TabIndex = 53;
+            this._AddTrackingNumBtn.Text = "Add Tracking No.";
+            this._AddTrackingNumBtn.UseVisualStyleBackColor = true;
+            this._AddTrackingNumBtn.Click += new System.EventHandler(this._AddTrackingNumBtn_Click);
+            // 
+            // _TrackingAddTxt
+            // 
+            this._TrackingAddTxt.Location = new System.Drawing.Point(93, 446);
+            this._TrackingAddTxt.Name = "_TrackingAddTxt";
+            this._TrackingAddTxt.Size = new System.Drawing.Size(329, 20);
+            this._TrackingAddTxt.TabIndex = 54;
+            this._TrackingAddTxt.Visible = false;
+            // 
             // OrderDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 619);
+            this.Controls.Add(this._TrackingAddTxt);
+            this.Controls.Add(this._AddTrackingNumBtn);
             this.Controls.Add(this._ReprintBtn);
             this.Controls.Add(this._PaidAmountTxt);
             this.Controls.Add(this.label25);
@@ -675,5 +698,7 @@
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.TextBox _PaidAmountTxt;
         private System.Windows.Forms.Button _ReprintBtn;
+        private System.Windows.Forms.Button _AddTrackingNumBtn;
+        private System.Windows.Forms.TextBox _TrackingAddTxt;
     }
 }

@@ -25,16 +25,16 @@ namespace MarketplaceWinForm
 
         private void orderAndInvoicesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //OrdersForm frm = new OrdersForm();
-            //frm.MdiParent = this;
-            //frm.Show();
+            OrdersForm frm = new OrdersForm();
+            frm.MdiParent = this;
+            frm.Show();
         }
 
         private void addShipmentToOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AddShipmentToOrderForm frm = new AddShipmentToOrderForm();
-            frm.MdiParent = this;
-            frm.Show();
+            //AddShipmentToOrderForm frm = new AddShipmentToOrderForm();
+            //frm.MdiParent = this;
+            //frm.Show();
         }
 
         private void EndOfDayToolStripMenuItem_Click(object sender, EventArgs e)
@@ -58,9 +58,9 @@ namespace MarketplaceWinForm
 
         private void SKUMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SKUMapForm frm = new SKUMapForm();
-            frm.MdiParent = this;
-            frm.Show();
+            //SKUMapForm frm = new SKUMapForm();
+           // frm.MdiParent = this;
+            //frm.Show();
         }
     }
 }

@@ -31,6 +31,18 @@ namespace MarketplaceWinForm
             {
                 this._ReprintBtn.Enabled = false;
             }
+            if(orderHeaderDr["TrackingNum"].ToString()=="")
+            {
+                this._AddTrackingNumBtn.Enabled = true;
+                this._TrackingLinkLab.Visible = false;
+                this._TrackingAddTxt.Visible = true;
+                this._ShippingCarrierTxt.ReadOnly = false;
+            }
+            else
+            {
+                this._AddTrackingNumBtn.Enabled = false;
+            }
+
             DataTable orderLineDt = new DataTable();
             if(orderHeaderDr==null || orderHeaderDr["OrderNum"]==null)
             {
@@ -132,6 +144,11 @@ namespace MarketplaceWinForm
         private void _TrackingLinkLab_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("https://tools.usps.com/go/TrackConfirmAction?tLabels=" + this._TrackingLinkLab.Text);
+        }
+
+        private void _AddTrackingNumBtn_Click(object sender, EventArgs e)
+        {
+            Db.SaveSingleShipmentInfo(this._OrderNumTxt.Text, this._AccountNameTxt.Text, this._ChannelTxt.Text, this._TrackingAddTxt.Text, this._ShippingCarrierTxt.Text);
         }
     }
 }
