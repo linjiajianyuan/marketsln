@@ -489,7 +489,7 @@ namespace AmazonMarketplaceMdl
                             amazonUploadTrackingDr["ShipperTrackingNumber"] = trackingNumber;
                             amazonUploadTrackingDr["ShippingMethod"] = shippingMethod;
                             amazonUploadTrackingDt.Rows.Add(amazonUploadTrackingDr);
-                            Db.Db.BuildUpdateTrackingTableTran(orderId, "Add To XML", 1);
+                            Db.Db.BuildUpdateTrackingTableTran(orderId, "Add To XML", accountName);
                         }
                         XmlDocument amazonUploadTracingXml = new XmlDocument();
                         amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
@@ -502,7 +502,7 @@ namespace AmazonMarketplaceMdl
                             {
                                 foreach (DataRow dr in shippedInfoDt.Rows)
                                 {
-                                    Db.Db.BuildUpdateTrackingTableTran(dr["OrderID"].ToString(), "Failed", 0);
+                                    Db.Db.BuildUpdateTrackingTableTran(dr["OrderID"].ToString(), "Failed", accountName);
                                 }
                                 ExceptionUtility exceptionUtility = new ExceptionUtility();
                                 exceptionUtility.ErrorWarningMethod("SubmitAmazonTrackingXml ERROR: ",feedSubmissionId + ": SubmitAmazonTrackingXml ERROR: ", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);

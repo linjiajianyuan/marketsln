@@ -77,6 +77,10 @@ namespace EbayService
                                 {
                                     string productId = itemType.ItemID;
                                     string productSku = itemType.SKU;
+                                    if(productSku == "59001")
+                                    {
+                                        Console.WriteLine("");
+                                    }
                                     string productName = itemType.Title;
                                     if (exceptSKUList.Contains(productSku))
                                     {
@@ -94,7 +98,7 @@ namespace EbayService
                                         else
                                         {
                                             double startPrice = itemType.BuyItNowPrice.Value;
-                                            if (quantityAvailable <= 2)
+                                            if (quantityAvailable <= 2 && quantityAvailable >= 1)
                                             {
                                                 DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
                                                 sellingInventoryDr["ItemID"] = productId;

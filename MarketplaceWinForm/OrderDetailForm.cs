@@ -149,6 +149,7 @@ namespace MarketplaceWinForm
         private void _AddTrackingNumBtn_Click(object sender, EventArgs e)
         {
             Db.SaveSingleShipmentInfo(this._OrderNumTxt.Text, this._AccountNameTxt.Text, this._ChannelTxt.Text, this._TrackingAddTxt.Text, this._ShippingCarrierTxt.Text);
+            MessageBox.Show("Done");
         }
     }
 }

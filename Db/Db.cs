@@ -23,7 +23,7 @@ namespace Db
         public static DataTable GetAmazonDeveloperInfo()
         {
             string sql = @"select AccountName, Channel, EbayDeveloperID as SellerID, EbayCertificateID as MarketplaceID, EbayApplicationID as AccessKeyID, Token as SecretKey 
-                            from SellerAccount where AccountName = 'cs.kalegend2015@yahoo.com' and Channel = 'Amazon'";
+                            from SellerAccount where AccountName = 'beautyequation' and Channel = 'Amazon'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["marketplace"]);
@@ -348,7 +348,7 @@ namespace Db
 
         public static DataTable GetAmazonShippedOrderInfo(string accountName)
         {
-            string sql = "select * from ShipmentInfo where IsUpload=0 and Channel='Amazon' and AccountName='" + accountName + "'";
+            string sql = "select * from OrderHeader where Reference2 = '' and TrackingNum <> '' and Channel = 'Amazon' and AccountName='" + accountName + "'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
@@ -358,9 +358,10 @@ namespace Db
                 throw new Exception(ex.Message);
             }
         }
-        public static void BuildUpdateTrackingTableTran(string orderId, string note, int status)
+        public static void BuildUpdateTrackingTableTran(string orderId, string note, string accountName)
         {
-            string sql = "update ShipmentInfo set UploadNote = '" + note + "', IsUpload ='" + status + "', UploadTime='" + (DateTime)SqlDateTime.MinValue + "' where Channel='Amazon' and OrderID ='" + orderId + "'";
+            //string sql = "update ShipmentInfo set UploadNote = '" + note + "', IsUpload ='" + status + "', UploadTime='" + (DateTime)SqlDateTime.MinValue + "' where Channel='Amazon' and OrderID ='" + orderId + "'";
+            string sql = "update OrderHeader set Reference2='" + System.DateTime.Now + "' where OrderNum='" + orderId + "' and AccountName='" + accountName + "'";
             List<string> sqlList = new List<string>();
             try
             {

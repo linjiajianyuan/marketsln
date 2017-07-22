@@ -137,8 +137,7 @@ namespace MarketplaceDb
         }
         public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
         {
-            string sqlUpdate = @"update OrderHeader set TrackingNum='" + trackingNum 
-                               + "' ShippedDate ='" + System.DateTime.Now +"' ShippingCarrier='"+carrier
+            string sqlUpdate = @"update OrderHeader set TrackingNum='" + trackingNum + "', ShippedDate ='" + System.DateTime.Now +"', ShippingCarrier='"+carrier
                                + "' where OrderNum ='" + orderNum + "' and Channel='" 
                                + channel + "'";
             try
