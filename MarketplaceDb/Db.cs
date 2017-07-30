@@ -137,7 +137,9 @@ namespace MarketplaceDb
         }
         public static void CancelOrder(string orderNum, string accountName, string channel)
         {
-            string sqlUpdate = @"update OrderHeader set TrackingNum='CANCELLED ORDER', Reference2 = 'CANCELLED ORDER', ShippedDate ='2000-01-01 00:00:00.000'";
+            string sqlUpdate = @"update OrderHeader set TrackingNum='CANCELLED ORDER', Reference2 = 'CANCELLED ORDER', ShippedDate ='2000-01-01 00:00:00.000'
+                                 where OrderNum ='" + orderNum + "' and Channel='"
+                               + channel + "'";
             try
             {
                 SqlHelper.ExecuteNonQuery(sqlUpdate, ConfigurationManager.AppSettings["pebbledon"]);
