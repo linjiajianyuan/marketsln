@@ -151,5 +151,11 @@ namespace MarketplaceWinForm
             Db.SaveSingleShipmentInfo(this._OrderNumTxt.Text, this._AccountNameTxt.Text, this._ChannelTxt.Text, this._TrackingAddTxt.Text, this._ShippingCarrierTxt.Text);
             MessageBox.Show("Done");
         }
+
+        private void _CancelOrderBtn_Click(object sender, EventArgs e)
+        {
+            Db.CancelOrder(this._OrderNumTxt.Text, this._AccountNameTxt.Text, this._ChannelTxt.Text);
+            MessageBox.Show("Done");
+        }
     }
 }

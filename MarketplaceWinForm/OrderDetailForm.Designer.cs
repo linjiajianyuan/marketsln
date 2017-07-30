@@ -82,6 +82,7 @@
             this._ReprintBtn = new System.Windows.Forms.Button();
             this._AddTrackingNumBtn = new System.Windows.Forms.Button();
             this._TrackingAddTxt = new System.Windows.Forms.TextBox();
+            this._CancelOrderBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._OrderLineDgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -550,7 +551,7 @@
             // _ReprintBtn
             // 
             this._ReprintBtn.Enabled = false;
-            this._ReprintBtn.Location = new System.Drawing.Point(729, 285);
+            this._ReprintBtn.Location = new System.Drawing.Point(638, 285);
             this._ReprintBtn.Name = "_ReprintBtn";
             this._ReprintBtn.Size = new System.Drawing.Size(151, 23);
             this._ReprintBtn.TabIndex = 52;
@@ -576,11 +577,22 @@
             this._TrackingAddTxt.TabIndex = 54;
             this._TrackingAddTxt.Visible = false;
             // 
+            // _CancelOrderBtn
+            // 
+            this._CancelOrderBtn.Location = new System.Drawing.Point(797, 285);
+            this._CancelOrderBtn.Name = "_CancelOrderBtn";
+            this._CancelOrderBtn.Size = new System.Drawing.Size(84, 23);
+            this._CancelOrderBtn.TabIndex = 55;
+            this._CancelOrderBtn.Text = "Cancel Order";
+            this._CancelOrderBtn.UseVisualStyleBackColor = true;
+            this._CancelOrderBtn.Click += new System.EventHandler(this._CancelOrderBtn_Click);
+            // 
             // OrderDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 619);
+            this.Controls.Add(this._CancelOrderBtn);
             this.Controls.Add(this._TrackingAddTxt);
             this.Controls.Add(this._AddTrackingNumBtn);
             this.Controls.Add(this._ReprintBtn);
@@ -700,5 +712,6 @@
         private System.Windows.Forms.Button _ReprintBtn;
         private System.Windows.Forms.Button _AddTrackingNumBtn;
         private System.Windows.Forms.TextBox _TrackingAddTxt;
+        private System.Windows.Forms.Button _CancelOrderBtn;
     }
 }

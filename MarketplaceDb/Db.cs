@@ -135,6 +135,21 @@ namespace MarketplaceDb
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
+        public static void CancelOrder(string orderNum, string accountName, string channel)
+        {
+            string sqlUpdate = @"update OrderHeader set TrackingNum='CANCELLED ORDER', Reference2 = 'CANCELLED ORDER', ShippedDate ='2000-01-01 00:00:00.000'";
+            try
+            {
+                SqlHelper.ExecuteNonQuery(sqlUpdate, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, orderNum + ": CancelOrder ", orderNum + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+
         public static void SaveSingleShipmentInfo(string orderNum,string accountName,string channel, string trackingNum, string carrier)
         {
             string sqlUpdate = @"update OrderHeader set TrackingNum='" + trackingNum + "', ShippedDate ='" + System.DateTime.Now +"', ShippingCarrier='"+carrier
