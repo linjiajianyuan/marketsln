@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AmazonMarketplaceCon
+namespace AmazonUploadTracking
 {
     class Program
     {
@@ -19,8 +19,7 @@ namespace AmazonMarketplaceCon
             int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
             try
             {
-                AmazonMarketplaceMdl.Mdl.GetAmazonOrder();
-                //AmazonMarketplaceMdl.Mdl.CreateAmazonUploadTrackingXml();
+                AmazonMarketplaceMdl.Mdl.CreateAmazonUploadTrackingXml();
             }
             catch (Exception ex)
             {

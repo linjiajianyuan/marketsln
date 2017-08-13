@@ -23,7 +23,7 @@ namespace Db
         public static DataTable GetAmazonDeveloperInfo()
         {
             string sql = @"select AccountName, Channel, EbayDeveloperID as SellerID, EbayCertificateID as MarketplaceID, EbayApplicationID as AccessKeyID, Token as SecretKey 
-                            from SellerAccount where AccountName = 'beautyequation' and Channel = 'Amazon'";
+                            from SellerAccount where Channel = 'Amazon'";
             try
             {
                 return SqlHelper.ExecuteDataTable(sql, ConfigurationManager.AppSettings["marketplace"]);

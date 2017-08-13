@@ -187,104 +187,235 @@ namespace AmazonMarketplaceMdl
                     string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
                     string accountName = sellerAccountDr["AccountName"].ToString();
                     string channel = sellerAccountDr["Channel"].ToString();
-                    DataSet amazonOrderHeaderDs = new DataSet();
-                    amazonOrderHeaderDs = AmazonService.ListOrders.ListAmazonOrderHeader(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
-                    System.Threading.Thread.Sleep(2000);
-                    DataTable amazonOrderHeaderListOrdersResultDt = amazonOrderHeaderDs.Tables["ListOrdersResult"];
-                    // CHECK IF FIRST CALL WITH NEXT TOKEN
-                    string amazonOrderHeaderNextToken = "";
-                    foreach (DataRow amazonOrderHeaderListOrdersResultDr in amazonOrderHeaderListOrdersResultDt.Rows)
+                    List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                    if (exceptList.Contains(accountName))
                     {
-                        DataColumnCollection columns = amazonOrderHeaderListOrdersResultDt.Columns;
-                        if (columns.Contains("NextToken"))
+                        continue;
+                    }
+                    else
+                    {
+                        DataSet amazonOrderHeaderDs = new DataSet();
+                        amazonOrderHeaderDs = AmazonService.ListOrders.ListAmazonOrderHeader(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                        System.Threading.Thread.Sleep(2000);
+                        DataTable amazonOrderHeaderListOrdersResultDt = amazonOrderHeaderDs.Tables["ListOrdersResult"];
+                        // CHECK IF FIRST CALL WITH NEXT TOKEN
+                        string amazonOrderHeaderNextToken = "";
+                        foreach (DataRow amazonOrderHeaderListOrdersResultDr in amazonOrderHeaderListOrdersResultDt.Rows)
                         {
-                            amazonOrderHeaderNextToken = amazonOrderHeaderListOrdersResultDr["NextToken"].ToString();
-                            //Console.WriteLine(amazonOrderHeaderNextToken);
+                            DataColumnCollection columns = amazonOrderHeaderListOrdersResultDt.Columns;
+                            if (columns.Contains("NextToken"))
+                            {
+                                amazonOrderHeaderNextToken = amazonOrderHeaderListOrdersResultDr["NextToken"].ToString();
+                                //Console.WriteLine(amazonOrderHeaderNextToken);
+                            }
+                            else
+                            {
+                                continue;
+                            }
                         }
-                        else
+                        // END
+                        // use NEXT TOKEN to get additional orders
+                        while (amazonOrderHeaderNextToken != "")
+                        {
+                            try
+                            {
+                                System.Threading.Thread.Sleep(2000);
+                                DataSet amazonOrderHeaderNextTokenDs = AmazonService.ListOrders.ListAmazonOrderHeaderByNextToken(accountName, amazonOrderHeaderNextToken, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                DataTable amazonOrderHeaderListOrdersNextTokenResultDt = amazonOrderHeaderNextTokenDs.Tables["ListOrdersByNextTokenResult"];
+                                foreach (DataRow amazonOrderHeaderListOrdersNextTokenResultDr in amazonOrderHeaderListOrdersNextTokenResultDt.Rows)
+                                {
+                                    DataColumnCollection columns = amazonOrderHeaderListOrdersNextTokenResultDt.Columns;
+                                    if (columns.Contains("NextToken"))
+                                    {
+                                        amazonOrderHeaderNextToken = amazonOrderHeaderListOrdersNextTokenResultDr["NextToken"].ToString();
+                                    }
+                                    else
+                                    {
+                                        amazonOrderHeaderNextToken = "";
+                                        continue;
+                                    }
+                                }
+
+                                DataTable amazonOrderHeaderNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["Order"];
+                                DataTable amazonOrderHeaderShippingAddressNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["ShippingAddress"];
+                                DataTable amazonOrderHeaderTotalNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["OrderTotal"];
+                                DataRow[] shippingAddressNextTokenDr;
+                                DataRow[] orderTotalNextTokenDr;
+
+                                foreach (DataRow headerDr in amazonOrderHeaderNextTokenDt.Rows)
+                                {
+                                    AmazonOrderType amazonOrderType = new AmazonOrderType();
+                                    int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
+                                    string amazonOrderId = headerDr["AmazonOrderId"].ToString();
+                                    if (amazonOrderId == "113-0789979-8852265")
+                                    {
+                                        Console.WriteLine("");
+                                    }
+                                    string orderStatus = headerDr["OrderStatus"].ToString();
+                                    DataRow checker = Db.Db.CheckAmazonOrderDuplicatedDb(amazonOrderId);
+                                    if (checker == null)
+                                    {
+                                        try
+                                        {
+                                            shippingAddressNextTokenDr = amazonOrderHeaderShippingAddressNextTokenDt.Select("Order_Id='" + internalOrderId + "'");
+                                            orderTotalNextTokenDr = amazonOrderHeaderTotalNextTokenDt.Select("Order_Id='" + internalOrderId + "'");
+                                            AddAmazonOrderHeader(amazonOrderType, headerDr, shippingAddressNextTokenDr, orderTotalNextTokenDr, orderStatus, accountName);
+                                            DataSet amazonOrderLineNextTokenDs = AmazonService.ListOrders.ListAmazonOrderLine(amazonOrderId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+
+                                            System.Threading.Thread.Sleep(2000);
+                                            DataTable amazonOrderLineListOrderItemsResultNextTokenDt = amazonOrderLineNextTokenDs.Tables["ListOrderItemsResult"];
+
+                                            DataTable amazonOrderLineOrderItemNextTokenDt = amazonOrderLineNextTokenDs.Tables["OrderItem"];
+                                            DataTable amazonOrderLineItemPriceNextTokenDt = amazonOrderLineNextTokenDs.Tables["ItemPrice"];
+                                            DataTable amazonOrderLineShippingPriceNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingPrice"];
+                                            DataTable amazonOrderLinePromotionDiscountNextTokenDt = amazonOrderLineNextTokenDs.Tables["PromotionDiscount"];
+                                            DataTable amazonOrderLineItemTaxNextTokenDt = amazonOrderLineNextTokenDs.Tables["ItemTax"];
+                                            DataTable amazonOrderLineShippingDiscountNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingDiscount"];
+                                            DataTable amazonOrderLineShippingTaxNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingTax"];
+                                            DataTable amazonOrderLineCustomizedDt = amazonOrderLineNextTokenDs.Tables["BuyerCustomizedInfo"];
+                                            foreach (DataRow amazonOrderLineOrderItemNextTokenDr in amazonOrderLineOrderItemNextTokenDt.Rows)
+                                            {
+                                                int internalItemId = ConvertUtility.ToInt(amazonOrderLineOrderItemNextTokenDr["OrderItem_Id"]);
+                                                DataRow[] orderItemDr = amazonOrderLineOrderItemNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemPriceDr = amazonOrderLineItemPriceNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] shippingPriceDr = amazonOrderLineShippingPriceNextTokenDt == null ? null : amazonOrderLineShippingPriceNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] promotionDiscountDr = amazonOrderLinePromotionDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemTaxDr = amazonOrderLineItemTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountNextTokenDt == null ? null : amazonOrderLineShippingDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxNextTokenDt == null ? null : amazonOrderLineShippingTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
+                                                if (itemCustomizedInfoDr == null || itemCustomizedInfoDr.Length <= 0)
+                                                {
+                                                    itemCustomizedInfoDr = null;
+                                                }
+                                                AmazonOrderLineType lineType = new AmazonOrderLineType();
+                                                AddAmazonOrderLine(amazonOrderType, amazonOrderId, lineType, orderItemDr, itemPriceDr, shippingPriceDr, promotionDiscountDr, itemTaxDr, itemShippingDiscountDr, itemShippingTaxDr, itemCustomizedInfoDr);
+                                                amazonOrderType.Lines.Add(lineType);
+                                            }
+                                            try
+                                            {
+                                                Db.Db.AddAmazonOrderTran(accountName, amazonOrderType);
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                                exceptionUtility.CatchMethod(ex, "AddAmazonOrderTran Next Token:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                                continue;
+                                            }
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                            exceptionUtility.CatchMethod(ex, "Amazon Order was canceled:", accountName + " " + amazonOrderId + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                            continue;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Db.Db.UpdateAmazonOrderToCancel(amazonOrderId, orderStatus);
+                                        continue;
+                                    }
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                exceptionUtility.CatchMethod(ex, "use NEXT TOKEN to get additional orders error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                continue;
+                            }
+                        }
+
+
+                        DataTable amazonOrderHeaderDt = amazonOrderHeaderDs.Tables["Order"];
+                        DataTable amazonOrderHeaderShippingAddressDt = amazonOrderHeaderDs.Tables["ShippingAddress"];
+                        DataTable amazonOrderHeaderTotalDt = amazonOrderHeaderDs.Tables["OrderTotal"];
+                        DataRow[] shippingAddressDr;
+                        DataRow[] orderTotalDr;
+                        if (amazonOrderHeaderDt == null)
                         {
                             continue;
                         }
-                    }
-                    // END
-                    // use NEXT TOKEN to get additional orders
-                    while (amazonOrderHeaderNextToken != "")
-                    {
-                        try
+                        else
                         {
-                            System.Threading.Thread.Sleep(2000);
-                            DataSet amazonOrderHeaderNextTokenDs = AmazonService.ListOrders.ListAmazonOrderHeaderByNextToken(accountName,amazonOrderHeaderNextToken, merchantId, marketplaceId, accessKeyId, secretAccessKey);
-                            DataTable amazonOrderHeaderListOrdersNextTokenResultDt = amazonOrderHeaderNextTokenDs.Tables["ListOrdersByNextTokenResult"];
-                            foreach (DataRow amazonOrderHeaderListOrdersNextTokenResultDr in amazonOrderHeaderListOrdersNextTokenResultDt.Rows)
-                            {
-                                DataColumnCollection columns = amazonOrderHeaderListOrdersNextTokenResultDt.Columns;
-                                if (columns.Contains("NextToken"))
-                                {
-                                    amazonOrderHeaderNextToken = amazonOrderHeaderListOrdersNextTokenResultDr["NextToken"].ToString();
-                                }
-                                else
-                                {
-                                    amazonOrderHeaderNextToken = "";
-                                    continue;
-                                }
-                            }
-
-                            DataTable amazonOrderHeaderNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["Order"];
-                            DataTable amazonOrderHeaderShippingAddressNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["ShippingAddress"];
-                            DataTable amazonOrderHeaderTotalNextTokenDt = amazonOrderHeaderNextTokenDs.Tables["OrderTotal"];
-                            DataRow[] shippingAddressNextTokenDr;
-                            DataRow[] orderTotalNextTokenDr;
-
-                            foreach (DataRow headerDr in amazonOrderHeaderNextTokenDt.Rows)
+                            foreach (DataRow headerDr in amazonOrderHeaderDt.Rows)  //GET FIRST EACH ORDER HEADER LINE
                             {
                                 AmazonOrderType amazonOrderType = new AmazonOrderType();
                                 int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
                                 string amazonOrderId = headerDr["AmazonOrderId"].ToString();
-                                if(amazonOrderId == "113-0789979-8852265")
-                                {
-                                    Console.WriteLine("");
-                                }
                                 string orderStatus = headerDr["OrderStatus"].ToString();
                                 DataRow checker = Db.Db.CheckAmazonOrderDuplicatedDb(amazonOrderId);
-                                if (checker == null)
+                                if (checker == null) // if order is not exist
                                 {
                                     try
                                     {
-                                        shippingAddressNextTokenDr = amazonOrderHeaderShippingAddressNextTokenDt.Select("Order_Id='" + internalOrderId + "'");
-                                        orderTotalNextTokenDr = amazonOrderHeaderTotalNextTokenDt.Select("Order_Id='" + internalOrderId + "'");
-                                        AddAmazonOrderHeader(amazonOrderType, headerDr, shippingAddressNextTokenDr, orderTotalNextTokenDr, orderStatus,accountName);
-                                        DataSet amazonOrderLineNextTokenDs = AmazonService.ListOrders.ListAmazonOrderLine(amazonOrderId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
-
-                                        System.Threading.Thread.Sleep(2000);
-                                        DataTable amazonOrderLineListOrderItemsResultNextTokenDt = amazonOrderLineNextTokenDs.Tables["ListOrderItemsResult"];
-
-                                        DataTable amazonOrderLineOrderItemNextTokenDt = amazonOrderLineNextTokenDs.Tables["OrderItem"];
-                                        DataTable amazonOrderLineItemPriceNextTokenDt = amazonOrderLineNextTokenDs.Tables["ItemPrice"];
-                                        DataTable amazonOrderLineShippingPriceNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingPrice"];
-                                        DataTable amazonOrderLinePromotionDiscountNextTokenDt = amazonOrderLineNextTokenDs.Tables["PromotionDiscount"];
-                                        DataTable amazonOrderLineItemTaxNextTokenDt = amazonOrderLineNextTokenDs.Tables["ItemTax"];
-                                        DataTable amazonOrderLineShippingDiscountNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingDiscount"];
-                                        DataTable amazonOrderLineShippingTaxNextTokenDt = amazonOrderLineNextTokenDs.Tables["ShippingTax"];
-                                        DataTable amazonOrderLineCustomizedDt = amazonOrderLineNextTokenDs.Tables["BuyerCustomizedInfo"];
-                                        foreach (DataRow amazonOrderLineOrderItemNextTokenDr in amazonOrderLineOrderItemNextTokenDt.Rows)
+                                        shippingAddressDr = amazonOrderHeaderShippingAddressDt.Select("Order_Id='" + internalOrderId + "'");
+                                        orderTotalDr = amazonOrderHeaderTotalDt.Select("Order_Id='" + internalOrderId + "'");
+                                        AddAmazonOrderHeader(amazonOrderType, headerDr, shippingAddressDr, orderTotalDr, orderStatus, accountName);
+                                        DataSet amazonOrderLineDs = new DataSet();
+                                        try
                                         {
-                                            int internalItemId = ConvertUtility.ToInt(amazonOrderLineOrderItemNextTokenDr["OrderItem_Id"]);
-                                            DataRow[] orderItemDr = amazonOrderLineOrderItemNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemPriceDr = amazonOrderLineItemPriceNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] shippingPriceDr = amazonOrderLineShippingPriceNextTokenDt == null ? null : amazonOrderLineShippingPriceNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] promotionDiscountDr = amazonOrderLinePromotionDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemTaxDr = amazonOrderLineItemTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountNextTokenDt==null?null: amazonOrderLineShippingDiscountNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxNextTokenDt == null ? null : amazonOrderLineShippingTaxNextTokenDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
-                                            if(itemCustomizedInfoDr == null || itemCustomizedInfoDr.Length <= 0)
-                                            {
-                                                itemCustomizedInfoDr = null;
-                                            }
-                                            AmazonOrderLineType lineType = new AmazonOrderLineType();
-                                            AddAmazonOrderLine(amazonOrderType, amazonOrderId, lineType, orderItemDr, itemPriceDr, shippingPriceDr, promotionDiscountDr, itemTaxDr, itemShippingDiscountDr, itemShippingTaxDr, itemCustomizedInfoDr);
-                                            amazonOrderType.Lines.Add(lineType);
+                                            amazonOrderLineDs = AmazonService.ListOrders.ListAmazonOrderLine(amazonOrderId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                            System.Threading.Thread.Sleep(2000);
                                         }
+                                        catch (Exception ex)
+                                        {
+                                            ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                            exceptionUtility.CatchMethod(ex, "AmazonService.ListOrders.ListAmazonOrderLine error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                            continue;
+                                        }
+
+                                        DataTable amazonOrderLineListOrderItemsResultDt = amazonOrderLineDs.Tables["ListOrderItemsResult"];
+
+                                        // CHECK IF FIRST ITEM CALL WITH NEXT TOKEN
+                                        string amazonOrderLineNextToken = "";
+                                        foreach (DataRow amazonOrderLineListOrderItemsResultDr in amazonOrderLineListOrderItemsResultDt.Rows)
+                                        {
+                                            DataColumnCollection columns = amazonOrderLineListOrderItemsResultDt.Columns;
+                                            if (columns.Contains("NextToken"))
+                                            {
+                                                amazonOrderLineNextToken = amazonOrderLineListOrderItemsResultDr["NextToken"].ToString();
+                                            }
+                                            else
+                                            {
+                                                continue;
+                                            }
+                                        }
+                                        // END
+
+                                        DataTable amazonOrderLineOrderItemDt = amazonOrderLineDs.Tables["OrderItem"];
+                                        DataTable amazonOrderLineItemPriceDt = amazonOrderLineDs.Tables["ItemPrice"];
+                                        DataTable amazonOrderLineShippingPriceDt = amazonOrderLineDs.Tables["ShippingPrice"];
+                                        DataTable amazonOrderLinePromotionDiscountDt = amazonOrderLineDs.Tables["PromotionDiscount"];
+                                        DataTable amazonOrderLineItemTaxDt = amazonOrderLineDs.Tables["ItemTax"];
+                                        DataTable amazonOrderLineShippingDiscountDt = amazonOrderLineDs.Tables["ShippingDiscount"];
+                                        DataTable amazonOrderLineShippingTaxDt = amazonOrderLineDs.Tables["ShippingTax"];
+                                        DataTable amazonOrderLineCustomizedDt = amazonOrderLineDs.Tables["BuyerCustomizedInfo"];
+                                        foreach (DataRow amazonOrderLineOrderItemDr in amazonOrderLineOrderItemDt.Rows)
+                                        {
+                                            int internalItemId = ConvertUtility.ToInt(amazonOrderLineOrderItemDr["OrderItem_Id"]);
+                                            DataRow[] orderItemDr = amazonOrderLineOrderItemDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                            DataRow[] itemPriceDr = amazonOrderLineItemPriceDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                            if (itemPriceDr.Length > 0)
+                                            {
+                                                DataRow[] shippingPriceDr = amazonOrderLineShippingPriceDt == null ? null : amazonOrderLineShippingPriceDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] promotionDiscountDr = amazonOrderLinePromotionDiscountDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemTaxDr = amazonOrderLineItemTaxDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountDt == null ? null : amazonOrderLineShippingDiscountDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxDt == null ? null : amazonOrderLineShippingTaxDt.Select("OrderItem_Id='" + internalItemId + "'");
+                                                DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
+                                                AmazonOrderLineType lineType = new AmazonOrderLineType();
+                                                AddAmazonOrderLine(amazonOrderType, amazonOrderId, lineType, orderItemDr, itemPriceDr, shippingPriceDr, promotionDiscountDr, itemTaxDr, itemShippingDiscountDr, itemShippingTaxDr, itemCustomizedInfoDr);
+                                                amazonOrderType.Lines.Add(lineType);
+                                            }
+                                            else
+                                            {
+                                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                                exceptionUtility.ErrorWarningMethod("AddAmazonOrderTran Transaction:", accountName + " " + amazonOrderId + ": one item has been canceled", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                                continue;
+                                            }
+                                        }
+
                                         try
                                         {
                                             Db.Db.AddAmazonOrderTran(accountName, amazonOrderType);
@@ -292,14 +423,14 @@ namespace AmazonMarketplaceMdl
                                         catch (Exception ex)
                                         {
                                             ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                            exceptionUtility.CatchMethod(ex, "AddAmazonOrderTran Next Token:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                            exceptionUtility.CatchMethod(ex, "AddAmazonOrderTran Transaction error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                                             continue;
                                         }
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
                                         ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                        exceptionUtility.CatchMethod(ex, "Amazon Order was canceled:", accountName + " " + amazonOrderId+" "+ ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                        exceptionUtility.CatchMethod(ex, "Order was canceled:", accountName + " " + amazonOrderId + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                                         continue;
                                     }
                                 }
@@ -308,133 +439,9 @@ namespace AmazonMarketplaceMdl
                                     Db.Db.UpdateAmazonOrderToCancel(amazonOrderId, orderStatus);
                                     continue;
                                 }
-                             }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            ExceptionUtility exceptionUtility = new ExceptionUtility();
-                            exceptionUtility.CatchMethod(ex, "use NEXT TOKEN to get additional orders error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                            continue;
-                        }
-                    }
-
-
-                    DataTable amazonOrderHeaderDt = amazonOrderHeaderDs.Tables["Order"];
-                    DataTable amazonOrderHeaderShippingAddressDt = amazonOrderHeaderDs.Tables["ShippingAddress"];
-                    DataTable amazonOrderHeaderTotalDt = amazonOrderHeaderDs.Tables["OrderTotal"];
-                    DataRow[] shippingAddressDr;
-                    DataRow[] orderTotalDr;
-                    if(amazonOrderHeaderDt==null)
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        foreach (DataRow headerDr in amazonOrderHeaderDt.Rows)  //GET FIRST EACH ORDER HEADER LINE
-                        {
-                            AmazonOrderType amazonOrderType = new AmazonOrderType();
-                            int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
-                            string amazonOrderId = headerDr["AmazonOrderId"].ToString();
-                            string orderStatus = headerDr["OrderStatus"].ToString();
-                            DataRow checker = Db.Db.CheckAmazonOrderDuplicatedDb(amazonOrderId);
-                            if (checker == null) // if order is not exist
-                            {
-                                try
-                                {
-                                    shippingAddressDr = amazonOrderHeaderShippingAddressDt.Select("Order_Id='" + internalOrderId + "'");
-                                    orderTotalDr = amazonOrderHeaderTotalDt.Select("Order_Id='" + internalOrderId + "'");
-                                    AddAmazonOrderHeader(amazonOrderType, headerDr, shippingAddressDr, orderTotalDr, orderStatus, accountName);
-                                    DataSet amazonOrderLineDs = new DataSet();
-                                    try
-                                    {
-                                        amazonOrderLineDs = AmazonService.ListOrders.ListAmazonOrderLine(amazonOrderId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
-                                        System.Threading.Thread.Sleep(2000);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                        exceptionUtility.CatchMethod(ex, "AmazonService.ListOrders.ListAmazonOrderLine error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                        continue;
-                                    }
-
-                                    DataTable amazonOrderLineListOrderItemsResultDt = amazonOrderLineDs.Tables["ListOrderItemsResult"];
-
-                                    // CHECK IF FIRST ITEM CALL WITH NEXT TOKEN
-                                    string amazonOrderLineNextToken = "";
-                                    foreach (DataRow amazonOrderLineListOrderItemsResultDr in amazonOrderLineListOrderItemsResultDt.Rows)
-                                    {
-                                        DataColumnCollection columns = amazonOrderLineListOrderItemsResultDt.Columns;
-                                        if (columns.Contains("NextToken"))
-                                        {
-                                            amazonOrderLineNextToken = amazonOrderLineListOrderItemsResultDr["NextToken"].ToString();
-                                        }
-                                        else
-                                        {
-                                            continue;
-                                        }
-                                    }
-                                    // END
-
-                                    DataTable amazonOrderLineOrderItemDt = amazonOrderLineDs.Tables["OrderItem"];
-                                    DataTable amazonOrderLineItemPriceDt = amazonOrderLineDs.Tables["ItemPrice"];
-                                    DataTable amazonOrderLineShippingPriceDt = amazonOrderLineDs.Tables["ShippingPrice"];
-                                    DataTable amazonOrderLinePromotionDiscountDt = amazonOrderLineDs.Tables["PromotionDiscount"];
-                                    DataTable amazonOrderLineItemTaxDt = amazonOrderLineDs.Tables["ItemTax"];
-                                    DataTable amazonOrderLineShippingDiscountDt = amazonOrderLineDs.Tables["ShippingDiscount"];
-                                    DataTable amazonOrderLineShippingTaxDt = amazonOrderLineDs.Tables["ShippingTax"];
-                                    DataTable amazonOrderLineCustomizedDt = amazonOrderLineDs.Tables["BuyerCustomizedInfo"];
-                                    foreach (DataRow amazonOrderLineOrderItemDr in amazonOrderLineOrderItemDt.Rows)
-                                    {
-                                        int internalItemId = ConvertUtility.ToInt(amazonOrderLineOrderItemDr["OrderItem_Id"]);
-                                        DataRow[] orderItemDr = amazonOrderLineOrderItemDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                        DataRow[] itemPriceDr = amazonOrderLineItemPriceDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                        if (itemPriceDr.Length > 0)
-                                        {
-                                            DataRow[] shippingPriceDr = amazonOrderLineShippingPriceDt == null ? null : amazonOrderLineShippingPriceDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] promotionDiscountDr = amazonOrderLinePromotionDiscountDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemTaxDr = amazonOrderLineItemTaxDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemShippingDiscountDr = amazonOrderLineShippingDiscountDt == null ? null : amazonOrderLineShippingDiscountDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemShippingTaxDr = amazonOrderLineShippingTaxDt == null ? null : amazonOrderLineShippingTaxDt.Select("OrderItem_Id='" + internalItemId + "'");
-                                            DataRow[] itemCustomizedInfoDr = amazonOrderLineCustomizedDt == null ? null : amazonOrderLineCustomizedDt.Select("OrderItem_Id ='" + internalItemId + "'");
-                                            AmazonOrderLineType lineType = new AmazonOrderLineType();
-                                            AddAmazonOrderLine(amazonOrderType, amazonOrderId, lineType, orderItemDr, itemPriceDr, shippingPriceDr, promotionDiscountDr, itemTaxDr, itemShippingDiscountDr, itemShippingTaxDr, itemCustomizedInfoDr);
-                                            amazonOrderType.Lines.Add(lineType);
-                                        }
-                                        else
-                                        {
-                                            ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                            exceptionUtility.ErrorWarningMethod("AddAmazonOrderTran Transaction:", accountName + " " + amazonOrderId + ": one item has been canceled", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                            continue;
-                                        }
-                                    }
-
-                                    try
-                                    {
-                                        Db.Db.AddAmazonOrderTran(accountName, amazonOrderType);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                        exceptionUtility.CatchMethod(ex, "AddAmazonOrderTran Transaction error:", accountName + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                        continue;
-                                    }
-                                }
-                                catch (Exception ex)
-                                {
-                                    ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                    exceptionUtility.CatchMethod(ex, "Order was canceled:", accountName + " " + amazonOrderId + " " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                Db.Db.UpdateAmazonOrderToCancel(amazonOrderId, orderStatus);
-                                continue;
                             }
                         }
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -457,97 +464,106 @@ namespace AmazonMarketplaceMdl
                     string accessKeyId = sellerAccountDr["AccessKeyID"].ToString();
                     string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
                     string accountName = sellerAccountDr["AccountName"].ToString();
-                    DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
-                    if (shippedInfoDt.Rows.Count > 0)
+
+                    List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                    if (exceptList.Contains(accountName))
                     {
-                        DataTable amazonUploadTrackingDt = new DataTable();
-                        amazonUploadTrackingDt.Columns.Add("MerchantOrderID", typeof(System.String));
-                        amazonUploadTrackingDt.Columns.Add("FulfillmentDate", typeof(System.String));
-                        amazonUploadTrackingDt.Columns.Add("CarrierCode", typeof(System.String));
-                        amazonUploadTrackingDt.Columns.Add("ShippingMethod", typeof(System.String));
-                        amazonUploadTrackingDt.Columns.Add("ShipperTrackingNumber", typeof(System.String));
-                        string orderId = "";
-                        DateTime shipDate;
-                        string carrierCode = "";
-                        string trackingNumber = "";
-                        string shippingMethod = "";
-
-                        foreach (DataRow dr in shippedInfoDt.Rows)
-                        {
-                            orderId = dr["OrderNum"].ToString();
-                            shipDate = ConvertUtility.ToDateTime(dr["EnterDate"]);
-                            carrierCode = ConfigurationManager.AppSettings["defaultCarrier"];
-                            trackingNumber = dr["TrackingNum"].ToString();
-                            shippingMethod = ConfigurationManager.AppSettings["defaultShippingMethod"];
-                            TimeZone zone = TimeZone.CurrentTimeZone;
-                            DateTime universal = zone.ToUniversalTime(shipDate).AddHours(0);
-                            var ISO8601String = universal.ToString(@"yyyy-MM-dd\THH:mm:ss");
-                            DataRow amazonUploadTrackingDr = amazonUploadTrackingDt.NewRow();
-                            amazonUploadTrackingDr["MerchantOrderID"] = orderId;
-                            amazonUploadTrackingDr["FulfillmentDate"] = ISO8601String;
-                            amazonUploadTrackingDr["CarrierCode"] = carrierCode;
-                            amazonUploadTrackingDr["ShipperTrackingNumber"] = trackingNumber;
-                            amazonUploadTrackingDr["ShippingMethod"] = shippingMethod;
-                            amazonUploadTrackingDt.Rows.Add(amazonUploadTrackingDr);
-                            Db.Db.BuildUpdateTrackingTableTran(orderId, "Add To XML", accountName);
-                        }
-                        XmlDocument amazonUploadTracingXml = new XmlDocument();
-                        amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
-                        amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml");
-                        string feedSubmissionId = "";
-                        try
-                        {
-                            feedSubmissionId = AmazonService.SubmitTrackingFeed.SubmitAmazonTrackingFeed(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml", merchantId, marketplaceId, accessKeyId, secretAccessKey);
-                            if (feedSubmissionId == "")
-                            {
-                                foreach (DataRow dr in shippedInfoDt.Rows)
-                                {
-                                    Db.Db.BuildUpdateTrackingTableTran(dr["OrderID"].ToString(), "Failed", accountName);
-                                }
-                                ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                exceptionUtility.ErrorWarningMethod("SubmitAmazonTrackingXml ERROR: ",feedSubmissionId + ": SubmitAmazonTrackingXml ERROR: ", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                            }
-                            else
-                            {
-                                System.Threading.Thread.Sleep(3600000);
-                                AmazonService.GetFeedSubmissionResult.GetAmazonTrackingFeedSubmissionResult(feedSubmissionId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
-                                DataSet amazonTrackingUploadResultDs = AmazonService.LoadXml.LoadAmazonTrackingUploadResultXml();
-                                if (amazonTrackingUploadResultDs.Tables.Count <= 0)
-                                {
-                                    ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                    exceptionUtility.ErrorWarningMethod("LoadTrackingResultReport: ", feedSubmissionId + ": Wait To Long for getting result Feed ID" , senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                }
-                                else
-                                {
-                                    DataTable resultProcessingSummaryDt = amazonTrackingUploadResultDs.Tables["ProcessingSummary"];
-                                    int messagesProcessed = 0;
-                                    int messagesWithError = 0;
-                                    int messagesSuccessful = 0;
-                                    foreach (DataRow resultProcessingSummaryDr in resultProcessingSummaryDt.Rows)
-                                    {
-                                        messagesProcessed = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesProcessed"]);
-                                        messagesWithError = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesWithError"]);
-                                        messagesSuccessful = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesSuccessful"]);
-                                    }
-                                    if (messagesProcessed <= 0 || (messagesProcessed > 0 && messagesWithError > 0))
-                                    {
-                                        ExceptionUtility exceptionUtility = new ExceptionUtility();
-                                        exceptionUtility.ErrorWarningMethod("Submit Amazon Tracking Error: ", "Processed:"+ messagesProcessed + " | Error:" + messagesWithError + " | " + " Successful: " + messagesSuccessful + " " + feedSubmissionId, senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                                    }
-
-                                }
-                            }
-                        }
-                        catch(Exception ex)
-                        {
-                            ExceptionUtility exceptionUtility = new ExceptionUtility();
-                            exceptionUtility.CatchMethod(ex, accountName + ": UploadAmazonTrackingXmlAndGetResult ERROR: ",  ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
-                            continue;
-                        }
+                        continue;
                     }
                     else
                     {
-                        continue; // no tracking number need to be uploaded
+                        DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
+                        if (shippedInfoDt.Rows.Count > 0)
+                        {
+                            DataTable amazonUploadTrackingDt = new DataTable();
+                            amazonUploadTrackingDt.Columns.Add("MerchantOrderID", typeof(System.String));
+                            amazonUploadTrackingDt.Columns.Add("FulfillmentDate", typeof(System.String));
+                            amazonUploadTrackingDt.Columns.Add("CarrierCode", typeof(System.String));
+                            amazonUploadTrackingDt.Columns.Add("ShippingMethod", typeof(System.String));
+                            amazonUploadTrackingDt.Columns.Add("ShipperTrackingNumber", typeof(System.String));
+                            string orderId = "";
+                            DateTime shipDate;
+                            string carrierCode = "";
+                            string trackingNumber = "";
+                            string shippingMethod = "";
+
+                            foreach (DataRow dr in shippedInfoDt.Rows)
+                            {
+                                orderId = dr["OrderNum"].ToString();
+                                shipDate = ConvertUtility.ToDateTime(dr["EnterDate"]);
+                                carrierCode = ConfigurationManager.AppSettings["defaultCarrier"];
+                                trackingNumber = dr["TrackingNum"].ToString();
+                                shippingMethod = ConfigurationManager.AppSettings["defaultShippingMethod"];
+                                TimeZone zone = TimeZone.CurrentTimeZone;
+                                DateTime universal = zone.ToUniversalTime(shipDate).AddHours(0);
+                                var ISO8601String = universal.ToString(@"yyyy-MM-dd\THH:mm:ss");
+                                DataRow amazonUploadTrackingDr = amazonUploadTrackingDt.NewRow();
+                                amazonUploadTrackingDr["MerchantOrderID"] = orderId;
+                                amazonUploadTrackingDr["FulfillmentDate"] = ISO8601String;
+                                amazonUploadTrackingDr["CarrierCode"] = carrierCode;
+                                amazonUploadTrackingDr["ShipperTrackingNumber"] = trackingNumber;
+                                amazonUploadTrackingDr["ShippingMethod"] = shippingMethod;
+                                amazonUploadTrackingDt.Rows.Add(amazonUploadTrackingDr);
+                                Db.Db.BuildUpdateTrackingTableTran(orderId, "Add To XML", accountName);
+                            }
+                            XmlDocument amazonUploadTracingXml = new XmlDocument();
+                            amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
+                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml");
+                            string feedSubmissionId = "";
+                            try
+                            {
+                                feedSubmissionId = AmazonService.SubmitTrackingFeed.SubmitAmazonTrackingFeed(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml", merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                if (feedSubmissionId == "")
+                                {
+                                    foreach (DataRow dr in shippedInfoDt.Rows)
+                                    {
+                                        Db.Db.BuildUpdateTrackingTableTran(dr["OrderID"].ToString(), "Failed", accountName);
+                                    }
+                                    ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                    exceptionUtility.ErrorWarningMethod("SubmitAmazonTrackingXml ERROR: ", feedSubmissionId + ": SubmitAmazonTrackingXml ERROR: ", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                }
+                                /*else
+                                {
+                                    System.Threading.Thread.Sleep(3600000);
+                                    AmazonService.GetFeedSubmissionResult.GetAmazonTrackingFeedSubmissionResult(feedSubmissionId, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                    DataSet amazonTrackingUploadResultDs = AmazonService.LoadXml.LoadAmazonTrackingUploadResultXml();
+                                    if (amazonTrackingUploadResultDs.Tables.Count <= 0)
+                                    {
+                                        ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                        exceptionUtility.ErrorWarningMethod("LoadTrackingResultReport: ", feedSubmissionId + ": Wait To Long for getting result Feed ID", senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                    }
+                                    else
+                                    {
+                                        DataTable resultProcessingSummaryDt = amazonTrackingUploadResultDs.Tables["ProcessingSummary"];
+                                        int messagesProcessed = 0;
+                                        int messagesWithError = 0;
+                                        int messagesSuccessful = 0;
+                                        foreach (DataRow resultProcessingSummaryDr in resultProcessingSummaryDt.Rows)
+                                        {
+                                            messagesProcessed = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesProcessed"]);
+                                            messagesWithError = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesWithError"]);
+                                            messagesSuccessful = ConvertUtility.ToInt(resultProcessingSummaryDr["MessagesSuccessful"]);
+                                        }
+                                        if (messagesProcessed <= 0 || (messagesProcessed > 0 && messagesWithError > 0))
+                                        {
+                                            ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                            exceptionUtility.ErrorWarningMethod("Submit Amazon Tracking Error: ", "Processed:" + messagesProcessed + " | Error:" + messagesWithError + " | " + " Successful: " + messagesSuccessful + " " + feedSubmissionId, senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                        }
+
+                                    }
+                                }*/
+                            }
+                            catch (Exception ex)
+                            {
+                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                exceptionUtility.CatchMethod(ex, accountName + ": UploadAmazonTrackingXmlAndGetResult ERROR: ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            continue; // no tracking number need to be uploaded
+                        }
                     }
                 }
             }
