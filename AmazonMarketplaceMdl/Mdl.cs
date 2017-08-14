@@ -88,7 +88,8 @@ namespace AmazonMarketplaceMdl
                 var areas = surfaces0["areas"];
                 foreach(var area in areas)
                 {
-                    customizedInfo = customizedInfo + "|" + area["fontFamily"].ToString() + "," + area["label"].ToString() + "," + area["text"].ToString();
+                    //customizedInfo = customizedInfo + "|" + area["fontFamily"].ToString() + "," + area["label"].ToString() + "," + area["text"].ToString();
+                    customizedInfo = customizedInfo + "|" + area["colorName"].ToString() + "," + area["fontFamily"].ToString() + "," + area["label"].ToString() + "," + area["text"].ToString();
                 }
                 
                 File.Delete(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\CustomizedInfo\\" + fileName);
