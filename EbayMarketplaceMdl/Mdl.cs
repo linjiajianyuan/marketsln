@@ -35,7 +35,16 @@ namespace EbayMarketplaceMdl
                         {
                             string trackingNum = dr["TrackingNum"].ToString();
                             string orderNum = dr["OrderNum"].ToString();
-                            string carrier = ConfigurationManager.AppSettings["defaultCarrier"];
+                            string carrier = "";
+                            if(dr["ShippingCarrier"]!=null || dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
+                            {
+                                carrier = "Fedex";
+                            }
+                            else
+                            {
+                                carrier = ConfigurationManager.AppSettings["defaultCarrier"];
+                            }
+                            
                             EbayService.UploadTrackingNum.UploadSingleTrackingNum(trackingNum, orderNum, carrier, accountName, token);
                         }
                     }
