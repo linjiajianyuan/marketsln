@@ -492,7 +492,14 @@ namespace AmazonMarketplaceMdl
                             {
                                 orderId = dr["OrderNum"].ToString();
                                 shipDate = ConvertUtility.ToDateTime(dr["EnterDate"]);
-                                carrierCode = ConfigurationManager.AppSettings["defaultCarrier"];
+                                if (dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
+                                {
+                                    carrierCode = "Fedex";
+                                }
+                                else
+                                {
+                                    carrierCode = ConfigurationManager.AppSettings["defaultCarrier"];
+                                }
                                 trackingNumber = dr["TrackingNum"].ToString();
                                 shippingMethod = ConfigurationManager.AppSettings["defaultShippingMethod"];
                                 TimeZone zone = TimeZone.CurrentTimeZone;

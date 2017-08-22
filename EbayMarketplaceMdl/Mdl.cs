@@ -36,7 +36,7 @@ namespace EbayMarketplaceMdl
                             string trackingNum = dr["TrackingNum"].ToString();
                             string orderNum = dr["OrderNum"].ToString();
                             string carrier = "";
-                            if(dr["ShippingCarrier"]!=null || dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
+                            if(dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
                             {
                                 carrier = "Fedex";
                             }
