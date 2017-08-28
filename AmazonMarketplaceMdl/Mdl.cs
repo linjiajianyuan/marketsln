@@ -248,10 +248,6 @@ namespace AmazonMarketplaceMdl
                                     AmazonOrderType amazonOrderType = new AmazonOrderType();
                                     int internalOrderId = ConvertUtility.ToInt(headerDr["Order_Id"]);
                                     string amazonOrderId = headerDr["AmazonOrderId"].ToString();
-                                    if (amazonOrderId == "113-0789979-8852265")
-                                    {
-                                        Console.WriteLine("");
-                                    }
                                     string orderStatus = headerDr["OrderStatus"].ToString();
                                     DataRow checker = Db.Db.CheckAmazonOrderDuplicatedDb(amazonOrderId);
                                     if (checker == null)

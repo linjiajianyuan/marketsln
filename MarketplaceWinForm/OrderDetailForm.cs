@@ -157,5 +157,10 @@ namespace MarketplaceWinForm
             Db.CancelOrder(this._OrderNumTxt.Text, this._AccountNameTxt.Text, this._ChannelTxt.Text);
             MessageBox.Show("Done");
         }
+
+        private void _NoteTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
