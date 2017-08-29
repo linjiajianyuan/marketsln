@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PebbledonUtilityLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -61,6 +62,21 @@ namespace MarketplaceWinForm
             //SKUMapForm frm = new SKUMapForm();
            // frm.MdiParent = this;
             //frm.Show();
+        }
+
+        private void importVisionInventoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                DataTable csvTable = new DataTable();
+                csvTable = CsvUtility.LoadCsvFileAsDataTable(openFileDialog1.FileName);
+
+            }
+            else
+            {
+                //
+            }
         }
     }
 }

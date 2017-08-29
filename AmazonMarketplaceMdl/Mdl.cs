@@ -488,7 +488,7 @@ namespace AmazonMarketplaceMdl
                             foreach (DataRow dr in shippedInfoDt.Rows)
                             {
                                 orderId = dr["OrderNum"].ToString();
-                                shipDate = ConvertUtility.ToDateTime(dr["EnterDate"]);
+                                shipDate = ConvertUtility.ToDateTime(dr["ShippedDate"]);
                                 if (dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
                                 {
                                     carrierCode = "Fedex";

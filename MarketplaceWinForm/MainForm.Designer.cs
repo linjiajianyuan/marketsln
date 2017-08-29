@@ -36,6 +36,7 @@
             this.checkShipmentInformationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SKUMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importVisionInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,7 +93,8 @@
             // inventoryToolStripMenuItem
             // 
             this.inventoryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SKUMapToolStripMenuItem});
+            this.SKUMapToolStripMenuItem,
+            this.importVisionInventoryToolStripMenuItem});
             this.inventoryToolStripMenuItem.Name = "inventoryToolStripMenuItem";
             this.inventoryToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.inventoryToolStripMenuItem.Text = "Inventory";
@@ -101,9 +103,16 @@
             // SKUMapToolStripMenuItem
             // 
             this.SKUMapToolStripMenuItem.Name = "SKUMapToolStripMenuItem";
-            this.SKUMapToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.SKUMapToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.SKUMapToolStripMenuItem.Text = "SKU Map";
             this.SKUMapToolStripMenuItem.Click += new System.EventHandler(this.SKUMapToolStripMenuItem_Click);
+            // 
+            // importVisionInventoryToolStripMenuItem
+            // 
+            this.importVisionInventoryToolStripMenuItem.Name = "importVisionInventoryToolStripMenuItem";
+            this.importVisionInventoryToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
+            this.importVisionInventoryToolStripMenuItem.Text = "Import Vision Inventory";
+            this.importVisionInventoryToolStripMenuItem.Click += new System.EventHandler(this.importVisionInventoryToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -132,6 +141,7 @@
         private System.Windows.Forms.ToolStripMenuItem domesticEndOfDayToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkShipmentInformationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem SKUMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importVisionInventoryToolStripMenuItem;
     }
 }
 

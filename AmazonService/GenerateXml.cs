@@ -33,7 +33,8 @@ namespace AmazonService
             headerNode.AppendChild(documentVersionNode);
 
             XmlNode merchantIdentifierNode = xmlDoc.CreateElement("MerchantIdentifier");
-            merchantIdentifierNode.InnerText = "M_CARPARTSDE_1214223";
+            //merchantIdentifierNode.InnerText = "M_CARPARTSDE_1214223";
+            merchantIdentifierNode.InnerText = "";
             headerNode.AppendChild(merchantIdentifierNode);
 
 
