@@ -469,7 +469,7 @@ namespace AmazonMarketplaceMdl
                     }
                     else
                     {
-                        System.Threading.Thread.Sleep(300000);
+                        //System.Threading.Thread.Sleep(300000);
                         DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
                         if (shippedInfoDt.Rows.Count > 0)
                         {
@@ -513,11 +513,11 @@ namespace AmazonMarketplaceMdl
                             }
                             XmlDocument amazonUploadTracingXml = new XmlDocument();
                             amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
-                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml");
+                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"+ accountName+"_AmazonTrackingForUpload.xml");
                             string feedSubmissionId = "";
                             try
                             {
-                                feedSubmissionId = AmazonService.SubmitTrackingFeed.SubmitAmazonTrackingFeed(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\AmazonTrackingForUpload.xml", merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                feedSubmissionId = AmazonService.SubmitTrackingFeed.SubmitAmazonTrackingFeed(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + accountName + "_AmazonTrackingForUpload.xml", merchantId, marketplaceId, accessKeyId, secretAccessKey);
                                 if (feedSubmissionId == "")
                                 {
                                     foreach (DataRow dr in shippedInfoDt.Rows)
