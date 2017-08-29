@@ -24,7 +24,7 @@ namespace AmazonUploadTracking
             catch (Exception ex)
             {
                 ExceptionUtility exceptionUtility = new ExceptionUtility();
-                exceptionUtility.CatchMethod(ex, "GetAmazonOrder Main ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                exceptionUtility.CatchMethod(ex, "UploadAmazonTracking Main ", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
             }
         }
     }

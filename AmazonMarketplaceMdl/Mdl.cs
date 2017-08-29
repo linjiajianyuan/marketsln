@@ -469,6 +469,7 @@ namespace AmazonMarketplaceMdl
                     }
                     else
                     {
+                        System.Threading.Thread.Sleep(300000);
                         DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
                         if (shippedInfoDt.Rows.Count > 0)
                         {
