@@ -380,13 +380,13 @@ namespace MarketplaceDb
 												
 												                                else Reference1
 												                                end as reference1
-												                                from  [Test].[dbo].[SKUMap] where VendorSKU= cast(replace(cast(aa.Reference1 as nvarchar(max)), 'USE ', '')  as nvarchar  )),cast(0 as nvarchar))  
+												                                from  SKUMap where VendorSKU= cast(replace(cast(aa.Reference1 as nvarchar(max)), 'USE ', '')  as nvarchar  )),cast(0 as nvarchar))  
 			                                when aa.Reference1 like '' then cast(0 as nvarchar)
 			                                else aa.Reference1 
 			                                end as test
 			                                ))
                                  )
-                                 from [Test].[dbo].[SKUMap] aa";
+                                 from SKUMap aa";
                 SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
             }
             catch(Exception ex)

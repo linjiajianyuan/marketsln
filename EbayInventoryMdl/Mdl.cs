@@ -46,6 +46,7 @@ namespace EbayInventoryMdl
                                 int soldQty = ConvertUtility.ToInt(adjustInventoryDr["soldQty"]);
                                 int quantityAvailable = ConvertUtility.ToInt(adjustInventoryDr["quantityAvailable"]);
                                 int isVariation = ConvertUtility.ToInt(adjustInventoryDr["isVariation"]);
+
                                 EbayService.UpdateInventoryByReviseFixedPriceItem.UpdateInventory(accountName, token, itemId, qty, sku, isVariation, soldQty, startPrice);
                             }
                             catch (Exception ex)

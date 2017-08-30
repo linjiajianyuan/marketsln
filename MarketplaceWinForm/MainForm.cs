@@ -66,6 +66,7 @@ namespace MarketplaceWinForm
 
         private void importVisionInventoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            pictureBox1.Visible = true;
             try
             {
                 OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -90,13 +91,14 @@ namespace MarketplaceWinForm
                             MarketplaceDb.Db.UpdateVisionReferenceInventory(visionSku, visionQty);
                         }
                     }
+                    MarketplaceDb.Db.FinalUpdateVisionQty();
+                    MessageBox.Show("Done");
+                    pictureBox1.Visible = false;
                 }
                 else
                 {
                     //
                 }
-                MarketplaceDb.Db.FinalUpdateVisionQty();
-                MessageBox.Show("Done");
             }
             catch(Exception ex)
             {

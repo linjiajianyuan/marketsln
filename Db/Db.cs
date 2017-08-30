@@ -396,7 +396,27 @@ namespace Db
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
-
+        public static DataRow GetVisionSkuInfo(string sku)
+        {
+            try
+            {
+                string sql = @"select * from pebbledon.dbo.SKUMap where iteza0923 = '" + sku + "' or motovehicleparts = 'VFE1001641' or framegeneration = 'VFE1001641' or kalegend = 'VFE1001641' or beautyequation = 'VFE1001641' or kadepot = 'VFE1001641'";
+                try
+                {
+                    return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["marketplace"]);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception(ex.Message);
+                }
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, "GetVisionSkuInfo: ", sku + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
 
     }
 }

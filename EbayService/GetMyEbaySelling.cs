@@ -81,68 +81,102 @@ namespace EbayService
                                     {
                                         Console.WriteLine("");
                                     }
-                                    string productName = itemType.Title;
-                                    if (exceptSKUList.Contains(productSku))
+                                    DataRow visionSkuDr = Db.Db.GetVisionSkuInfo(productSku);
+                                    if(visionSkuDr != null || visionSkuDr["VendorSKU"].ToString()!="")
                                     {
-                                        continue;
-                                    }
-                                    else if (itemType.Variations == null || itemType.Variations.Variation.Count==0)
-                                    {
-                                        int quantityAvailable = itemType.QuantityAvailable;
-                                        int quantity = itemType.Quantity;
-                                        int soldQty = quantity - quantityAvailable;
-                                        if(itemType.BuyItNowPrice==null)
+                                        int visionQty = ConvertUtility.ToInt(visionSkuDr["qty"]);
+                                        if(visionQty<=2)
                                         {
-                                            continue;
+                                            visionQty = 0;
                                         }
                                         else
                                         {
-                                            double startPrice = itemType.BuyItNowPrice.Value;
-                                            if (quantityAvailable <= 2 && quantityAvailable >= 1)
-                                            {
-                                                DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
-                                                sellingInventoryDr["ItemID"] = productId;
-                                                sellingInventoryDr["SKU"] = itemType.SKU;
-                                                sellingInventoryDr["Name"] = productName;
-                                                sellingInventoryDr["Qty"] = quantity;
-                                                sellingInventoryDr["StartPrice"] = startPrice;
-                                                sellingInventoryDr["SoldQty"] = soldQty;
-                                                sellingInventoryDr["QuantityAvailable"] = quantityAvailable;
-                                                sellingInventoryDr["IsVariation"] = 0;
-                                                sellingInventoryDt.Rows.Add(sellingInventoryDr);
-                                            }
-                                            else
-                                            {
-                                                continue;
-                                            }
+                                            visionQty = 3;
+                                        }
+                                        if(itemType.Quantity!=visionQty)
+                                        {
+                                            DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
+                                            sellingInventoryDr["ItemID"] = productId;
+                                            sellingInventoryDr["SKU"] = itemType.SKU;
+                                            sellingInventoryDr["Name"] = itemType.Title;
+                                            sellingInventoryDr["Qty"] = itemType.Quantity;
+                                            sellingInventoryDr["StartPrice"] = itemType.BuyItNowPrice.Value;
+                                            sellingInventoryDr["SoldQty"] = itemType.Quantity - itemType.QuantityAvailable;
+                                            sellingInventoryDr["QuantityAvailable"] = itemType.QuantityAvailable;
+                                            sellingInventoryDr["IsVariation"] = 0;
+                                            sellingInventoryDt.Rows.Add(sellingInventoryDr);
+                                        }
+                                        else
+                                        {
+                                            continue;
                                         }
                                     }
                                     else
                                     {
-                                        foreach (VariationType simpleType in itemType.Variations.Variation)
+                                        string productName = itemType.Title;
+                                        if (exceptSKUList.Contains(productSku))
                                         {
-                                            productSku = simpleType.SKU;
-                                            int quantity = simpleType.Quantity;
-                                            double startPrice = simpleType.StartPrice.Value;
-                                            if (quantity == 1)
-                                            {
-                                                DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
-                                                sellingInventoryDr["ItemID"] = productId;
-                                                sellingInventoryDr["SKU"] = productSku;
-                                                sellingInventoryDr["Name"] = productName;
-                                                sellingInventoryDr["Qty"] = simpleType.Quantity;
-                                                sellingInventoryDr["StartPrice"] = startPrice;
-                                                sellingInventoryDr["SoldQty"] = -1;
-                                                sellingInventoryDr["QuantityAvailable"] = -1;
-                                                sellingInventoryDr["IsVariation"] = 1;
-                                                sellingInventoryDt.Rows.Add(sellingInventoryDr);
-                                            }
-                                            else
+                                            continue;
+                                        }
+                                        else if (itemType.Variations == null || itemType.Variations.Variation.Count == 0)
+                                        {
+                                            int quantityAvailable = itemType.QuantityAvailable;
+                                            int quantity = itemType.Quantity;
+                                            int soldQty = quantity - quantityAvailable;
+                                            if (itemType.BuyItNowPrice == null)
                                             {
                                                 continue;
                                             }
+                                            else
+                                            {
+                                                double startPrice = itemType.BuyItNowPrice.Value;
+                                                if (quantityAvailable <= 2 && quantityAvailable >= 1)
+                                                {
+                                                    DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
+                                                    sellingInventoryDr["ItemID"] = productId;
+                                                    sellingInventoryDr["SKU"] = itemType.SKU;
+                                                    sellingInventoryDr["Name"] = productName;
+                                                    sellingInventoryDr["Qty"] = quantity;
+                                                    sellingInventoryDr["StartPrice"] = startPrice;
+                                                    sellingInventoryDr["SoldQty"] = soldQty;
+                                                    sellingInventoryDr["QuantityAvailable"] = quantityAvailable;
+                                                    sellingInventoryDr["IsVariation"] = 0;
+                                                    sellingInventoryDt.Rows.Add(sellingInventoryDr);
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                            foreach (VariationType simpleType in itemType.Variations.Variation)
+                                            {
+                                                productSku = simpleType.SKU;
+                                                int quantity = simpleType.Quantity;
+                                                double startPrice = simpleType.StartPrice.Value;
+                                                if (quantity == 1)
+                                                {
+                                                    DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
+                                                    sellingInventoryDr["ItemID"] = productId;
+                                                    sellingInventoryDr["SKU"] = productSku;
+                                                    sellingInventoryDr["Name"] = productName;
+                                                    sellingInventoryDr["Qty"] = simpleType.Quantity;
+                                                    sellingInventoryDr["StartPrice"] = startPrice;
+                                                    sellingInventoryDr["SoldQty"] = -1;
+                                                    sellingInventoryDr["QuantityAvailable"] = -1;
+                                                    sellingInventoryDr["IsVariation"] = 1;
+                                                    sellingInventoryDt.Rows.Add(sellingInventoryDr);
+                                                }
+                                                else
+                                                {
+                                                    continue;
+                                                }
+                                            }
                                         }
                                     }
+                                    
                                 }
                                 catch (Exception ex)
                                 {
