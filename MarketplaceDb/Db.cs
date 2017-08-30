@@ -309,6 +309,92 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
+        public static DataRow CheckNewVisionSKU(string visionSku)
+        {
+            string sql = "select * from SKUMap where VendorSKU ='"+visionSku+"'";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
 
+        }
+        public static void UpdateVisionReferenceInventory(string visionSku, string visionInventory)
+        {
+            try
+            {
+                string sql = "update SKUMap set Reference1 ='" + visionInventory + "' where VendorSKU = '" + visionSku + "'";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, "UpdateVisionReferenceInventory", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+        public static DataRow GetMaxItemID()
+        {
+            string sql = "  select max([ItemID]) as maxItemID  FROM [Pebbledon].[dbo].[SKUMap]";
+            try
+            {
+                return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+        public static void InsertNewVisionItem(int maxItemId, string vendorSKU, string visionQty)
+        {
+            try
+            {
+                string sql = @"insert into SKUMap (VendorSKU, ItemID, iteza0923, 
+                                    motovehicleparts, framegeneration, kalegend, 
+                                    beautyequation,kadepot, Reference1) 
+                            values ('"+ vendorSKU + "','"+maxItemId + "','VIE" + maxItemId
+                            + "','VME" + maxItemId + "','VFE" + maxItemId + "','VKA" + maxItemId 
+                            + "','VBA" + maxItemId+ "','VKAA" + maxItemId + "','" + visionQty
+                            + "')";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, "InsertNewVisionItem", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
+        public static void FinalUpdateVisionQty()
+        {
+            try
+            {
+                string sql = @"
+                                 update  aa set aa.qty = convert(int, convert(varchar(max),(select 
+				                                case 
+			                                when aa.Reference1 like 'USE%' then isnull((select 
+												                                case when Reference1 like '' then cast(0 as nvarchar)
+												
+												                                else Reference1
+												                                end as reference1
+												                                from  [Test].[dbo].[SKUMap] where VendorSKU= cast(replace(cast(aa.Reference1 as nvarchar(max)), 'USE ', '')  as nvarchar  )),cast(0 as nvarchar))  
+			                                when aa.Reference1 like '' then cast(0 as nvarchar)
+			                                else aa.Reference1 
+			                                end as test
+			                                ))
+                                 )
+                                 from [Test].[dbo].[SKUMap] aa";
+                SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch(Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, "FinalUpdateVisionQty", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+        }
     }
 }

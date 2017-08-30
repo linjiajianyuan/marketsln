@@ -66,17 +66,43 @@ namespace MarketplaceWinForm
 
         private void importVisionInventoryToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            try
             {
-                DataTable csvTable = new DataTable();
-                csvTable = CsvUtility.LoadCsvFileAsDataTable(openFileDialog1.FileName);
-
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    DataTable csvTable = new DataTable();
+                    csvTable = CsvUtility.LoadCsvFileAsDataTable(openFileDialog1.FileName);
+                    foreach (DataRow csvDr in csvTable.Rows)
+                    {
+                        string visionSku = csvDr["Vision Item #"].ToString().Trim();
+                        string visionQty = csvDr["CA Inventory"].ToString().Trim();
+                        
+                        DataRow isNewVisionSkuDr = MarketplaceDb.Db.CheckNewVisionSKU(visionSku);
+                        if (isNewVisionSkuDr == null || isNewVisionSkuDr["VendorSKU"].ToString() == "")
+                        {
+                            DataRow dr = MarketplaceDb.Db.GetMaxItemID();
+                            int nextMaxItemId = ConvertUtility.ToInt(dr["maxItemID"].ToString()) + 1;
+                            MarketplaceDb.Db.InsertNewVisionItem(nextMaxItemId, visionSku, visionQty);
+                        }
+                        else
+                        {
+                            MarketplaceDb.Db.UpdateVisionReferenceInventory(visionSku, visionQty);
+                        }
+                    }
+                }
+                else
+                {
+                    //
+                }
+                MarketplaceDb.Db.FinalUpdateVisionQty();
+                MessageBox.Show("Done");
             }
-            else
+            catch(Exception ex)
             {
-                //
+                MessageBox.Show("Error: "+ex.Message.ToString());
             }
+           
         }
     }
 }
