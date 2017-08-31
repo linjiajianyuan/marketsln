@@ -77,12 +77,12 @@ namespace EbayService
                                 {
                                     string productId = itemType.ItemID;
                                     string productSku = itemType.SKU;
-                                    if(productSku == "59001")
+                                    if(productId == "262822015178")
                                     {
                                         Console.WriteLine("");
                                     }
                                     DataRow visionSkuDr = Db.Db.GetVisionSkuInfo(productSku);
-                                    if(visionSkuDr != null || visionSkuDr["VendorSKU"].ToString()!="")
+                                    if(visionSkuDr != null)
                                     {
                                         int visionQty = ConvertUtility.ToInt(visionSkuDr["qty"]);
                                         if(visionQty<=2)
@@ -91,7 +91,7 @@ namespace EbayService
                                         }
                                         else
                                         {
-                                            visionQty = 3;
+                                            visionQty = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
                                         }
                                         if(itemType.Quantity!=visionQty)
                                         {
@@ -99,7 +99,7 @@ namespace EbayService
                                             sellingInventoryDr["ItemID"] = productId;
                                             sellingInventoryDr["SKU"] = itemType.SKU;
                                             sellingInventoryDr["Name"] = itemType.Title;
-                                            sellingInventoryDr["Qty"] = itemType.Quantity;
+                                            sellingInventoryDr["Qty"] = visionQty;
                                             sellingInventoryDr["StartPrice"] = itemType.BuyItNowPrice.Value;
                                             sellingInventoryDr["SoldQty"] = itemType.Quantity - itemType.QuantityAvailable;
                                             sellingInventoryDr["QuantityAvailable"] = itemType.QuantityAvailable;
@@ -136,7 +136,8 @@ namespace EbayService
                                                     sellingInventoryDr["ItemID"] = productId;
                                                     sellingInventoryDr["SKU"] = itemType.SKU;
                                                     sellingInventoryDr["Name"] = productName;
-                                                    sellingInventoryDr["Qty"] = quantity;
+                                                    //sellingInventoryDr["Qty"] = quantity;
+                                                    sellingInventoryDr["Qty"] = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
                                                     sellingInventoryDr["StartPrice"] = startPrice;
                                                     sellingInventoryDr["SoldQty"] = soldQty;
                                                     sellingInventoryDr["QuantityAvailable"] = quantityAvailable;
@@ -156,13 +157,14 @@ namespace EbayService
                                                 productSku = simpleType.SKU;
                                                 int quantity = simpleType.Quantity;
                                                 double startPrice = simpleType.StartPrice.Value;
-                                                if (quantity == 1)
+                                                if (quantity > 0 && quantity>3)
                                                 {
                                                     DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
                                                     sellingInventoryDr["ItemID"] = productId;
                                                     sellingInventoryDr["SKU"] = productSku;
                                                     sellingInventoryDr["Name"] = productName;
-                                                    sellingInventoryDr["Qty"] = simpleType.Quantity;
+                                                    //sellingInventoryDr["Qty"] = simpleType.Quantity;
+                                                    sellingInventoryDr["Qty"] = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
                                                     sellingInventoryDr["StartPrice"] = startPrice;
                                                     sellingInventoryDr["SoldQty"] = -1;
                                                     sellingInventoryDr["QuantityAvailable"] = -1;

@@ -400,7 +400,7 @@ namespace Db
         {
             try
             {
-                string sql = @"select * from pebbledon.dbo.SKUMap where iteza0923 = '" + sku + "' or motovehicleparts = 'VFE1001641' or framegeneration = 'VFE1001641' or kalegend = 'VFE1001641' or beautyequation = 'VFE1001641' or kadepot = 'VFE1001641'";
+                string sql = @"select * from pebbledon.dbo.SKUMap where iteza0923 = '" + sku + "' or motovehicleparts = '" + sku + "' or framegeneration = '" + sku + "' or kalegend = '" + sku + "' or beautyequation = '" + sku + "' or kadepot = '" + sku + "'";
                 try
                 {
                     return SqlHelper.GetDataRow(sql, ConfigurationManager.AppSettings["marketplace"]);

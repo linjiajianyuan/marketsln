@@ -37,8 +37,8 @@ namespace EbayService
                 if(isVariation==0)
                 {
                     item.ItemID = itemId;
-                    item.QuantityAvailable = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
-                    item.Quantity = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
+                    item.QuantityAvailable = qty;
+                    item.Quantity = qty;
                     //item.StartPrice.Value = startPrice;
                     reviseFixedPriceItemCall.Item = item;
                     reviseFixedPriceItemCall.Execute();
@@ -51,7 +51,7 @@ namespace EbayService
                     VariationsType vsType = new VariationsType();
                     
                     simpleType.SKU = sku;
-                    simpleType.Quantity = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
+                    simpleType.Quantity = qty;
                     vtc.Add(simpleType);
                     vsType.Variation = vtc;
                     item.Variations = vsType;
