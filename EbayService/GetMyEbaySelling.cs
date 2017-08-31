@@ -155,7 +155,7 @@ namespace EbayService
                                             foreach (VariationType simpleType in itemType.Variations.Variation)
                                             {
                                                 productSku = simpleType.SKU;
-                                                int quantity = simpleType.Quantity;
+                                                int quantity = simpleType.Quantity-simpleType.SellingStatus.QuantitySold;
                                                 double startPrice = simpleType.StartPrice.Value;
                                                 if (quantity > 0 && quantity>3)
                                                 {
