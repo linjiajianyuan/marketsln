@@ -77,7 +77,7 @@ namespace EbayService
                                 {
                                     string productId = itemType.ItemID;
                                     string productSku = itemType.SKU;
-                                    if(productId == "262822015178")
+                                    if(productId == "252081524116")
                                     {
                                         Console.WriteLine("");
                                     }
@@ -93,7 +93,7 @@ namespace EbayService
                                         {
                                             visionQty = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
                                         }
-                                        if(itemType.Quantity!=visionQty)
+                                        if(itemType.QuantityAvailable != visionQty)
                                         {
                                             DataRow sellingInventoryDr = sellingInventoryDt.NewRow();
                                             sellingInventoryDr["ItemID"] = productId;
