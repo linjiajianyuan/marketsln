@@ -78,17 +78,19 @@ namespace MarketplaceWinForm
                     {
                         string visionSku = csvDr["Vision Item #"].ToString().Trim();
                         string visionQty = csvDr["CA Inventory"].ToString().Trim();
-                        
+                        string visionNjQty = csvDr["NJ Inventory"].ToString().Trim();
+                        string visionTxQty = csvDr["TX Inventory"].ToString().Trim();
+
                         DataRow isNewVisionSkuDr = MarketplaceDb.Db.CheckNewVisionSKU(visionSku);
                         if (isNewVisionSkuDr == null || isNewVisionSkuDr["VendorSKU"].ToString() == "")
                         {
                             DataRow dr = MarketplaceDb.Db.GetMaxItemID();
                             int nextMaxItemId = ConvertUtility.ToInt(dr["maxItemID"].ToString()) + 1;
-                            MarketplaceDb.Db.InsertNewVisionItem(nextMaxItemId, visionSku, visionQty);
+                            MarketplaceDb.Db.InsertNewVisionItem(nextMaxItemId, visionSku, visionQty,visionNjQty, visionTxQty);
                         }
                         else
                         {
-                            MarketplaceDb.Db.UpdateVisionReferenceInventory(visionSku, visionQty);
+                            MarketplaceDb.Db.UpdateVisionReferenceInventory(visionSku, visionQty, visionNjQty, visionTxQty);
                         }
                     }
                     MarketplaceDb.Db.FinalUpdateVisionQty();

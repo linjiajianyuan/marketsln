@@ -322,11 +322,11 @@ namespace MarketplaceDb
             }
 
         }
-        public static void UpdateVisionReferenceInventory(string visionSku, string visionInventory)
+        public static void UpdateVisionReferenceInventory(string visionSku, string visionInventory, string visionNjInventory, string visionTxInventory)
         {
             try
             {
-                string sql = "update SKUMap set Reference1 ='" + visionInventory + "' where VendorSKU = '" + visionSku + "'";
+                string sql = "update SKUMap set Reference1 ='" + visionInventory + "',Reference2 ='"+visionNjInventory +"', Reference3 ='"+visionTxInventory+"' where VendorSKU = '" + visionSku + "'";
                 SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
             }
             catch (Exception ex)
@@ -348,16 +348,17 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-        public static void InsertNewVisionItem(int maxItemId, string vendorSKU, string visionQty)
+        public static void InsertNewVisionItem(int maxItemId, string vendorSKU, string visionQty, string visionNjQty, string visionTxQty)
         {
             try
             {
                 string sql = @"insert into SKUMap (VendorSKU, ItemID, iteza0923, 
                                     motovehicleparts, framegeneration, kalegend, 
-                                    beautyequation,kadepot, Reference1) 
+                                    beautyequation,kadepot, Reference1, Reference2, Reference3) 
                             values ('"+ vendorSKU + "','"+maxItemId + "','VIE" + maxItemId
                             + "','VME" + maxItemId + "','VFE" + maxItemId + "','VKA" + maxItemId 
                             + "','VBA" + maxItemId+ "','VKAA" + maxItemId + "','" + visionQty
+                            + "','" + visionNjQty + "','" + visionTxQty
                             + "')";
                 SqlHelper.ExecuteNonQuery(sql, ConfigurationManager.AppSettings["pebbledon"]);
             }
