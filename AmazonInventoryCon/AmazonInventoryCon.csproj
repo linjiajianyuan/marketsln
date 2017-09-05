@@ -4,15 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6976668A-EFBC-44F7-89C0-FA900CC4C45E}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{0DCC13CF-3BBF-4B6B-A798-7FF6F1C2C933}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AmazonService</RootNamespace>
-    <AssemblyName>AmazonService</AssemblyName>
+    <RootNamespace>AmazonInventoryCon</RootNamespace>
+    <AssemblyName>AmazonInventoryCon</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -30,20 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MarketplaceWebService">
-      <HintPath>..\Lib\MarketplaceWebService.dll</HintPath>
-    </Reference>
-    <Reference Include="MWSClientCsRuntime-1.0, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\MWSClientCsRuntime-1.0.dll</HintPath>
-    </Reference>
-    <Reference Include="MWSOrders_2013-09-01_v2015-09-24">
-      <HintPath>..\Lib\MWSOrders_2013-09-01_v2015-09-24.dll</HintPath>
-    </Reference>
-    <Reference Include="MWSProducts_2011-10-01_v2014-12-16, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Lib\MWSProducts_2011-10-01_v2014-12-16.dll</HintPath>
-    </Reference>
     <Reference Include="PebbledonUtilityLib">
       <HintPath>..\Lib\PebbledonUtilityLib.dll</HintPath>
     </Reference>
@@ -58,15 +47,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GenerateXml.cs" />
-    <Compile Include="GetFeedSubmissionResult.cs" />
-    <Compile Include="GetReport.cs" />
-    <Compile Include="GetReportRequestList.cs" />
-    <Compile Include="ListOrders.cs" />
-    <Compile Include="LoadXml.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RequestReport.cs" />
-    <Compile Include="SubmitTrackingFeed.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AmazonMarketplaceMdl\AmazonMarketplaceMdl.csproj">
+      <Project>{1cea51dd-f3b6-4c14-8fb9-f1e604da2236}</Project>
+      <Name>AmazonMarketplaceMdl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

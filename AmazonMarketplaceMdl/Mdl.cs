@@ -155,7 +155,7 @@ namespace AmazonMarketplaceMdl
             {
                 amazonOrderType.Header.delivery_Instructions = "AmazonFullfillment";
             }
-            string customizedUrl = itemCustomizedInfoDr == null ? "" : itemCustomizedInfoDr[0]["CustomizedURL"].ToString();
+            string customizedUrl = (itemCustomizedInfoDr == null || itemCustomizedInfoDr.Count() == 0) ? "" : itemCustomizedInfoDr[0]["CustomizedURL"].ToString();
             if (customizedUrl == "")
             {
                 amazonOrderType.Header.customizedMessage = amazonOrderType.Header.customizedMessage + "";
@@ -174,6 +174,97 @@ namespace AmazonMarketplaceMdl
         private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
+
+        public static void GetAmazonInventoryReport()
+        {
+            DataTable sellerAccountDt = Db.Db.GetAmazonDeveloperInfo();
+            foreach (DataRow sellerAccountDr in sellerAccountDt.Rows)
+            {
+                string merchantId = sellerAccountDr["SellerID"].ToString();
+                string marketplaceId = sellerAccountDr["MarketplaceID"].ToString();
+                string accessKeyId = sellerAccountDr["AccessKeyID"].ToString();
+                string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
+                string accountName = sellerAccountDr["AccountName"].ToString();
+                string channel = sellerAccountDr["Channel"].ToString();
+                try
+                {
+                    string reportRequestId = AmazonService.RequestReport.RequestAmazonInventoryReport(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                    System.Threading.Thread.Sleep(3600000);
+                    string reportGenerateId = "";
+                    string status = "";
+                    DataTable reportInfoDt = AmazonService.GetReportRequestList.GetAmazonReportRequestList(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                    try
+                    {
+                        foreach (DataRow reportInfoDr in reportInfoDt.Rows)
+                        {
+                            string reportRequestIdFromAmazon = reportInfoDr["ReportRequestId"].ToString();
+                            string reportGenerateIdFromAmazon = reportInfoDr["ReportGenerateId"].ToString();
+                            string reportStatusFromAmazon = reportInfoDr["Status"].ToString();
+                            if (reportRequestIdFromAmazon == reportRequestId)
+                            {
+                                reportGenerateId = reportGenerateIdFromAmazon;
+                                status = reportStatusFromAmazon;
+
+                                if (status != "_DONE_")
+                                {
+                                    System.Threading.Thread.Sleep(600000); // 10 mins
+                                    reportInfoDt = AmazonService.GetReportRequestList.GetAmazonReportRequestList(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                                    foreach (DataRow reportInfoDr2 in reportInfoDt.Rows)
+                                    {
+                                        reportRequestIdFromAmazon = reportInfoDr2["ReportRequestId"].ToString();
+                                        reportGenerateIdFromAmazon = reportInfoDr2["ReportGenerateId"].ToString();
+                                        reportStatusFromAmazon = reportInfoDr2["Status"].ToString();
+                                        if (reportRequestIdFromAmazon == reportRequestId)
+                                        {
+                                            reportGenerateId = reportGenerateIdFromAmazon;
+                                            status = reportStatusFromAmazon;
+
+                                            if (status != "_DONE_")
+                                            {
+                                                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                                                exceptionUtility.ErrorWarningMethod("LoadInventoryReport error:", accountName + " " + "Wait To Long for getting report " + reportRequestIdFromAmazon, senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                                                break;
+                                            }
+                                            else
+                                            {
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                else
+                                {
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                continue;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        ExceptionUtility exceptionUtility = new ExceptionUtility();
+                        exceptionUtility.CatchMethod(ex, "LoadInventoryReport Error:", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                    }
+                    AmazonService.GetReport.GetAmazonReport(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey, reportGenerateId);
+                }
+                catch(Exception ex)
+                {
+                    ExceptionUtility exceptionUtility = new ExceptionUtility();
+                    exceptionUtility.CatchMethod(ex, "GetAmazonInventoryReport Error:", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                    continue;
+                }
+            }
+        }
+
+
 
         public static void GetAmazonOrder()
         {
@@ -473,7 +564,7 @@ namespace AmazonMarketplaceMdl
                         DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
                         if (shippedInfoDt.Rows.Count > 0)
                         {
-                            DataTable amazonUploadTrackingDt = new DataTable();
+                            /*DataTable amazonUploadTrackingDt = new DataTable();
                             amazonUploadTrackingDt.Columns.Add("MerchantOrderID", typeof(System.String));
                             amazonUploadTrackingDt.Columns.Add("FulfillmentDate", typeof(System.String));
                             amazonUploadTrackingDt.Columns.Add("CarrierCode", typeof(System.String));
@@ -491,7 +582,7 @@ namespace AmazonMarketplaceMdl
                                 shipDate = ConvertUtility.ToDateTime(dr["ShippedDate"]);
                                 if (dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
                                 {
-                                    carrierCode = "Fedex";
+                                    carrierCode = "FEDEX";
                                 }
                                 else
                                 {
@@ -513,7 +604,7 @@ namespace AmazonMarketplaceMdl
                             }
                             XmlDocument amazonUploadTracingXml = new XmlDocument();
                             amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
-                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"+ accountName+"_AmazonTrackingForUpload.xml");
+                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"+ accountName+"_AmazonTrackingForUpload.xml");*/
                             string feedSubmissionId = "";
                             try
                             {
@@ -577,5 +668,7 @@ namespace AmazonMarketplaceMdl
                 throw ExceptionUtility.GetCustomizeException(ex);
             }
         }
+
+       
     }
 }
