@@ -564,7 +564,7 @@ namespace AmazonMarketplaceMdl
                         DataTable shippedInfoDt = Db.Db.GetAmazonShippedOrderInfo(accountName);
                         if (shippedInfoDt.Rows.Count > 0)
                         {
-                            /*DataTable amazonUploadTrackingDt = new DataTable();
+                            DataTable amazonUploadTrackingDt = new DataTable();
                             amazonUploadTrackingDt.Columns.Add("MerchantOrderID", typeof(System.String));
                             amazonUploadTrackingDt.Columns.Add("FulfillmentDate", typeof(System.String));
                             amazonUploadTrackingDt.Columns.Add("CarrierCode", typeof(System.String));
@@ -604,7 +604,7 @@ namespace AmazonMarketplaceMdl
                             }
                             XmlDocument amazonUploadTracingXml = new XmlDocument();
                             amazonUploadTracingXml = AmazonService.GenerateXml.BuildAmazonTrackingFeedXml(amazonUploadTrackingDt);
-                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"+ accountName+"_AmazonTrackingForUpload.xml");*/
+                            amazonUploadTracingXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\"+ accountName+"_AmazonTrackingForUpload.xml");
                             string feedSubmissionId = "";
                             try
                             {
