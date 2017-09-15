@@ -186,13 +186,18 @@ namespace AmazonMarketplaceMdl
                 string secretAccessKey = sellerAccountDr["SecretKey"].ToString();
                 string accountName = sellerAccountDr["AccountName"].ToString();
                 string channel = sellerAccountDr["Channel"].ToString();
+                List<string> exceptList = ConfigurationManager.AppSettings["exceptList"].Split(',').ToList();
+                if (exceptList.Contains(accountName))
+                {
+                    continue;
+                }
                 try
                 {
-                    string reportRequestId = AmazonService.RequestReport.RequestAmazonInventoryReport(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                    string reportRequestId = AmazonService.RequestReport.RequestAmazonInventoryReport(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);// send report request
                     System.Threading.Thread.Sleep(3600000);
                     string reportGenerateId = "";
                     string status = "";
-                    DataTable reportInfoDt = AmazonService.GetReportRequestList.GetAmazonReportRequestList(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);
+                    DataTable reportInfoDt = AmazonService.GetReportRequestList.GetAmazonReportRequestList(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey);// get report
                     try
                     {
                         foreach (DataRow reportInfoDr in reportInfoDt.Rows)
@@ -254,6 +259,59 @@ namespace AmazonMarketplaceMdl
                         exceptionUtility.CatchMethod(ex, "LoadInventoryReport Error:", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
                     }
                     AmazonService.GetReport.GetAmazonReport(accountName, merchantId, marketplaceId, accessKeyId, secretAccessKey, reportGenerateId);
+                    DataTable amazonInventoryReportDt = Db.Db.LoadAmazonInventoryReport(accountName);
+                    string amazonSku = "";
+                    int amazonQty = 0;
+                    int newQty = 0;
+                    DataTable amazonUpdateInventoryDt = new DataTable();
+                    amazonUpdateInventoryDt.Columns.Add("sku", typeof(System.String));
+                    amazonUpdateInventoryDt.Columns.Add("quantity", typeof(System.String));
+                    try
+                    {
+                        foreach(DataRow amazonInventoryReportDr in amazonInventoryReportDt.Rows)
+                        {
+                            amazonSku = amazonInventoryReportDr["sku"].ToString();
+                            amazonQty = ConvertUtility.ToInt(amazonInventoryReportDr["quantity"]);
+                            if(amazonQty<5)
+                            {
+                                DataRow visionSkuDr = Db.Db.GetVisionSkuInfo(amazonSku);
+                                if(visionSkuDr !=null)
+                                {
+                                    int visionQty = ConvertUtility.ToInt(visionSkuDr["qty"]);
+                                    if (visionQty <= 2)
+                                    {
+                                        visionQty = 0;
+                                    }
+                                    else
+                                    {
+                                        visionQty = ConvertUtility.ToInt(ConfigurationManager.AppSettings["qtyValue"]);
+                                    }
+                                    DataRow amazonUpdateInventoryDr = amazonUpdateInventoryDt.NewRow();
+                                    amazonUpdateInventoryDr["sku"] = amazonSku;
+                                    amazonUpdateInventoryDr["quantity"] = visionQty;
+                                    amazonUpdateInventoryDt.Rows.Add(amazonUpdateInventoryDr);
+                                }
+                                else
+                                {
+                                    DataRow amazonUpdateInventoryDr = amazonUpdateInventoryDt.NewRow();
+                                    amazonUpdateInventoryDr["sku"] = amazonSku;
+                                    amazonUpdateInventoryDr["quantity"] = 5;
+                                    amazonUpdateInventoryDt.Rows.Add(amazonUpdateInventoryDr);
+                                }
+
+                            }
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        ExceptionUtility exceptionUtility = new ExceptionUtility();
+                        exceptionUtility.CatchMethod(ex, "Checking Amazon Inventory Error:", ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                        break;
+                    }
+                    XmlDocument amazonInventoryXml = new XmlDocument();
+                    amazonInventoryXml = AmazonService.GenerateXml.BuildAmazonInventoryFeedXml(accountName, amazonUpdateInventoryDt);
+                    amazonInventoryXml.Save(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + accountName + "_AmazonInventoryReport.xml");
+                    string feedSubmissionId = AmazonService.SubmitInventoryFeed.SubmitAmazonInventoryFeed(accountName, Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + accountName + "_AmazonInventoryReport.xml", merchantId,marketplaceId,accessKeyId,secretAccessKey);
                 }
                 catch(Exception ex)
                 {
@@ -263,7 +321,6 @@ namespace AmazonMarketplaceMdl
                 }
             }
         }
-
 
 
         public static void GetAmazonOrder()

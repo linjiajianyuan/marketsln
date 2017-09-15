@@ -88,5 +88,67 @@ namespace AmazonService
             }
             return xmlDoc;
         }
+
+        public static XmlDocument BuildAmazonInventoryFeedXml(string accountName, DataTable updateInventoryDt)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlDeclaration Declaration = xmlDoc.CreateXmlDeclaration("1.0", "utf-8", null);
+            xmlDoc.AppendChild(Declaration);
+            XmlNode rootNode = xmlDoc.CreateElement("AmazonEnvelope");
+            XmlAttribute rootAttribute5 = xmlDoc.CreateAttribute("xmlns:xsi");
+            rootAttribute5.Value = "http://www.w3.org/2001/XMLSchema-instance";
+            rootNode.Attributes.Append(rootAttribute5);
+            //XmlAttribute rootAttribute4 = xmlDoc.CreateAttribute("xsi:noNamespaceSchemaLocation");
+            XmlAttribute rootAttribute4 = xmlDoc.CreateAttribute("xsi", "noNamespaceSchemaLocation", "http://www.w3.org/2001/XMLSchema-instance");
+            rootAttribute4.Value = "amzn-envelope.xsd";
+            rootNode.Attributes.Append(rootAttribute4);
+            xmlDoc.AppendChild(rootNode);
+
+            XmlNode headerNode = xmlDoc.CreateElement("Header");
+            rootNode.AppendChild(headerNode);
+
+            XmlNode documentVersionNode = xmlDoc.CreateElement("DocumentVersion");
+            documentVersionNode.InnerText = "1.01";
+            headerNode.AppendChild(documentVersionNode);
+
+            XmlNode messageTypeNode = xmlDoc.CreateElement("MessageType");
+            messageTypeNode.InnerText = "Inventory";
+            rootNode.AppendChild(messageTypeNode);
+
+            int messageId = 1;
+            foreach (DataRow updateInventoryDr in updateInventoryDt.Rows)
+            {
+                XmlNode messageNode = xmlDoc.CreateElement("Message");
+                rootNode.AppendChild(messageNode);
+
+                XmlNode messageIdNode = xmlDoc.CreateElement("MessageID");
+                messageIdNode.InnerText = messageId.ToString();
+                messageNode.AppendChild(messageIdNode);
+
+                XmlNode operationTypeNode = xmlDoc.CreateElement("OperationType");
+                operationTypeNode.InnerText = "Update";
+                messageNode.AppendChild(operationTypeNode);
+
+                XmlNode inventoryNode = xmlDoc.CreateElement("Inventory");
+                messageNode.AppendChild(inventoryNode);
+
+                XmlNode skuNode = xmlDoc.CreateElement("SKU");
+                string sku = updateInventoryDr["sku"].ToString();
+                skuNode.InnerText = sku;
+                inventoryNode.AppendChild(skuNode);
+
+
+                XmlNode quantityNode = xmlDoc.CreateElement("Quantity");
+                quantityNode.InnerText = updateInventoryDr["quantity"].ToString();
+                inventoryNode.AppendChild(quantityNode);
+
+                XmlNode fulfillmentLatencyNode = xmlDoc.CreateElement("FulfillmentLatency");
+                fulfillmentLatencyNode.InnerText = "2";
+                inventoryNode.AppendChild(fulfillmentLatencyNode);
+
+                messageId = messageId + 1;
+            }
+            return xmlDoc;
+        }
     }
 }

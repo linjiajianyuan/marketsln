@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +21,49 @@ namespace Db
         private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
+
+        public static DataTable LoadAmazonInventoryReport(string accountName)
+        {
+            FileStream fs = new FileStream(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\" + accountName + "_AmazonInventoryReport.xml", FileMode.Open, FileAccess.Read);
+            StreamReader sr = new StreamReader(fs);
+            string[] line;
+            string content;
+            DataTable amazonOnboardInventoryDt = new DataTable();
+            int lineCount = 1;
+            try
+            {
+                while ((content = sr.ReadLine()) != null)
+                {
+                    if (lineCount == 1)
+                    {
+                        line = content.Split('\t');
+                        amazonOnboardInventoryDt.Columns.Add(line[0], typeof(System.String));//sku
+                        amazonOnboardInventoryDt.Columns.Add(line[1], typeof(System.String));//asin
+                        amazonOnboardInventoryDt.Columns.Add(line[2], typeof(System.Decimal));//price
+                        amazonOnboardInventoryDt.Columns.Add(line[3], typeof(System.Int32));//qty
+                        lineCount++;
+                    }
+                    else
+                    {
+                        line = content.Split('\t');
+                        DataRow amazonOnboardInventoryDr = amazonOnboardInventoryDt.NewRow();
+                        amazonOnboardInventoryDr["sku"] = line[0].ToString();
+                        amazonOnboardInventoryDr["asin"] = line[1].ToString();
+                        amazonOnboardInventoryDr["price"] = ConvertUtility.ToDecimal(line[2]);
+                        amazonOnboardInventoryDr["quantity"] = ConvertUtility.ToInt(line[3]);
+                        amazonOnboardInventoryDt.Rows.Add(amazonOnboardInventoryDr);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionUtility exceptionUtility = new ExceptionUtility();
+                exceptionUtility.CatchMethod(ex, "LoadAmazonInventoryReport Error ", accountName + ": " + ex.Message.ToString(), senderEmail, messageFromPassword, messageToEmail, smtpClient, smtpPortNum);
+                throw ExceptionUtility.GetCustomizeException(ex);
+            }
+
+            return amazonOnboardInventoryDt;
+        }
 
         public static DataTable GetAmazonDeveloperInfo()
         {
