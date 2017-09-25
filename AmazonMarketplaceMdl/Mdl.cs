@@ -639,7 +639,7 @@ namespace AmazonMarketplaceMdl
                                 shipDate = ConvertUtility.ToDateTime(dr["ShippedDate"]);
                                 if (dr["ShippingCarrier"].ToString().Trim().ToUpper() == "FEDEX")
                                 {
-                                    carrierCode = "FEDEX";
+                                    carrierCode = "FedEx";
                                 }
                                 else
                                 {
