@@ -99,7 +99,7 @@ namespace MarketplaceWinForm
                 }
                 else
                 {
-                    //
+                    pictureBox1.Visible = false;
                 }
             }
             catch(Exception ex)
@@ -107,6 +107,13 @@ namespace MarketplaceWinForm
                 MessageBox.Show("Error: "+ex.Message.ToString());
             }
            
+        }
+
+        private void monthlySalesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonthlySalesForm frm = new MonthlySalesForm();
+            frm.MdiParent = this;
+            frm.Show();
         }
     }
 }

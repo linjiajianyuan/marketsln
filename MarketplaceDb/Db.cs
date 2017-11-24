@@ -16,7 +16,23 @@ namespace MarketplaceDb
         private static string messageToEmail = ConfigurationManager.AppSettings["messageToEmail"];
         private static string smtpClient = ConfigurationManager.AppSettings["smtpClient"];
         private static int smtpPortNum = ConvertUtility.ToInt(ConfigurationManager.AppSettings["smtpPortNum"]);
-        
+
+        public static DataTable GetMonthlySales()
+        {
+            string sql = @"SELECT YEAR(OrderDate) as SalesYear,MONTH(OrderDate) as SalesMonth,SUM(Total) AS TotalSales
+                            FROM Pebbledon.dbo.OrderHeader
+                            GROUP BY YEAR(OrderDate), MONTH(OrderDate)
+                            ORDER BY YEAR(OrderDate), MONTH(OrderDate)";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static DataTable GetAllChannel()
         {
             string sql = "select distinct Channel from OrderHeader";

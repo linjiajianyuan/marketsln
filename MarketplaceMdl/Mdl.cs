@@ -9,6 +9,13 @@ namespace MarketplaceMdl
 {
     public class Mdl
     {
+        public static DataTable GetMonthlySales()
+        {
+            DataTable dt = new DataTable();
+            dt = MarketplaceDb.Db.GetMonthlySales();
+            return dt;
+        }
+
         public static DataTable GetOrderView(int shipped,string startDate, string endDate, string ebayItemNum, string buyerUserId, string name, string email)
         {
             DataTable dt = new DataTable();
