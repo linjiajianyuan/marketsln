@@ -38,9 +38,10 @@
             this.inventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SKUMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importVisionInventoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.monthlySalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.monthlySalesByChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -120,6 +121,22 @@
             this.importVisionInventoryToolStripMenuItem.Text = "Import Vision Inventory";
             this.importVisionInventoryToolStripMenuItem.Click += new System.EventHandler(this.importVisionInventoryToolStripMenuItem_Click);
             // 
+            // statisticsToolStripMenuItem
+            // 
+            this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.monthlySalesToolStripMenuItem,
+            this.monthlySalesByChannelToolStripMenuItem});
+            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
+            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.statisticsToolStripMenuItem.Text = "Statistics";
+            // 
+            // monthlySalesToolStripMenuItem
+            // 
+            this.monthlySalesToolStripMenuItem.Name = "monthlySalesToolStripMenuItem";
+            this.monthlySalesToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.monthlySalesToolStripMenuItem.Text = "Monthly Sales";
+            this.monthlySalesToolStripMenuItem.Click += new System.EventHandler(this.monthlySalesToolStripMenuItem_Click);
+            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
@@ -130,20 +147,12 @@
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Visible = false;
             // 
-            // statisticsToolStripMenuItem
+            // monthlySalesByChannelToolStripMenuItem
             // 
-            this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.monthlySalesToolStripMenuItem});
-            this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
-            this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
-            this.statisticsToolStripMenuItem.Text = "Statistics";
-            // 
-            // monthlySalesToolStripMenuItem
-            // 
-            this.monthlySalesToolStripMenuItem.Name = "monthlySalesToolStripMenuItem";
-            this.monthlySalesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.monthlySalesToolStripMenuItem.Text = "Monthly Sales";
-            this.monthlySalesToolStripMenuItem.Click += new System.EventHandler(this.monthlySalesToolStripMenuItem_Click);
+            this.monthlySalesByChannelToolStripMenuItem.Name = "monthlySalesByChannelToolStripMenuItem";
+            this.monthlySalesByChannelToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.monthlySalesByChannelToolStripMenuItem.Text = "Monthly Sales By Channel";
+            this.monthlySalesByChannelToolStripMenuItem.Click += new System.EventHandler(this.monthlySalesByChannelToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -178,6 +187,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthlySalesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem monthlySalesByChannelToolStripMenuItem;
     }
 }
 

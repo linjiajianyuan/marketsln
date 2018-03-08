@@ -61,8 +61,9 @@
             this._OrderDgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._OrderDgv.Location = new System.Drawing.Point(12, 32);
             this._OrderDgv.Name = "_OrderDgv";
-            this._OrderDgv.Size = new System.Drawing.Size(817, 414);
+            this._OrderDgv.Size = new System.Drawing.Size(809, 414);
             this._OrderDgv.TabIndex = 0;
+            this._OrderDgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._OrderDgv_CellContentClick);
             this._OrderDgv.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this._CellContentDoubleClick);
             // 
             // _UnshippedCheckBox
@@ -71,7 +72,7 @@
             this._UnshippedCheckBox.AutoSize = true;
             this._UnshippedCheckBox.Checked = true;
             this._UnshippedCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this._UnshippedCheckBox.Location = new System.Drawing.Point(847, 32);
+            this._UnshippedCheckBox.Location = new System.Drawing.Point(839, 32);
             this._UnshippedCheckBox.Name = "_UnshippedCheckBox";
             this._UnshippedCheckBox.Size = new System.Drawing.Size(77, 17);
             this._UnshippedCheckBox.TabIndex = 1;
@@ -83,7 +84,7 @@
             // 
             this._ShippedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this._ShippedCheckBox.AutoSize = true;
-            this._ShippedCheckBox.Location = new System.Drawing.Point(847, 55);
+            this._ShippedCheckBox.Location = new System.Drawing.Point(839, 55);
             this._ShippedCheckBox.Name = "_ShippedCheckBox";
             this._ShippedCheckBox.Size = new System.Drawing.Size(65, 17);
             this._ShippedCheckBox.TabIndex = 2;
@@ -170,7 +171,7 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this._EndDatePicker);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(847, 89);
+            this.groupBox1.Location = new System.Drawing.Point(839, 89);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(297, 357);
             this.groupBox1.TabIndex = 9;
@@ -245,7 +246,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1156, 461);
+            this.ClientSize = new System.Drawing.Size(1148, 461);
             this.Controls.Add(this._TotalLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this._ShippedCheckBox);

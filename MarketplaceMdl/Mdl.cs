@@ -16,6 +16,13 @@ namespace MarketplaceMdl
             return dt;
         }
 
+        public static DataTable GetMonthlySalesByChannel()
+        {
+            DataTable dt = new DataTable();
+            dt = MarketplaceDb.Db.GetMonthlySalesByChannel();
+            return dt;
+        }
+
         public static DataTable GetOrderView(int shipped,string startDate, string endDate, string ebayItemNum, string buyerUserId, string name, string email)
         {
             DataTable dt = new DataTable();

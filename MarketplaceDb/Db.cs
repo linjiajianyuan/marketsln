@@ -33,6 +33,22 @@ namespace MarketplaceDb
             }
         }
 
+        public static DataTable GetMonthlySalesByChannel()
+        {
+            string sql = @"SELECT YEAR(OrderDate) as SalesYear,MONTH(OrderDate) as SalesMonth,SUM(Total) AS TotalSales, Channel
+                            FROM Pebbledon.dbo.OrderHeader
+                            GROUP BY YEAR(OrderDate), MONTH(OrderDate), Channel
+                            ORDER BY YEAR(OrderDate), MONTH(OrderDate), Channel";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static DataTable GetAllChannel()
         {
             string sql = "select distinct Channel from OrderHeader";
@@ -81,15 +97,15 @@ namespace MarketplaceDb
 
             if (shipped==0)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,LEFT([AddressType],1) AS AddressType,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate='1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else if (shipped ==1)
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,LEFT([AddressType],1) AS AddressType,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " ShippedDate <>'1753-01-01 00:00:00.000' and OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             else
             {
-                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
+                sql = "select h.OrderNum,AccountName,OrderDate,BuyerUserID,Note,LEFT([AddressType],1) AS AddressType,ShipName,ShipAddress1,ShipAddress2,ShipCity,ShipState,ShipCountry,ShipZip,ShipPhone,ShippedDate,h.EnterDate,h.Channel,h.TrackingNum from OrderHeader h where " + addCondition + " OrderDate >='" + startDate + "' and OrderDate <='" + endDate + "' order by OrderDate desc";
             }
             try
             {

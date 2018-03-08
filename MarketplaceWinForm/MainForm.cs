@@ -115,5 +115,12 @@ namespace MarketplaceWinForm
             frm.MdiParent = this;
             frm.Show();
         }
+
+        private void monthlySalesByChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonthlySalesForm frm = new MonthlySalesForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
     }
 }

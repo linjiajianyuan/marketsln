@@ -27,5 +27,10 @@ namespace MarketplaceWinForm
             column2.Width = 50;
             column3.Width = 80;
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

@@ -21,9 +21,9 @@ namespace MarketplaceWinForm
             this._OrderDgv.ReadOnly = true;
         }
         private const int cellOrderNum = 0;
-        private const int cellChannel = 15;
-        private const int cellShippedDate = 13;
-        private const int cellShipCountry = 10;
+        private const int cellChannel = 16;
+        private const int cellShippedDate = 14;
+        private const int cellShipCountry = 11;
         private const int cellCustomizedMessage = 4;
 
         private void OrdersForm_Load(object sender, EventArgs e)
@@ -249,6 +249,11 @@ namespace MarketplaceWinForm
             {
                 MessageBox.Show("Please select an unshipped order at least");
             }
+        }
+
+        private void _OrderDgv_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
