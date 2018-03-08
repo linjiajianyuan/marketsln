@@ -118,7 +118,14 @@ namespace MarketplaceWinForm
 
         private void monthlySalesByChannelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MonthlySalesForm frm = new MonthlySalesForm();
+            MonthlySalesByChannelForm frm = new MonthlySalesByChannelForm();
+            frm.MdiParent = this;
+            frm.Show();
+        }
+
+        private void monthlySalesByAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MonthlySalesByAccountForm frm = new MonthlySalesByAccountForm();
             frm.MdiParent = this;
             frm.Show();
         }

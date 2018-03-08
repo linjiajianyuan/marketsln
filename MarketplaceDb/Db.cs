@@ -32,7 +32,21 @@ namespace MarketplaceDb
                 throw new Exception(ex.Message);
             }
         }
-
+        public static DataTable GetMonthlySalesByAccount()
+        {
+            string sql = @"SELECT YEAR(OrderDate) as SalesYear,MONTH(OrderDate) as SalesMonth,SUM(Total) AS TotalSales, Channel, AccountName
+                            FROM Pebbledon.dbo.OrderHeader
+                            GROUP BY YEAR(OrderDate), MONTH(OrderDate), Channel, AccountName
+                            ORDER BY YEAR(OrderDate), MONTH(OrderDate), Channel, AccountName";
+            try
+            {
+                return SqlHelper.GetDataTable(sql, ConfigurationManager.AppSettings["pebbledon"]);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
         public static DataTable GetMonthlySalesByChannel()
         {
             string sql = @"SELECT YEAR(OrderDate) as SalesYear,MONTH(OrderDate) as SalesMonth,SUM(Total) AS TotalSales, Channel

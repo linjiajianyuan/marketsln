@@ -1,6 +1,6 @@
 ﻿namespace MarketplaceWinForm
 {
-    partial class MonthlySalesForm
+    partial class MonthlySalesByAccountForm
     {
         /// <summary>
         /// Required designer variable.
@@ -37,22 +37,20 @@
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 12);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 22);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(291, 254);
+            this.dataGridView1.Size = new System.Drawing.Size(483, 345);
             this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // MonthlySalesForm
+            // MonthlySalesByAccountForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(315, 278);
+            this.ClientSize = new System.Drawing.Size(507, 388);
             this.Controls.Add(this.dataGridView1);
-            this.Name = "MonthlySalesForm";
-            this.Text = "MonthlySalesForm";
-            this.Load += new System.EventHandler(this.MonthlySalesForm_Load);
+            this.Name = "MonthlySalesByAccountForm";
+            this.Text = "MonthlySalesByAccountForm";
+            this.Load += new System.EventHandler(this.MonthlySalesByAccountForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 

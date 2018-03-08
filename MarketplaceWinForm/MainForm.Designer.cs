@@ -42,6 +42,7 @@
             this.monthlySalesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.monthlySalesByChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.monthlySalesByAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -125,7 +126,8 @@
             // 
             this.statisticsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.monthlySalesToolStripMenuItem,
-            this.monthlySalesByChannelToolStripMenuItem});
+            this.monthlySalesByChannelToolStripMenuItem,
+            this.monthlySalesByAccountToolStripMenuItem});
             this.statisticsToolStripMenuItem.Name = "statisticsToolStripMenuItem";
             this.statisticsToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.statisticsToolStripMenuItem.Text = "Statistics";
@@ -153,6 +155,13 @@
             this.monthlySalesByChannelToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
             this.monthlySalesByChannelToolStripMenuItem.Text = "Monthly Sales By Channel";
             this.monthlySalesByChannelToolStripMenuItem.Click += new System.EventHandler(this.monthlySalesByChannelToolStripMenuItem_Click);
+            // 
+            // monthlySalesByAccountToolStripMenuItem
+            // 
+            this.monthlySalesByAccountToolStripMenuItem.Name = "monthlySalesByAccountToolStripMenuItem";
+            this.monthlySalesByAccountToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.monthlySalesByAccountToolStripMenuItem.Text = "Monthly Sales By Account";
+            this.monthlySalesByAccountToolStripMenuItem.Click += new System.EventHandler(this.monthlySalesByAccountToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -188,6 +197,7 @@
         private System.Windows.Forms.ToolStripMenuItem statisticsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthlySalesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem monthlySalesByChannelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem monthlySalesByAccountToolStripMenuItem;
     }
 }
 

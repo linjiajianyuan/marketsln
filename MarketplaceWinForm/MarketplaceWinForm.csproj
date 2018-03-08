@@ -73,6 +73,18 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MonthlySalesByAccountForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MonthlySalesByAccountForm.Designer.cs">
+      <DependentUpon>MonthlySalesByAccountForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MonthlySalesByChannelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MonthlySalesByChannelForm.Designer.cs">
+      <DependentUpon>MonthlySalesByChannelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MonthlySalesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +133,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonthlySalesByAccountForm.resx">
+      <DependentUpon>MonthlySalesByAccountForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MonthlySalesByChannelForm.resx">
+      <DependentUpon>MonthlySalesByChannelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MonthlySalesForm.resx">
       <DependentUpon>MonthlySalesForm.cs</DependentUpon>
